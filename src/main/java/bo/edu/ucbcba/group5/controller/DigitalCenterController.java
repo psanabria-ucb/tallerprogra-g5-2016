@@ -1,5 +1,5 @@
 package bo.edu.ucbcba.group5.controller;
-import bo.edu.ucbcba.group5.dao.VideoClubEntityManager;
+import bo.edu.ucbcba.group5.dao.DigitalCenterEntityManager;
 import bo.edu.ucbcba.group5.exceptions.ValidationException;
 import bo.edu.ucbcba.group5.model.Elemento;
 
@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class MovieController {
+public class DigitalCenterController {
     public void create(String title,
                        String gender,
                        String description,
@@ -40,7 +40,7 @@ public class MovieController {
             throw new ValidationException("Minutes can't be greater than 59");
         elemento.setLength(hours * 60 + minutes);
 
-        EntityManager entityManager = VideoClubEntityManager.createEntityManager();
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(elemento);
         entityManager.getTransaction().commit();
@@ -48,7 +48,7 @@ public class MovieController {
     }
 
     public List<Elemento> searchMovies(String q) {
-        EntityManager entityManager = VideoClubEntityManager.createEntityManager();
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
         TypedQuery<Elemento> query = entityManager.createQuery("select e from Elemento e WHERE lower(e.title) like :title", Elemento.class);
         query.setParameter("title", "%" + q.toLowerCase() + "%");
         List<Elemento> response = query.getResultList();

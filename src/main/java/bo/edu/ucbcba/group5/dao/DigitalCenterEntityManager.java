@@ -6,18 +6,18 @@ import javax.persistence.Persistence;
 
 // This is a singleton that give us a entity manager to manage
 // in the entire DAO
-public class VideoClubEntityManager {
-    private static VideoClubEntityManager entityManager;
+public class DigitalCenterEntityManager {
+    private static DigitalCenterEntityManager entityManager;
 
     private EntityManagerFactory entityManagerFactory;
 
-    private VideoClubEntityManager() {
+    private DigitalCenterEntityManager() {
         entityManagerFactory = Persistence.createEntityManagerFactory("DigitalCenter");
     }
 
-    private static VideoClubEntityManager getInstance() {
+    private static DigitalCenterEntityManager getInstance() {
         if (entityManager == null)
-            entityManager = new VideoClubEntityManager();
+            entityManager = new DigitalCenterEntityManager();
         return entityManager;
     }
 

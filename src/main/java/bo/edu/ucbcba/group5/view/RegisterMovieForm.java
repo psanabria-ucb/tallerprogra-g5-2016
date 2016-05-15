@@ -1,6 +1,6 @@
 package bo.edu.ucbcba.group5.view;
 
-import bo.edu.ucbcba.group5.controller.MovieController;
+import bo.edu.ucbcba.group5.controller.DigitalCenterController;
 import bo.edu.ucbcba.group5.exceptions.ValidationException;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -27,7 +27,7 @@ public class RegisterMovieForm extends JDialog {
     private JRadioButton rating4;
     private JRadioButton rating5;
     private int rating = 5;
-    private MovieController controller;
+    private DigitalCenterController controller;
 
     RegisterMovieForm(JFrame parent) {
         super(parent, "Register Elemento", true);
@@ -57,7 +57,7 @@ public class RegisterMovieForm extends JDialog {
         rating3.addActionListener(ratingListener);
         rating4.addActionListener(ratingListener);
         rating5.addActionListener(ratingListener);
-        controller = new MovieController();
+        controller = new DigitalCenterController();
     }
 
     private void saveUser() {
