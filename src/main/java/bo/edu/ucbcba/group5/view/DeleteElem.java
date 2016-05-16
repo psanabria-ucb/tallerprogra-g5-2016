@@ -12,15 +12,16 @@ import java.util.List;
 /**
  * Created by Abel on 5/15/2016.
  */
-public class BuscarElem extends JDialog {
-    private JPanel rootPanel;
+public class DeleteElem extends JDialog{
     private JTextField nameField;
-    private JButton buscarButton;
     private JTable resulTable;
+    private JPanel rootPanel;
+    private JButton buscarButton;
+    private JButton deleteButton;
     private DigitalCenterController digitalCenterController;
 
-    BuscarElem(JFrame parent){
-        super(parent,"Buscar",true);
+    DeleteElem(JFrame parent){
+        super(parent,"borrar",true);
         setContentPane(rootPanel);
         setSize(1600, 1400);
         pack();
@@ -33,12 +34,24 @@ public class BuscarElem extends JDialog {
                 populateTable();
             }
         });
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                deleteElem();
+            }
+        });
     }
+    public void deleteElem(){
 
+            DefaultTableModel model = (DefaultTableModel) resulTable.getModel();
+            int cod = (Integer) model.getValueAt(resulTable.getSelectedRow(),0);
+            digitalCenterController.delete(cod);
+
+    }
     private void populateTable() {
         List<Elemento> elementos = digitalCenterController.searchMovies(nameField.getText());
         DefaultTableModel model = new DefaultTableModel();
-       // model.addColumn("Id");
+        //model.addColumn("Id");
         model.addColumn("Title");
         model.addColumn("Gender");
         model.addColumn("Description");

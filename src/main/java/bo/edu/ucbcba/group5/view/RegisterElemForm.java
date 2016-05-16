@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RegisterMovieForm extends JDialog {
+public class RegisterElemForm extends JDialog {
     private JPanel rootPanel;
     private JTextField title;
     private JTextField gender;  //  REGISTRA EL GENERO
@@ -29,7 +29,7 @@ public class RegisterMovieForm extends JDialog {
     private int rating = 5;
     private DigitalCenterController controller;
 
-    RegisterMovieForm(JFrame parent) {
+    RegisterElemForm(JFrame parent) {
         super(parent, "Register Elemento", true);
         setContentPane(rootPanel);
         pack();
@@ -62,6 +62,7 @@ public class RegisterMovieForm extends JDialog {
 
     private void saveUser() {
         try {
+
             controller.create(title.getText(),
                     gender.getText(),       // REGISTRA EL GENERO
                     description.getText(),

@@ -55,4 +55,12 @@ public class DigitalCenterController {
         entityManager.close();
         return response;
     }
+    public void delete(int id)
+    {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.remove(entityManager.find(Elemento.class,id));
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
 }

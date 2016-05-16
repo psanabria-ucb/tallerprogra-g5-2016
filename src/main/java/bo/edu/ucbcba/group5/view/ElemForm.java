@@ -7,14 +7,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MoviesForm extends JFrame {
+public class ElemForm extends JFrame {
     private JPanel rootPanel;
 
     private JButton createButton;
     private JButton buscarButton;
+    private JButton eliminarButton;
     private DigitalCenterController digitalCenterController;
 
-    public MoviesForm() {
+    public ElemForm() {
 
         super("DigitalCenter");
         setContentPane(rootPanel);
@@ -24,6 +25,12 @@ public class MoviesForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 launchRegister();
+            }
+        });
+        eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                launchDelete();
             }
         });
         digitalCenterController = new DigitalCenterController();
@@ -42,9 +49,15 @@ public class MoviesForm extends JFrame {
             }
         });
     }
+    private void launchDelete() {
+        DeleteElem form = new DeleteElem(this);
+
+        form.setVisible(true);
+
+    }
 
     private void launchRegister() {
-        RegisterMovieForm form = new RegisterMovieForm(this);
+        RegisterElemForm form = new RegisterElemForm(this);
 
         form.setVisible(true);
 
