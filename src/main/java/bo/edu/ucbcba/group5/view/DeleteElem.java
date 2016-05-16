@@ -50,7 +50,7 @@ public class DeleteElem extends JDialog{
     }
     private void populateTable() {
         List<Elemento> elementos = digitalCenterController.searchMovies(nameField.getText());
-        DefaultTableModel model = new DefaultTableModel();
+        final DefaultTableModel model = new DefaultTableModel();
         //model.addColumn("Id");
         model.addColumn("Title");
         model.addColumn("Gender");
@@ -71,7 +71,6 @@ public class DeleteElem extends JDialog{
             row[6] = String.format("%s,%s", m.getLength() / 60, m.getLength() % 60);
             model.addRow(row);
         }
-
 
 
 

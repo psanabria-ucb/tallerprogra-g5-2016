@@ -3,7 +3,12 @@ package bo.edu.ucbcba.group5.view;
 import bo.edu.ucbcba.group5.controller.DigitalCenterController;
 import bo.edu.ucbcba.group5.model.Elemento;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +42,7 @@ public class BuscarElem extends JDialog {
 
     private void populateTable() {
         List<Elemento> elementos = digitalCenterController.searchMovies(nameField.getText());
-        DefaultTableModel model = new DefaultTableModel();
+        final DefaultTableModel model = new DefaultTableModel();
        // model.addColumn("Id");
         model.addColumn("Title");
         model.addColumn("Gender");
@@ -59,6 +64,37 @@ public class BuscarElem extends JDialog {
             model.addRow(row);
         }
 
+        model.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if(e.getType() == TableModelEvent.UPDATE){
+                    int columna = e.getColumn();
+                    int fila = e.getFirstRow();
+                    if(columna == 1)
+                    {
+
+                        EntityManagerFactory emfactory = Persistence.
+                                createEntityManagerFactory( "DigitalCenter" );
+                        EntityManager entitymanager = emfactory.createEntityManager( );
+                        entitymanager.getTransaction( ).begin( );
+                        int cod = (Integer) model.getValueAt(resulTable.getSelectedRow(),0);
+                        Elemento elemento = entitymanager.find( Elemento.class, cod );
+
+                        String nombr;
+
+                        //before update
+                        System.out.println( elemento);
+                        elemento.setTitle(String.valueOf(model.getValueAt(fila,columna)));
+                        entitymanager.getTransaction( ).commit( );
+
+                        //after update
+                        System.out.println( elemento );
+                        entitymanager.close();
+                        emfactory.close();
+                    }
+                }
+            }
+        });
 
 
 
