@@ -4,10 +4,14 @@ import bo.edu.ucbcba.group5.controller.DigitalCenterController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class ElemForm extends JFrame {
     private JPanel rootPanel;
@@ -21,6 +25,7 @@ public class ElemForm extends JFrame {
     public ElemForm() {
 
         super("DigitalCenter");
+        launchImage();
         setContentPane(rootPanel);
         setSize(600, 400);
 
@@ -83,6 +88,21 @@ public class ElemForm extends JFrame {
         form.setVisible(true);
 
     }
+    private void launchImage() {
+
+        BufferedImage myPicture = null;
+        try {
+            myPicture = ImageIO.read(new File("foto.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.setSize(300, 300);
+        JLabel label = new JLabel(new ImageIcon(myPicture));
+        ((JPanel) getContentPane()).setOpaque(false);
+        getLayeredPane().add(label, JLayeredPane.FRAME_CONTENT_LAYER);
+        label.setBounds(0, 0, myPicture.getWidth(), myPicture.getHeight());
+    }
+
 
 
     {

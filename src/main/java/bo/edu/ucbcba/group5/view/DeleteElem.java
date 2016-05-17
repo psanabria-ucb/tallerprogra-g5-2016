@@ -24,7 +24,7 @@ public class DeleteElem extends JDialog {
     private DigitalCenterController digitalCenterController;
 
     DeleteElem(JFrame parent) {
-        super(parent, "borrar", true);
+        super(parent, "Borrar", true);
         setContentPane(rootPanel);
         setSize(1600, 1400);
         pack();
