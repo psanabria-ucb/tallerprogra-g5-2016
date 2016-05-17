@@ -13,6 +13,7 @@ public class ElemForm extends JFrame {
     private JButton createButton;
     private JButton buscarButton;
     private JButton eliminarButton;
+    private JButton juegosButton;
     private DigitalCenterController digitalCenterController;
 
     public ElemForm() {
@@ -42,12 +43,22 @@ public class ElemForm extends JFrame {
             }
         });
         */
+        juegosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                launchGameWindow();
+            }
+        });
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 launchBusqueda();
             }
         });
+    }
+    private void launchGameWindow(){
+        GameWindow form=new GameWindow(this);
+        form.setVisible(true);
     }
     private void launchDelete() {
         DeleteElem form = new DeleteElem(this);
