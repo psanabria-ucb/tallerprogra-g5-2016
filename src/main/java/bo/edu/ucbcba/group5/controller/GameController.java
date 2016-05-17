@@ -24,8 +24,8 @@ public class GameController {
             juego.setLanzamiento(Integer.parseInt(lanzamiento));
         else
             throw new ValidationException("Release year isn't a number");
-        int p;
-        p = Integer.parseInt(Gbpeso);
+        Double p;
+        p = Double.parseDouble(Gbpeso);
         juego.setPeso(p);
 
        /* int hours, minutes;
@@ -44,6 +44,43 @@ public class GameController {
 */
         EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
         entityManager.getTransaction().begin();
+        entityManager.persist(juego);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    public void update(String nombre, String genero, String description, String lanzamiento, String Gbpeso)
+    {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        entityManager.getTransaction().begin();
+        Juego juego = entityManager.find(Juego.class,nombre);
+        juego.setNombre(nombre);
+        juego.setGenero(genero);
+        juego.setDescription(description);
+        if (lanzamiento.matches("[0-9]+"))
+            juego.setLanzamiento(Integer.parseInt(lanzamiento));
+        else
+            throw new ValidationException("Release year isn't a number");
+        Double p;
+        p = Double.parseDouble(Gbpeso);
+        juego.setPeso(p);
+
+       /* int hours, minutes;
+
+        if (!hoursLength.matches("[0-9]+"))
+            throw new ValidationException("Year isn't a number");
+        hours = Integer.parseInt(hoursLength);
+
+        if (!minutesLength.matches("[0-9]+"))
+            throw new ValidationException("Minutes field isn't a number");
+        minutes = Integer.parseInt(minutesLength);
+
+        if (minutes >= 60)
+            throw new ValidationException("Minutes can't be greater than 59");
+        elemento.setLength(hours * 60 + minutes);
+*/
+        //EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+       // entityManager.getTransaction().begin();
         entityManager.persist(juego);
         entityManager.getTransaction().commit();
         entityManager.close();

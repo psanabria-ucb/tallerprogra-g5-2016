@@ -66,6 +66,7 @@ public class BuscarElem extends JDialog {
             row[5] = m.getReleaseYear();
             row[6] = String.format("%s,%s", m.getLength() / 60, m.getLength() % 60);
             model.addRow(row);
+
         }
 
         model.addTableModelListener(new TableModelListener() {
@@ -82,6 +83,7 @@ public class BuscarElem extends JDialog {
                         entitymanager.getTransaction().begin();
                         int cod = (Integer) model.getValueAt(resulTable.getSelectedRow(), 0);
                         Elemento elemento = entitymanager.find(Elemento.class, cod);
+
 
                         String nombr;
 

@@ -17,7 +17,7 @@ public class Juego {
     @Lob
     @Column(length = 500)
     private String description;
-    private int peso; // En Gb
+    private Double peso; // En Gb
     private int lanzamiento;
 
 
@@ -45,11 +45,11 @@ public class Juego {
         this.genero = genero;
     }
 
-    public int getPeso() {
+    public Double getPeso() {
         return peso;
     }
 
-    public void setPeso(int peso) {
+    public void setPeso(Double peso) {
         this.peso = peso;
     }
 

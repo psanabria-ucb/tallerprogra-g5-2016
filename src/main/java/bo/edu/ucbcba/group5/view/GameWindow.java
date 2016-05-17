@@ -17,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 /**
@@ -34,7 +36,9 @@ public class GameWindow extends JDialog {
     private JTextField lanField;
     private JTextField genField;
     private JTextField pesoField;
+    private JButton actualizarButton;
     private GameController gameController;
+    private DefaultTableModel model;
 
 
 
@@ -64,8 +68,37 @@ public class GameWindow extends JDialog {
                 deleteElem();
             }
         });
-    }
+        actualizarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                launchUpdate2();
+            }
+        });
 
+        resulTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                super.mouseClicked(mouseEvent);
+                nameField1.setText((String) model.getValueAt(resulTable.getSelectedRow(), 0));
+                genField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 1));
+                descField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 2));
+                lanField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
+               // int p;
+               // p = Integer.parseInt(Gbpeso);
+                pesoField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 4));
+
+            }
+        });
+    }
+    private void Clean(){
+        nameField1.setText("");
+        genField.setText("");
+        descField.setText("");
+        lanField.setText("");
+        // int p;
+        // p = Integer.parseInt(Gbpeso);
+        pesoField.setText("");
+    }
     private void launchRegistrar() {
         try {
 
@@ -79,61 +112,73 @@ public class GameWindow extends JDialog {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Format error", JOptionPane.ERROR_MESSAGE);
         }
 
-        JOptionPane.showMessageDialog(this, "Elemento created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Juego creado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
         //cancel();
+
+        populateTable();
+    }
+    private void launchUpdate(){
+        try {
+
+            gameController.update(nameField1.getText(),
+                    genField.getText(),       // REGISTRA EL GENERO
+                    descField.getText(),
+                    lanField.getText(),
+                    pesoField.getText());
+
+        } catch (ValidationException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "error de formato", JOptionPane.ERROR_MESSAGE);
+        }
+
+        JOptionPane.showMessageDialog(this, "Elemento actualizado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+        populateTable();
+        Clean();
+
+    }
+    private void launchUpdate2(){
+        DefaultTableModel model = (DefaultTableModel) resulTable.getModel();
+        String cod = (String) model.getValueAt(resulTable.getSelectedRow(), 0);
+        gameController.delete(cod);
+
+        try {
+
+            gameController.create(nameField1.getText(),
+                    genField.getText(),       // REGISTRA EL GENERO
+                    descField.getText(),
+                    lanField.getText(),
+                    pesoField.getText());
+
+        } catch (ValidationException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "error de formato", JOptionPane.ERROR_MESSAGE);
+        }
+        JOptionPane.showMessageDialog(this, "Elemento actualizado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+        populateTable();
     }
 
     private void populateTable() {
         List<Juego> elementos = gameController.BuscarGames(nameField.getText());
-        final DefaultTableModel model = new DefaultTableModel();
+        model = new DefaultTableModel();
         // model.addColumn("Id");
         model.addColumn("nombre");
         model.addColumn("genero");
         model.addColumn("Description");
         model.addColumn("lanzamiento");
         model.addColumn("peso");
+        model.addColumn("tip");
         resulTable.setModel(model);
 
         for (Juego m : elementos) {
-            Object[] row = new Object[5];
+            Object[] row = new Object[6];
             // row[0] = m.getId();
             row[0] = m.getNombre();
             row[1] = m.getGenero();
             row[2] = m.getDescription();
             row[3] = m.getLanzamiento();
-            row[4] = String.format("%s,%s", m.getPeso() / 60, m.getPeso() % 60);
+            row[4] = String.format("%s", m.getPeso());
+            row[5]="Gbytes";
             model.addRow(row);
         }
-        model.addTableModelListener(new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                if (e.getType() == TableModelEvent.UPDATE) {
-                    int columna = e.getColumn();
-                    int fila = e.getFirstRow();
-                    if (columna == 0) {
-
-                        EntityManagerFactory emfactory = Persistence.
-                                createEntityManagerFactory("DigitalCenter");
-                        EntityManager entitymanager = emfactory.createEntityManager();
-                        entitymanager.getTransaction().begin();
-                        String cod1 = (String) model.getValueAt(resulTable.getSelectedRow(), 0);
-                        Juego elemento = entitymanager.find(Juego.class, cod1);
-
-                        String nombr;
-
-                        //before update
-                        System.out.println(elemento);
-                        elemento.setNombre(String.valueOf(model.getValueAt(fila, columna - 1)));
-                        entitymanager.getTransaction().commit();
-
-                        //after update
-                        System.out.println(elemento);
-                        entitymanager.close();
-                        emfactory.close();
-                    }
-                }
-            }
-        });
+        Clean();
 
     }
 
@@ -142,6 +187,9 @@ public class GameWindow extends JDialog {
         DefaultTableModel model = (DefaultTableModel) resulTable.getModel();
         String cod = (String) model.getValueAt(resulTable.getSelectedRow(), 0);
         gameController.delete(cod);
+        JOptionPane.showMessageDialog(this, "Elemento eliminado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+        populateTable();
+
 
     }
 

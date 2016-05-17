@@ -25,9 +25,9 @@ public class ElemForm extends JFrame {
     public ElemForm() {
 
         super("DigitalCenter");
-        launchImage();
+      // launchImage();lo puse mas abajo xD y da
         setContentPane(rootPanel);
-        setSize(600, 400);
+       // setSize(600, 400);
 
         createButton.addActionListener(new ActionListener() {
             @Override
@@ -56,12 +56,15 @@ public class ElemForm extends JFrame {
                 launchGameWindow();
             }
         });
+        launchImage();
+        setSize(600, 400);
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 launchBusqueda();
             }
         });
+
     }
 
     private void launchGameWindow() {
