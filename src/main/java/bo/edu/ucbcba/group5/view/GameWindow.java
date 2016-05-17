@@ -36,6 +36,8 @@ public class GameWindow extends JDialog {
     private JTextField pesoField;
     private GameController gameController;
 
+
+
     GameWindow(JFrame parent) {
         super(parent, "Juegos", true);
         setContentPane(rootPanel);
