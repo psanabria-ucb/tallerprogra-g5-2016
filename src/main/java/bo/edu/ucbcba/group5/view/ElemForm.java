@@ -1,6 +1,7 @@
 package bo.edu.ucbcba.group5.view;
 
 import bo.edu.ucbcba.group5.controller.DigitalCenterController;
+import bo.edu.ucbcba.group5.model.Album;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -21,6 +22,7 @@ public class ElemForm extends JFrame {
     private JButton eliminarButton;
     private JButton juegosButton;
     private JButton peliculasButton;
+    private JButton musicaButton;
     private DigitalCenterController digitalCenterController;
 
     public ElemForm() {
@@ -63,6 +65,12 @@ public class ElemForm extends JFrame {
                 launchMovieWindow();
             }
         });
+        musicaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                launchAlbumWindow();
+            }
+        });
         launchImage();
         setSize(600, 400);
         buscarButton.addActionListener(new ActionListener() {
@@ -82,6 +90,12 @@ public class ElemForm extends JFrame {
     private void launchMovieWindow() {
         MovieWindow form = new MovieWindow(this);
         form.setVisible(true);
+    }
+
+    private void launchAlbumWindow() {
+        AlbumWindow form = new AlbumWindow(this);
+        form.setVisible(true);
+
     }
 
     private void launchDelete() {
@@ -154,6 +168,9 @@ public class ElemForm extends JFrame {
         peliculasButton = new JButton();
         peliculasButton.setText("Peliculas");
         rootPanel.add(peliculasButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        musicaButton = new JButton();
+        musicaButton.setText("Musica");
+        rootPanel.add(musicaButton, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
