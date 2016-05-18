@@ -96,6 +96,7 @@ public class ElemForm extends JFrame {
         form.setVisible(true);
     }
 
+
     private void launchDelete() {
         DeleteElem form = new DeleteElem(this);
 
