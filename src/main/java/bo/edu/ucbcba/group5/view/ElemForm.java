@@ -21,6 +21,7 @@ public class ElemForm extends JFrame {
     private JButton eliminarButton;
     private JButton juegosButton;
     private JButton peliculasButton;
+    private JButton musicasButton;
     private DigitalCenterController digitalCenterController;
 
     public ElemForm() {
@@ -63,6 +64,12 @@ public class ElemForm extends JFrame {
                 launchMovieWindow();
             }
         });
+        musicasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                launchMusicWindow();
+            }
+        });
         launchImage();
         setSize(600, 400);
         buscarButton.addActionListener(new ActionListener() {
@@ -81,6 +88,11 @@ public class ElemForm extends JFrame {
 
     private void launchMovieWindow() {
         MovieWindow form = new MovieWindow(this);
+        form.setVisible(true);
+    }
+    private void launchMusicWindow()
+    {
+        MusicForm form = new MusicForm(this);
         form.setVisible(true);
     }
 
