@@ -30,8 +30,10 @@ public class ElemForm extends JFrame {
         // launchImage();lo puse mas abajo xD y da
         setContentPane(rootPanel);
         // setSize(600, 400);
-
-        createButton.addActionListener(new ActionListener() {
+        createButton.setVisible(false);
+        eliminarButton.setVisible(false);
+        buscarButton.setVisible(false);
+       createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 launchRegister();
@@ -71,7 +73,7 @@ public class ElemForm extends JFrame {
             }
         });
         launchImage();
-        setSize(600, 400);
+        setSize(1300, 700);
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -121,11 +123,11 @@ public class ElemForm extends JFrame {
 
         BufferedImage myPicture = null;
         try {
-            myPicture = ImageIO.read(new File("foto.jpg"));
+            myPicture = ImageIO.read(new File("digital.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.setSize(300, 300);
+        this.setSize(900, 700);
         JLabel label = new JLabel(new ImageIcon(myPicture));
         ((JPanel) getContentPane()).setOpaque(false);
         getLayeredPane().add(label, JLayeredPane.FRAME_CONTENT_LAYER);

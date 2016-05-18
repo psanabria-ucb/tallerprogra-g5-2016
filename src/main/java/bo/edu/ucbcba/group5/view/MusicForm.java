@@ -98,8 +98,8 @@ public class MusicForm extends JDialog{
                     genField.getText(),       // REGISTRA EL GENERO
                     descField.getText(),
                     lanField.getText(),
-                    minuField.getText(),
-                    pesoField.getText());
+                    pesoField.getText(),
+                    minuField.getText());
 
         } catch (ValidationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Format error", JOptionPane.ERROR_MESSAGE);
@@ -166,7 +166,7 @@ public class MusicForm extends JDialog{
         resulTable.setModel(model);
 
         for (Musica m : elementos) {
-            Object[] row = new Object[7];
+            Object[] row = new Object[6];
             // row[0] = m.getId();
             row[0] = m.getNombre();
             row[1] = m.getGenero();
@@ -174,7 +174,7 @@ public class MusicForm extends JDialog{
             row[3] = m.getLanzamiento();
             row[4] = m.getDuracMinutos();
             row[5] = String.format("%s", m.getPeso());
-            row[6] = "Gbytes";
+
             model.addRow(row);
         }
         Clean();
