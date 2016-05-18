@@ -33,7 +33,7 @@ public class ElemForm extends JFrame {
         createButton.setVisible(false);
         eliminarButton.setVisible(false);
         buscarButton.setVisible(false);
-       createButton.addActionListener(new ActionListener() {
+        createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 launchRegister();
@@ -92,8 +92,8 @@ public class ElemForm extends JFrame {
         MovieWindow form = new MovieWindow(this);
         form.setVisible(true);
     }
-    private void launchMusicWindow()
-    {
+
+    private void launchMusicWindow() {
         MusicForm form = new MusicForm(this);
         form.setVisible(true);
     }
@@ -165,10 +165,13 @@ public class ElemForm extends JFrame {
         rootPanel.add(eliminarButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         juegosButton = new JButton();
         juegosButton.setText("Juegos");
-        rootPanel.add(juegosButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        rootPanel.add(juegosButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(400, 40), new Dimension(400, 40), new Dimension(400, 40), 0, false));
         peliculasButton = new JButton();
         peliculasButton.setText("Peliculas");
-        rootPanel.add(peliculasButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        rootPanel.add(peliculasButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(400, 40), new Dimension(400, 40), new Dimension(400, 40), 0, false));
+        musicasButton = new JButton();
+        musicasButton.setText("Musicas");
+        rootPanel.add(musicasButton, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(400, 40), new Dimension(400, 40), new Dimension(400, 40), 0, false));
     }
 
     /**
