@@ -5,6 +5,7 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>bo.edu.ucbcba.group5.model.Elemento</class>
         <class>bo.edu.ucbcba.group5.model.Juego</class>
+        <class>bo.edu.ucbcba.group5.model.Pelicula</class>
         <properties>
             <property name="eclipselink.jdbc.url" value="jdbc:derby:DigitalCenter;create=true"/>
             <property name="eclipselink.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>

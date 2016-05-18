@@ -2,7 +2,7 @@ package bo.edu.ucbcba.group5.controller;
 
 import bo.edu.ucbcba.group5.dao.DigitalCenterEntityManager;
 import bo.edu.ucbcba.group5.exceptions.ValidationException;
-import bo.edu.ucbcba.group5.model.Elemento;
+//import bo.edu.ucbcba.group5.model.Elemento;
 import bo.edu.ucbcba.group5.model.Juego;
 
 import javax.persistence.EntityManager;

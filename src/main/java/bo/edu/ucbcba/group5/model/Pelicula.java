@@ -1,11 +1,15 @@
 package bo.edu.ucbcba.group5.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+
 /**
- * Created by Abel on 5/16/2016.
+ * Created by INTEL on 17/05/2016.
  */
-import javax.persistence.*;
 @Entity
-public class Juego {
+public class Pelicula {
 
     @Id
     private String nombre;
@@ -19,7 +23,7 @@ public class Juego {
     private String description;
     private Double peso; // En Gb
     private int lanzamiento;
-
+    private int duracMinutos;
 
     public String getDescription() {
         return description;
@@ -61,5 +65,9 @@ public class Juego {
         this.lanzamiento = lanzamiento;
     }
 
+    public int getDuracMinutos() {return duracMinutos;   }
 
+    public void setDuracMinutos(int duracMinutos) {  this.duracMinutos = duracMinutos; }
 }
+
+

@@ -20,14 +20,15 @@ public class ElemForm extends JFrame {
     private JButton buscarButton;
     private JButton eliminarButton;
     private JButton juegosButton;
+    private JButton peliculasButton;
     private DigitalCenterController digitalCenterController;
 
     public ElemForm() {
 
         super("DigitalCenter");
-      // launchImage();lo puse mas abajo xD y da
+        // launchImage();lo puse mas abajo xD y da
         setContentPane(rootPanel);
-       // setSize(600, 400);
+        // setSize(600, 400);
 
         createButton.addActionListener(new ActionListener() {
             @Override
@@ -56,6 +57,12 @@ public class ElemForm extends JFrame {
                 launchGameWindow();
             }
         });
+        peliculasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                launchMovieWindow();
+            }
+        });
         launchImage();
         setSize(600, 400);
         buscarButton.addActionListener(new ActionListener() {
@@ -69,6 +76,11 @@ public class ElemForm extends JFrame {
 
     private void launchGameWindow() {
         GameWindow form = new GameWindow(this);
+        form.setVisible(true);
+    }
+
+    private void launchMovieWindow() {
+        MovieWindow form = new MovieWindow(this);
         form.setVisible(true);
     }
 
@@ -91,6 +103,7 @@ public class ElemForm extends JFrame {
         form.setVisible(true);
 
     }
+
     private void launchImage() {
 
         BufferedImage myPicture = null;
@@ -105,7 +118,6 @@ public class ElemForm extends JFrame {
         getLayeredPane().add(label, JLayeredPane.FRAME_CONTENT_LAYER);
         label.setBounds(0, 0, myPicture.getWidth(), myPicture.getHeight());
     }
-
 
 
     {
@@ -139,6 +151,9 @@ public class ElemForm extends JFrame {
         juegosButton = new JButton();
         juegosButton.setText("Juegos");
         rootPanel.add(juegosButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        peliculasButton = new JButton();
+        peliculasButton.setText("Peliculas");
+        rootPanel.add(peliculasButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
