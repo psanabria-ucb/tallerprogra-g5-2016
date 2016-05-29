@@ -8,6 +8,7 @@
         <class>bo.edu.ucbcba.group5.model.Pelicula</class>
         <class>bo.edu.ucbcba.group5.model.Musica</class>
         <class>bo.edu.ucbcba.group5.model.Company</class>
+        <class>bo.edu.ucbcba.group5.model.Directors</class>
         <properties>
             <property name="eclipselink.jdbc.url" value="jdbc:derby:DigitalCenter;create=true"/>
             <property name="eclipselink.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>

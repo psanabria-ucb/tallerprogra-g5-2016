@@ -1,9 +1,6 @@
 package bo.edu.ucbcba.group5.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 
 /**
  * Created by INTEL on 17/05/2016.
@@ -24,6 +21,21 @@ public class Pelicula {
     private Double peso; // En Gb
     private int lanzamiento;
     private int duracMinutos;
+
+    @ManyToOne
+    private Directors director;
+
+    public Directors getDirector() {
+        return director;
+    }
+
+    public String getDirectorName(){
+        return director.getName();
+    }
+
+    public void setDirector(Directors director) {
+        this.director = director;
+    }
 
     public String getDescription() {
         return description;

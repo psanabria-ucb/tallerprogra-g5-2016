@@ -2,6 +2,7 @@ package bo.edu.ucbcba.group5.controller;
 
 import bo.edu.ucbcba.group5.dao.DigitalCenterEntityManager;
 import bo.edu.ucbcba.group5.exceptions.ValidationException;
+import bo.edu.ucbcba.group5.model.Directors;
 import bo.edu.ucbcba.group5.model.Pelicula;
 
 import javax.persistence.EntityManager;
@@ -12,13 +13,14 @@ import java.util.List;
  * Created by INTEL on 17/05/2016.
  */
 public class MovieController {
-    public void create(String nombre, String genero, String description, String lanzamiento,String duracMinutos, String Gbpeso)
+    public void create(String nombre, String genero, String description, String lanzamiento, String duracMinutos, String Gbpeso, Directors d)
     {
 
         Pelicula pelicula = new Pelicula();
         pelicula.setNombre(nombre);
         pelicula.setGenero(genero);
         pelicula.setDescription(description);
+        pelicula.setDirector(d);
         if (lanzamiento.matches("[0-9]+"))
             pelicula.setLanzamiento(Integer.parseInt(lanzamiento));
         else
@@ -47,18 +49,25 @@ public class MovieController {
         pelicula.setNombre(nombre);
         pelicula.setGenero(genero);
         pelicula.setDescription(description);
-        if (lanzamiento.matches("[0-9]+"))
+        if (lanzamiento.matches("[0-9]+")) {
             pelicula.setLanzamiento(Integer.parseInt(lanzamiento));
-        else
+        }
+        else {
             throw new ValidationException("El año de lanzamiento no es un número");
+        }
         Double p;
         p = Double.parseDouble(Gbpeso);
         pelicula.setPeso(p);
 
-        if (duracMinutos.matches("[0-9]+"))
+        if (duracMinutos.matches("[0-9]+")) {
             pelicula.setDuracMinutos(Integer.parseInt(duracMinutos));
-        else
+        }
+        else {
             throw new ValidationException("La duración no esta en minutos");
+        }
+
+
+
 
         entityManager.persist(pelicula);
         entityManager.getTransaction().commit();

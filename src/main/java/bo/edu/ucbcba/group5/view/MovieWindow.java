@@ -1,7 +1,9 @@
 package bo.edu.ucbcba.group5.view;
 
+import bo.edu.ucbcba.group5.controller.DirectorController;
 import bo.edu.ucbcba.group5.controller.MovieController;
 import bo.edu.ucbcba.group5.exceptions.ValidationException;
+import bo.edu.ucbcba.group5.model.Directors;
 import bo.edu.ucbcba.group5.model.Pelicula;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -24,7 +26,7 @@ public class MovieWindow extends JDialog {
     private JButton eliminarButton;
     private JButton actualizarButton;
     private JTable resulTable;
-    private JButton registrarButton;
+//    private JButton registrarButton;
     private JTextField nameField1;
     private JTextField genField;
     private JTextField descField;
@@ -32,8 +34,14 @@ public class MovieWindow extends JDialog {
     private JTextField pesoField;
     private JTextField minuField;
     private JPanel rootPanel;
+    private JButton agregarPeliculaButton;
+    private JTextField directorField;
+    private JButton agregarDirectorButton;
+    private JComboBox generoBox;
+    private JComboBox directorBox;
     private DefaultTableModel model;
     private MovieController movieController;
+    private DirectorController directorController = new DirectorController();
 
     MovieWindow(JFrame parent) {
         super(parent, "Películas", true);
@@ -41,20 +49,28 @@ public class MovieWindow extends JDialog {
         setSize(1600, 1400);
         pack();
         setResizable(true);
+        populateComboBox();
         movieController = new MovieController();
         populateTable();
+        agregarPeliculaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                launchAddMovieWindow();
+                populateTable();
+            }
+        });
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 populateTable();
             }
         });
-        registrarButton.addActionListener(new ActionListener() {
+       /* registrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                launchRegistrar();
+                //launchRegistrar();
             }
-        });
+        });*/
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -75,11 +91,36 @@ public class MovieWindow extends JDialog {
                 nameField1.setText((String) model.getValueAt(resulTable.getSelectedRow(), 0));
                 genField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 1));
                 descField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 2));
-                lanField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
-                minuField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 4)));
+                minuField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
+                lanField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 4)));
                 pesoField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 5));
+                directorField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 6));
             }
         });
+        agregarDirectorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                launchAddDirectorWindow();
+            }
+        });
+    }
+
+
+    private void populateComboBox(){
+        java.util.List<Directors> directors = directorController.getAllDirectors();
+        for (Directors c : directors) {
+            directorBox.addItem(c);
+        }
+    }
+
+    private void launchAddDirectorWindow(){
+        NewDirector form = new NewDirector(this);
+        form.setVisible(true);
+    }
+
+    private void launchAddMovieWindow() {
+        AddMovie form = new AddMovie(this);
+        form.setVisible(true);
     }
 
     private void Clean() {
@@ -91,10 +132,11 @@ public class MovieWindow extends JDialog {
         // p = Integer.parseInt(Gbpeso);
         pesoField.setText("");
         minuField.setText("");
+        directorField.setText("");
 
     }
 
-    private void launchRegistrar() {
+    /*private void launchRegistrar() {
         try {
 
             movieController.create(nameField1.getText(),
@@ -112,7 +154,7 @@ public class MovieWindow extends JDialog {
         //cancel();
 
         populateTable();
-    }
+    }*/
 
     private void launchUpdate() {
         try {
@@ -138,15 +180,15 @@ public class MovieWindow extends JDialog {
         DefaultTableModel model = (DefaultTableModel) resulTable.getModel();
         String cod = (String) model.getValueAt(resulTable.getSelectedRow(), 0);
         movieController.delete(cod);
-
+        Directors d=(Directors) directorBox.getSelectedItem();
         try {
 
             movieController.create(nameField1.getText(),
-                    genField.getText(),       // REGISTRA EL GENERO
+                    (String) generoBox.getSelectedItem(),       // REGISTRA EL GENERO
                     descField.getText(),
                     lanField.getText(),
                     minuField.getText(),
-                    pesoField.getText());
+                    pesoField.getText(), d);
 
         } catch (ValidationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "error de formato", JOptionPane.ERROR_MESSAGE);
@@ -159,13 +201,14 @@ public class MovieWindow extends JDialog {
         java.util.List<Pelicula> elementos = movieController.BuscarMovies(nameField.getText());
         model = new DefaultTableModel();
         // model.addColumn("Id");
-        model.addColumn("nombre");
-        model.addColumn("genero");
-        model.addColumn("Description");
-        model.addColumn("lanzamiento");
+        model.addColumn("Titulo");
+        model.addColumn("Género");
+        model.addColumn("Descripcion");
+        model.addColumn("Lanzamiento");
         model.addColumn("Duración");
-        model.addColumn("peso");
-        model.addColumn("tip");
+        model.addColumn("Peso");
+        //model.addColumn("tip");
+        model.addColumn("Director");
         resulTable.setModel(model);
 
         for (Pelicula m : elementos) {
@@ -177,7 +220,8 @@ public class MovieWindow extends JDialog {
             row[3] = m.getLanzamiento();
             row[4] = m.getDuracMinutos();
             row[5] = String.format("%s", m.getPeso());
-            row[6] = "Gbytes";
+            //row[6] = "Gbytes";
+            row[6]= m.getDirectorName();
             model.addRow(row);
         }
         Clean();
@@ -258,9 +302,9 @@ public class MovieWindow extends JDialog {
         rootPanel.add(lanField, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(425, 24), null, 0, false));
         pesoField = new JTextField();
         rootPanel.add(pesoField, new GridConstraints(9, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(425, 24), null, 0, false));
-        registrarButton = new JButton();
-        registrarButton.setText("Registrar");
-        rootPanel.add(registrarButton, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+       // registrarButton = new JButton();
+       // registrarButton.setText("Registrar");
+       // rootPanel.add(registrarButton, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label6 = new JLabel();
         label6.setText("Gb");
         rootPanel.add(label6, new GridConstraints(9, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -279,5 +323,9 @@ public class MovieWindow extends JDialog {
      */
     public JComponent $$$getRootComponent$$$() {
         return rootPanel;
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
