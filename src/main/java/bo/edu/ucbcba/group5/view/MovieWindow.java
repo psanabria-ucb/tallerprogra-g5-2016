@@ -39,6 +39,8 @@ public class MovieWindow extends JDialog {
     private JButton agregarDirectorButton;
     private JComboBox generoBox;
     private JComboBox directorBox;
+    private JComboBox filtroBox;
+    private JComboBox genBox;
     private DefaultTableModel model;
     private MovieController movieController;
     private DirectorController directorController = new DirectorController();
@@ -198,14 +200,19 @@ public class MovieWindow extends JDialog {
     }
 
     private void populateTable() {
-        java.util.List<Pelicula> elementos = movieController.BuscarMovies(nameField.getText());
+        //String comp= (String) comBox2.getSelectedItem();
+        String gen=(String)genBox.getSelectedItem();
+        String ord=(String)filtroBox.getSelectedItem();
+        //if(comp=="Todos")comp="";
+        if(gen=="Todos")gen="";
+        java.util.List<Pelicula> elementos = movieController.BuscarMovies(nameField.getText(),gen,ord);
         model = new DefaultTableModel();
         // model.addColumn("Id");
         model.addColumn("Titulo");
         model.addColumn("Género");
         model.addColumn("Descripcion");
-        model.addColumn("Lanzamiento");
         model.addColumn("Duración");
+        model.addColumn("Lanzamiento");
         model.addColumn("Peso");
         //model.addColumn("tip");
         model.addColumn("Director");
@@ -217,8 +224,8 @@ public class MovieWindow extends JDialog {
             row[0] = m.getNombre();
             row[1] = m.getGenero();
             row[2] = m.getDescription();
-            row[3] = m.getLanzamiento();
-            row[4] = m.getDuracMinutos();
+            row[3] = m.getDuracMinutos();
+            row[4] = m.getLanzamiento();
             row[5] = String.format("%s", m.getPeso());
             //row[6] = "Gbytes";
             row[6]= m.getDirectorName();

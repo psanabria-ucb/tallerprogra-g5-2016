@@ -74,11 +74,23 @@ public class MovieController {
         entityManager.close();
     }
 
-    public List<Pelicula> BuscarMovies(String q) {
+    public List<Pelicula> BuscarMovies(String q,String Gender,String ord) {
+        TypedQuery<Pelicula>query = null;
         EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
-        TypedQuery<Pelicula> query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre", Pelicula.class);
+        //TypedQuery<Juego> query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre order by e.nombre", Juego.class);
+        if(ord=="Titulo")
+            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.nombre", Pelicula.class);
+        if(ord=="Género")
+            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.genero", Pelicula.class);
+        if(ord=="Director")
+            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.director", Pelicula.class);
+        if(ord=="Lanzamiento")
+            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.lanzamiento", Pelicula.class);
+
         query.setParameter("nombre", "%" + q.toLowerCase() + "%");
-        // TypedQuery<Juego> query = entityManager.createQuery("select p from Juego p", Juego.class);
+        query.setParameter("genero", "%" + Gender.toLowerCase() + "%");
+       // query.setParameter("lanzamiento", "%" + Gender.toLowerCase() + "%");
+
         List<Pelicula> response = query.getResultList();
         entityManager.close();
         return response;
