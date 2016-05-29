@@ -3,6 +3,7 @@ package bo.edu.ucbcba.group5.controller;
 import bo.edu.ucbcba.group5.dao.DigitalCenterEntityManager;
 import bo.edu.ucbcba.group5.exceptions.ValidationException;
 //import bo.edu.ucbcba.group5.model.Elemento;
+import bo.edu.ucbcba.group5.model.Company;
 import bo.edu.ucbcba.group5.model.Juego;
 
 import javax.persistence.EntityManager;
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by Abel on 5/16/2016.
  */
 public class GameController {
-    public void create(String nombre, String genero, String description, String lanzamiento, String Gbpeso)
+    public void create(String nombre, String genero, String description, String lanzamiento, String Gbpeso, Company c)
     {
 
         Juego juego = new Juego();
@@ -27,6 +28,7 @@ public class GameController {
         Double p;
         p = Double.parseDouble(Gbpeso);
         juego.setPeso(p);
+        juego.setCompany(c);
 
        /* int hours, minutes;
 
@@ -86,11 +88,26 @@ public class GameController {
         entityManager.close();
     }
 
-    public List<Juego> BuscarGames(String q) {
+    public List<Juego> BuscarGames(String q,String company,String Gender,String ord) {
+        TypedQuery<Juego>query = null;
         EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
-        TypedQuery<Juego> query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre", Juego.class);
+        //TypedQuery<Juego> query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre order by e.nombre", Juego.class);
+        if(ord=="nombre")
+      query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.nombre", Juego.class);
+        if(ord=="genero")
+            query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.genero", Juego.class);
+        if(ord=="company")
+            query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.company", Juego.class);
+        if(ord=="lanzamiento")
+            query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.lanzamiento", Juego.class);
+
         query.setParameter("nombre", "%" + q.toLowerCase() + "%");
-       // TypedQuery<Juego> query = entityManager.createQuery("select p from Juego p", Juego.class);
+       query.setParameter("genero", "%" + Gender.toLowerCase() + "%");
+        //query.setParameter("var", e.ord);
+
+
+
+       //TypedQuery<Juego> query2 = entityManager.createQuery("select p from query p order by p.nombre", Juego.class);
         List<Juego> response = query.getResultList();
         entityManager.close();
         return response;

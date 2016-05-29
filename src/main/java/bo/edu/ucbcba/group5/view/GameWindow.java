@@ -1,7 +1,9 @@
 package bo.edu.ucbcba.group5.view;
 
+import bo.edu.ucbcba.group5.controller.CompanyController;
 import bo.edu.ucbcba.group5.controller.GameController;
 import bo.edu.ucbcba.group5.exceptions.ValidationException;
+import bo.edu.ucbcba.group5.model.Company;
 import bo.edu.ucbcba.group5.model.Juego;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -24,7 +26,7 @@ public class GameWindow extends JDialog {
     private JTable resulTable;
     private JButton buscarButton;
     private JButton eliminarButton;
-    private JButton registrarButton;
+   // private JButton registrarButton;
     private JTextField nameField;
     private JTextField nameField1;
     private JTextField descField;
@@ -32,8 +34,15 @@ public class GameWindow extends JDialog {
     private JTextField genField;
     private JTextField pesoField;
     private JButton actualizarButton;
+    private JButton nuevoJuegoButton;
+    private JComboBox genBox;
+    private JComboBox comBox2;
+    private JComboBox companyBox;
+    private JButton añadirJuegoButton;
+    private JComboBox catBox;
     private GameController gameController;
     private DefaultTableModel model;
+    private CompanyController companyControllerr=new CompanyController();
 
 
     GameWindow(JFrame parent) {
@@ -50,12 +59,6 @@ public class GameWindow extends JDialog {
                 populateTable();
             }
         });
-        registrarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                launchRegistrar();
-            }
-        });
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -68,7 +71,24 @@ public class GameWindow extends JDialog {
                 launchUpdate2();
             }
         });
+        nuevoJuegoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                lauchNewgame();
+                //populateComboBox();
 
+            }
+        });
+        añadirJuegoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+                    nuevoGame();
+                    populateTable();
+
+
+            }
+        });
         resulTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
@@ -83,8 +103,33 @@ public class GameWindow extends JDialog {
 
             }
         });
+        populateComboBox();
+        populatefiltroBox();
+    }
+    private void populateComboBox() {
+        List<Company> companys =companyControllerr.getAllCompanys();
+        for (Company c : companys) {
+            companyBox.addItem(c);
+        }
+    }
+    private void populatefiltroBox() {
+        List<Company> companys =companyControllerr.getAllCompanys();
+        for (Company c : companys) {
+            comBox2.addItem(c);
+        }
     }
 
+    private void lauchNewgame(){
+       // this.setVisible(false);
+        NewCompany form=new NewCompany(this);
+        form.setVisible(true);
+
+    }
+    private void nuevoGame(){
+        AddGame form=new AddGame(this);
+        form.setVisible(true);
+
+    }
     private void Clean() {
         nameField1.setText("");
         genField.setText("");
@@ -96,25 +141,33 @@ public class GameWindow extends JDialog {
     }
 
     private void launchRegistrar() {
+        Boolean entro;
+        entro=true;
+        Company c=(Company) companyBox.getSelectedItem();
         try {
 
             gameController.create(nameField1.getText(),
                     genField.getText(),       // REGISTRA EL GENERO
                     descField.getText(),
                     lanField.getText(),
-                    pesoField.getText());
+                    pesoField.getText(),c);
 
         } catch (ValidationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Format error", JOptionPane.ERROR_MESSAGE);
+            entro=false;
         }
-
-        JOptionPane.showMessageDialog(this, "Juego creado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
-        //cancel();
-
+        if(entro) {
+            JOptionPane.showMessageDialog(this, "Juego creado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+            Clean();
+        }
         populateTable();
     }
-
+    private void error(){
+        JOptionPane.showMessageDialog(this, "Juego creado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+    }
     private void launchUpdate() {
+        Boolean entro;
+        entro=true;
         try {
 
             gameController.update(nameField1.getText(),
@@ -125,8 +178,9 @@ public class GameWindow extends JDialog {
 
         } catch (ValidationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "error de formato", JOptionPane.ERROR_MESSAGE);
+            entro=false;
         }
-
+        if(entro)
         JOptionPane.showMessageDialog(this, "Elemento actualizado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
         populateTable();
         Clean();
@@ -137,24 +191,34 @@ public class GameWindow extends JDialog {
         DefaultTableModel model = (DefaultTableModel) resulTable.getModel();
         String cod = (String) model.getValueAt(resulTable.getSelectedRow(), 0);
         gameController.delete(cod);
-
+        Boolean entro=true;
+        Company c=(Company) companyBox.getSelectedItem();
         try {
 
             gameController.create(nameField1.getText(),
                     genField.getText(),       // REGISTRA EL GENERO
                     descField.getText(),
                     lanField.getText(),
-                    pesoField.getText());
+                    pesoField.getText(),c);
 
         } catch (ValidationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "error de formato", JOptionPane.ERROR_MESSAGE);
+            entro=false;
         }
-        JOptionPane.showMessageDialog(this, "Elemento actualizado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+        if(entro){
+            JOptionPane.showMessageDialog(this, "Elemento actualizado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+            Clean();
+        }
         populateTable();
     }
 
     private void populateTable() {
-        List<Juego> elementos = gameController.BuscarGames(nameField.getText());
+        String comp= (String) comBox2.getSelectedItem();
+        String gen=(String)genBox.getSelectedItem();
+        String ord=(String)catBox.getSelectedItem();
+        if(comp=="Todos")comp="";
+        if(gen=="Todos")gen="";
+        List<Juego> elementos = gameController.BuscarGames(nameField.getText(),comp,gen,ord);
         model = new DefaultTableModel();
         // model.addColumn("Id");
         model.addColumn("nombre");
@@ -162,7 +226,7 @@ public class GameWindow extends JDialog {
         model.addColumn("Description");
         model.addColumn("lanzamiento");
         model.addColumn("peso");
-        model.addColumn("tip");
+        model.addColumn("compania");
         resulTable.setModel(model);
 
         for (Juego m : elementos) {
@@ -173,10 +237,10 @@ public class GameWindow extends JDialog {
             row[2] = m.getDescription();
             row[3] = m.getLanzamiento();
             row[4] = String.format("%s", m.getPeso());
-            row[5] = "Gbytes";
+            row[5] = m.getCompany();
             model.addRow(row);
         }
-        Clean();
+
 
     }
 
@@ -187,6 +251,7 @@ public class GameWindow extends JDialog {
         gameController.delete(cod);
         JOptionPane.showMessageDialog(this, "Elemento eliminado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
         populateTable();
+        Clean();
 
 
     }
@@ -264,9 +329,9 @@ public class GameWindow extends JDialog {
         pesoField = new JTextField();
         pesoField.setText("");
         rootPanel.add(pesoField, new GridConstraints(9, 3, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        registrarButton = new JButton();
-        registrarButton.setText("Registrar");
-        rootPanel.add(registrarButton, new GridConstraints(4, 8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+       // registrarButton = new JButton();
+       // registrarButton.setText("Registrar");
+       //5 rootPanel.add(registrarButton, new GridConstraints(4, 8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         actualizarButton = new JButton();
         actualizarButton.setText("actualizar");
         rootPanel.add(actualizarButton, new GridConstraints(2, 8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

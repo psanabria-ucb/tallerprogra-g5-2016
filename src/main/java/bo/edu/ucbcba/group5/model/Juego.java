@@ -20,6 +20,16 @@ public class Juego {
     private Double peso; // En Gb
     private int lanzamiento;
 
+    public Company getCompany() {
+        return company;
+    }
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    @ManyToOne
+    private Company company;
+
 
     public String getDescription() {
         return description;
