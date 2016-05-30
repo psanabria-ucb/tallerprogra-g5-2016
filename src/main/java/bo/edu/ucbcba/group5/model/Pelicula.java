@@ -18,13 +18,23 @@ public class Pelicula {
     @Lob
     @Column(length = 500)
     private String description;
+    private String dirname;
     private Double peso; // En Gb
     private int lanzamiento;
     private int duracMinutos;
 
+
+
     @ManyToOne
     private Directors director;
 
+    public String getDirname() {
+        return dirname;
+    }
+
+    public void setDirname(String dirname) {
+        this.dirname = dirname;
+    }
     public Directors getDirector() {
         return director;
     }

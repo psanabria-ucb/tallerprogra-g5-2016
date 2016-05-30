@@ -63,8 +63,8 @@ public class AddMovie extends  JDialog{
             movieController.create(tituloField.getText(),
                     (String) generoBox.getSelectedItem(),       // REGISTRA EL GENERO
                     descripcionArea.getText(),
-                    duracionField.getText(),
                     lanzamientoField.getText(),
+                    duracionField.getText(),
                     pesoField.getText(),d);
 
         } catch (ValidationException ex) {

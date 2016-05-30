@@ -41,6 +41,7 @@ public class MovieWindow extends JDialog {
     private JComboBox directorBox;
     private JComboBox filtroBox;
     private JComboBox genBox;
+    private JComboBox dirBox;
     private DefaultTableModel model;
     private MovieController movieController;
     private DirectorController directorController = new DirectorController();
@@ -51,9 +52,11 @@ public class MovieWindow extends JDialog {
         setSize(1600, 1400);
         pack();
         setResizable(true);
-        populateComboBox();
+
         movieController = new MovieController();
         populateTable();
+        populatefiltroBox();
+        populateComboBox();
         agregarPeliculaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -103,10 +106,19 @@ public class MovieWindow extends JDialog {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 launchAddDirectorWindow();
+                populatefiltroBox();
+                populateComboBox();
             }
         });
+
     }
 
+    private void populatefiltroBox(){
+        java.util.List<Directors> director =directorController.getAllDirectors();
+        for (Directors d : director) {
+            dirBox.addItem(d.getName());
+        }
+    }
 
     private void populateComboBox(){
         java.util.List<Directors> directors = directorController.getAllDirectors();
@@ -200,12 +212,12 @@ public class MovieWindow extends JDialog {
     }
 
     private void populateTable() {
-        //String comp= (String) comBox2.getSelectedItem();
+        String direc= (String) dirBox.getSelectedItem();
         String gen=(String)genBox.getSelectedItem();
         String ord=(String)filtroBox.getSelectedItem();
-        //if(comp=="Todos")comp="";
+        if(direc=="Todos")direc="";
         if(gen=="Todos")gen="";
-        java.util.List<Pelicula> elementos = movieController.BuscarMovies(nameField.getText(),gen,ord);
+        java.util.List<Pelicula> elementos = movieController.BuscarMovies(nameField.getText(),direc,gen,ord);
         model = new DefaultTableModel();
         // model.addColumn("Id");
         model.addColumn("Titulo");

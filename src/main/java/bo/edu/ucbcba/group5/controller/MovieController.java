@@ -21,6 +21,7 @@ public class MovieController {
         pelicula.setGenero(genero);
         pelicula.setDescription(description);
         pelicula.setDirector(d);
+        pelicula.setDirname(d.getName());
         if (lanzamiento.matches("[0-9]+"))
             pelicula.setLanzamiento(Integer.parseInt(lanzamiento));
         else
@@ -74,21 +75,22 @@ public class MovieController {
         entityManager.close();
     }
 
-    public List<Pelicula> BuscarMovies(String q,String Gender,String ord) {
+    public List<Pelicula> BuscarMovies(String q,String direc,String Gender,String ord) {
         TypedQuery<Pelicula>query = null;
         EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
         //TypedQuery<Juego> query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre order by e.nombre", Juego.class);
         if(ord=="Titulo")
-            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.nombre", Pelicula.class);
+            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.dirname) like :dirname order by e.nombre", Pelicula.class);
         if(ord=="Género")
-            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.genero", Pelicula.class);
+            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.dirname) like :dirname order by e.genero", Pelicula.class);
         if(ord=="Director")
-            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.director", Pelicula.class);
+            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.dirname) like :dirname order by e.director", Pelicula.class);
         if(ord=="Lanzamiento")
-            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.lanzamiento", Pelicula.class);
+            query = entityManager.createQuery("select e from Pelicula e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.dirname) like :dirname order by e.lanzamiento", Pelicula.class);
 
         query.setParameter("nombre", "%" + q.toLowerCase() + "%");
         query.setParameter("genero", "%" + Gender.toLowerCase() + "%");
+        query.setParameter("dirname", "%" + direc.toLowerCase() + "%");
        // query.setParameter("lanzamiento", "%" + Gender.toLowerCase() + "%");
 
         List<Pelicula> response = query.getResultList();
