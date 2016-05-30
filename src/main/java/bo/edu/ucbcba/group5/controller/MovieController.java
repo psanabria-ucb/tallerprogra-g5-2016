@@ -15,9 +15,42 @@ import java.util.List;
 public class MovieController {
     public void create(String nombre, String genero, String description, String lanzamiento, String duracMinutos, String Gbpeso, Directors d)
     {
-
         Pelicula pelicula = new Pelicula();
-        pelicula.setNombre(nombre);
+        if(d==null ){
+            throw new ValidationException("Primero debe registrar al menos un director mediante -> Agregar Director");
+        }
+        if(nombre.isEmpty()){
+            throw new ValidationException("Ingrese un Titulo");
+        }
+        if(genero.isEmpty()){
+            throw new ValidationException("Ingrese un genero");
+        }
+        if(description.isEmpty()){
+            throw new ValidationException("Ingrese una descripcion");
+        }
+        if(lanzamiento.isEmpty()){
+            throw new ValidationException("Ingrese año de lanzamiento");
+        }
+        if(duracMinutos.isEmpty()){
+            throw new ValidationException("Agregue la duracion en minutos");
+        }
+        if(Gbpeso.isEmpty()){
+            throw new ValidationException("Ingrese el peso en GBytes");
+        }
+        int length;
+        length = nombre.length();
+        if(length>50) {
+            throw new ValidationException("El Titulo es muy largo");
+        }
+        else{
+            if(length<1) {
+            throw new ValidationException("El Titulo es muy corto");
+            }
+            else{
+                pelicula.setNombre(nombre);
+            }
+        }
+
         pelicula.setGenero(genero);
         pelicula.setDescription(description);
         pelicula.setDirector(d);
@@ -26,10 +59,12 @@ public class MovieController {
             pelicula.setLanzamiento(Integer.parseInt(lanzamiento));
         else
             throw new ValidationException("El año de lanzamiento no es un número");
+        if(Gbpeso.matches("[0.0-9.9]+")){
+            pelicula.setPeso(Double.parseDouble(Gbpeso));
+        }
         Double p;
-        p = Double.parseDouble(Gbpeso);
-        pelicula.setPeso(p);
-
+//        p = Double.parseDouble(Gbpeso);
+//        pelicula.setPeso(p);
         if (duracMinutos.matches("[0-9]+"))
             pelicula.setDuracMinutos(Integer.parseInt(duracMinutos));
         else
