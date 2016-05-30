@@ -52,6 +52,9 @@ public class NewCompany extends JDialog{
     private void cancel() {
         setVisible(false);
         dispose();
+        GameWindow f;
+        f = new GameWindow();
+        f.setVisible(true);
 
 
     }

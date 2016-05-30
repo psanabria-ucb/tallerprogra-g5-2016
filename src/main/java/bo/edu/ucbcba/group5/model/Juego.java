@@ -19,6 +19,15 @@ public class Juego {
     private String description;
     private Double peso; // En Gb
     private int lanzamiento;
+    private String compName;
+
+    public String getCompName() {
+        return compName;
+    }
+
+    public void setCompName(String compName) {
+        this.compName = compName;
+    }
 
     public Company getCompany() {
         return company;

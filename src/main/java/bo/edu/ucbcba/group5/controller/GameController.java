@@ -18,16 +18,43 @@ public class GameController {
     {
 
         Juego juego = new Juego();
-        juego.setNombre(nombre);
+        if (c==null){
+            throw new ValidationException("primero debe ir ala opcion registrar nueva desarrolladora para poder agregar un juego");
+        }
+        if (nombre.isEmpty()){
+            throw new ValidationException("debe ingresar un nombre");
+
+        }
+        if (lanzamiento.isEmpty()){
+            throw new ValidationException("debe ingresar un año");
+        }
+
+        if (description.isEmpty()){
+            throw new ValidationException("debe ingresar una descripccion");
+        }
+        if (Gbpeso.isEmpty()){
+            throw new ValidationException("debe ingresar un peso en Gb");
+        }
+        int length;
+        length = nombre.length();
+        if (length > 100)
+            throw new ValidationException("el nombre es demasiado largo");
+        else {
+            if(length<2)throw new ValidationException("el nombre es demasiado corto");
+            else juego.setNombre(nombre);
+        }
+        juego.setCompName(c.getName());
         juego.setGenero(genero);
         juego.setDescription(description);
         if (lanzamiento.matches("[0-9]+"))
             juego.setLanzamiento(Integer.parseInt(lanzamiento));
         else
-            throw new ValidationException("Release year isn't a number");
-        Double p;
-        p = Double.parseDouble(Gbpeso);
-        juego.setPeso(p);
+            throw new ValidationException("El año debe ser un numero");
+        if(Gbpeso.matches("[0.0-9.9]+"))
+        juego.setPeso(Double.parseDouble(Gbpeso));
+        else {
+            throw new ValidationException("el peso debe ser un numero");
+        }
         juego.setCompany(c);
 
        /* int hours, minutes;
@@ -93,16 +120,19 @@ public class GameController {
         EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
         //TypedQuery<Juego> query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre order by e.nombre", Juego.class);
         if(ord=="nombre")
-            query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.nombre", Juego.class);
+            query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.nombre", Juego.class);
         if(ord=="genero")
-            query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.genero", Juego.class);
+            query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.genero", Juego.class);
         if(ord=="company")
-            query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.company", Juego.class);
+            query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.company", Juego.class);
         if(ord=="lanzamiento")
-            query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero order by e.lanzamiento", Juego.class);
+            query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.lanzamiento", Juego.class);
 
         query.setParameter("nombre", "%" + q.toLowerCase() + "%");
         query.setParameter("genero", "%" + Gender.toLowerCase() + "%");
+        query.setParameter("compName","%" + company.toLowerCase() + "%");
+
+
         //query.setParameter("var", e.ord);
 
 

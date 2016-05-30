@@ -29,7 +29,7 @@ public class GameWindow extends JDialog {
    // private JButton registrarButton;
     private JTextField nameField;
     private JTextField nameField1;
-    private JTextField descField;
+    private JTextArea descArea;
     private JTextField lanField;
     private JTextField genField;
     private JTextField pesoField;
@@ -40,17 +40,19 @@ public class GameWindow extends JDialog {
     private JComboBox companyBox;
     private JButton añadirJuegoButton;
     private JComboBox catBox;
+    private JComboBox geneBox1;
+    private JTextField desField2;
     private GameController gameController;
     private DefaultTableModel model;
     private CompanyController companyControllerr=new CompanyController();
 
 
-    GameWindow(JFrame parent) {
+    GameWindow(ElemForm parent) {
         super(parent, "Juegos", true);
         setContentPane(rootPanel);
-        setSize(1600, 1400);
+        setSize(1200, 1000);
         pack();
-        setResizable(true);
+        setResizable(false);
         gameController = new GameController();
         populateTable();
         buscarButton.addActionListener(new ActionListener() {
@@ -74,6 +76,7 @@ public class GameWindow extends JDialog {
         nuevoJuegoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                setVisible(false);
                 lauchNewgame();
                 //populateComboBox();
 
@@ -95,18 +98,91 @@ public class GameWindow extends JDialog {
                 super.mouseClicked(mouseEvent);
                 nameField1.setText((String) model.getValueAt(resulTable.getSelectedRow(), 0));
                 genField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 1));
-                descField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 2));
+                descArea.setText((String) model.getValueAt(resulTable.getSelectedRow(), 2));
                 lanField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
                 // int p;
                 // p = Integer.parseInt(Gbpeso);
                 pesoField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 4));
+                desField2.setText((String) model.getValueAt(resulTable.getSelectedRow(),5));
 
             }
         });
         populateComboBox();
         populatefiltroBox();
     }
+
+    public GameWindow() {
+       // super("Juegos");
+
+        setContentPane(rootPanel);
+        setSize(1200, 1000);
+        pack();
+        setResizable(false);
+        gameController = new GameController();
+        populateTable();
+        buscarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                populateTable();
+            }
+        });
+        eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                deleteElem();
+            }
+        });
+        actualizarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                launchUpdate2();
+            }
+        });
+        nuevoJuegoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setVisible(false);
+                lauchNewgame();
+                //populateComboBox();
+
+            }
+        });
+        añadirJuegoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+                nuevoGame();
+                populateTable();
+
+
+            }
+        });
+        resulTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                super.mouseClicked(mouseEvent);
+                nameField1.setText((String) model.getValueAt(resulTable.getSelectedRow(), 0));
+                genField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 1));
+                descArea.setText((String) model.getValueAt(resulTable.getSelectedRow(), 2));
+                lanField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
+                // int p;
+                // p = Integer.parseInt(Gbpeso);
+                pesoField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 4));
+                desField2.setText((String) model.getValueAt(resulTable.getSelectedRow(),5));
+
+            }
+        });
+        populateComboBox();
+        populatefiltroBox();
+    }
+
     private void populateComboBox() {
+        List<Company> companys =companyControllerr.getAllCompanys();
+        for (Company c : companys) {
+            companyBox.addItem(c);
+        }
+    }
+    private void ComboBoxfiltro() {
         List<Company> companys =companyControllerr.getAllCompanys();
         for (Company c : companys) {
             companyBox.addItem(c);
@@ -115,7 +191,7 @@ public class GameWindow extends JDialog {
     private void populatefiltroBox() {
         List<Company> companys =companyControllerr.getAllCompanys();
         for (Company c : companys) {
-            comBox2.addItem(c);
+            comBox2.addItem(c.getName());
         }
     }
 
@@ -133,7 +209,7 @@ public class GameWindow extends JDialog {
     private void Clean() {
         nameField1.setText("");
         genField.setText("");
-        descField.setText("");
+        descArea.setText("");
         lanField.setText("");
         // int p;
         // p = Integer.parseInt(Gbpeso);
@@ -148,7 +224,7 @@ public class GameWindow extends JDialog {
 
             gameController.create(nameField1.getText(),
                     genField.getText(),       // REGISTRA EL GENERO
-                    descField.getText(),
+                    descArea.getText(),
                     lanField.getText(),
                     pesoField.getText(),c);
 
@@ -172,7 +248,7 @@ public class GameWindow extends JDialog {
 
             gameController.update(nameField1.getText(),
                     genField.getText(),       // REGISTRA EL GENERO
-                    descField.getText(),
+                    descArea.getText(),
                     lanField.getText(),
                     pesoField.getText());
 
@@ -188,6 +264,11 @@ public class GameWindow extends JDialog {
     }
 
     private void launchUpdate2() {
+        String auxname=nameField1.getText();
+        String auxgen=(String) geneBox1.getSelectedItem();
+        String auxarea=descArea.getText();
+        String auxlan= lanField.getText();
+        String auxpeso=pesoField.getText();
         DefaultTableModel model = (DefaultTableModel) resulTable.getModel();
         String cod = (String) model.getValueAt(resulTable.getSelectedRow(), 0);
         gameController.delete(cod);
@@ -196,19 +277,23 @@ public class GameWindow extends JDialog {
         try {
 
             gameController.create(nameField1.getText(),
-                    genField.getText(),       // REGISTRA EL GENERO
-                    descField.getText(),
+                    (String) geneBox1.getSelectedItem(),       // REGISTRA EL GENERO
+                    descArea.getText(),
                     lanField.getText(),
                     pesoField.getText(),c);
 
         } catch (ValidationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "error de formato", JOptionPane.ERROR_MESSAGE);
             entro=false;
+
+
         }
         if(entro){
             JOptionPane.showMessageDialog(this, "Elemento actualizado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+
             Clean();
         }
+
         populateTable();
     }
 
@@ -237,7 +322,7 @@ public class GameWindow extends JDialog {
             row[2] = m.getDescription();
             row[3] = m.getLanzamiento();
             row[4] = String.format("%s", m.getPeso());
-            row[5] = m.getCompany();
+            row[5] = m.getCompName();
             model.addRow(row);
         }
 
@@ -311,9 +396,9 @@ public class GameWindow extends JDialog {
         rootPanel.add(label3, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         nameField1 = new JTextField();
         rootPanel.add(nameField1, new GridConstraints(4, 3, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        descField = new JTextField();
-        descField.setText("");
-        rootPanel.add(descField, new GridConstraints(6, 3, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        descArea = new JTextArea();
+        descArea.setText("");
+        rootPanel.add(descArea, new GridConstraints(6, 3, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label4 = new JLabel();
         label4.setText("Género");
         rootPanel.add(label4, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
