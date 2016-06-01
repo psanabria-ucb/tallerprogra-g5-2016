@@ -50,12 +50,13 @@ public class GameController {
         juego.setGenero(genero);
         juego.setDescription(description);
         if (lanzamiento.matches("[0-9]+")) {
-            if (Integer.parseInt(lanzamiento) <=2016 && Integer.parseInt(lanzamiento) >= 1952) {
-                juego.setLanzamiento(Integer.parseInt(lanzamiento));
+            if(lanzamiento.length()<=4) {
+                if (Integer.parseInt(lanzamiento) <= 2016 && Integer.parseInt(lanzamiento) >= 1952) {
+                    juego.setLanzamiento(Integer.parseInt(lanzamiento));
 
-            }
-            else
-                throw new ValidationException("El año no puede ser menor a 1952 o mayor a 2016");
+                } else
+                    throw new ValidationException("El año no puede ser menor a 1952 o mayor a 2016");
+            }else throw new ValidationException("El año es demasiado largo");
 
         }
         else

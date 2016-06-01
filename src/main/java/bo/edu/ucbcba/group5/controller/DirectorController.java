@@ -46,7 +46,9 @@ public class DirectorController {
         }
 
         if (Anio.matches("[0-9]+")) {
+            if(Anio.length()<=4)
             director.setAnio(Integer.parseInt(Anio));
+            else throw new ValidationException("el año no puede ser tan grande");
         }else {
             throw new ValidationException("el año no es un numero");
         }

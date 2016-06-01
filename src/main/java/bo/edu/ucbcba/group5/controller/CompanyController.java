@@ -39,7 +39,11 @@ public class CompanyController {
         }
         director.setName(Name);
         if(osc.matches("[0-9]+")) {
+            if(osc.length()<=3)
             director.setAwards(Integer.parseInt(osc));
+            else
+                throw new ValidationException("la cantidad de premios no puede ser tanta ");
+
         }
         else {
             throw new ValidationException("la cantidad de premios debe ser un numero ");
@@ -47,12 +51,14 @@ public class CompanyController {
 
         if (Anio.matches("[0-9]+")) {
             {
-                if (Integer.parseInt(Anio) <=2016 && Integer.parseInt(Anio) >= 1952) {
-                    director.setAnio(Integer.parseInt(Anio));
+                if(Anio.length()<=4) {
+                    if (Integer.parseInt(Anio) <= 2016 && Integer.parseInt(Anio) >= 1952) {
+                        director.setAnio(Integer.parseInt(Anio));
 
+                    } else
+                        throw new ValidationException("El año no puede ser menor a 1952 o mayor a 2016");
                 }
-                else
-                    throw new ValidationException("El año no puede ser menor a 1952 o mayor a 2016");
+                else throw new ValidationException("El año es demasiado largo");
             }
         }else {
             throw new ValidationException("el año no es un numero");

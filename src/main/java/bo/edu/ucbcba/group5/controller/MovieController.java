@@ -62,11 +62,12 @@ public class MovieController {
         length = lanzamiento.length();
 
         if (lanzamiento.matches("[0-9]+")){
-            if (Integer.parseInt(lanzamiento) <=2016 && Integer.parseInt(lanzamiento) >= 1952) {
-            pelicula.setLanzamiento(Integer.parseInt(lanzamiento));
-            }
-            else
-                throw new ValidationException("El año no puede ser menor a 1952 o mayor a 2016");
+            if(lanzamiento.length()<=4) {
+                if (Integer.parseInt(lanzamiento) <= 2016 && Integer.parseInt(lanzamiento) >= 1952) {
+                    pelicula.setLanzamiento(Integer.parseInt(lanzamiento));
+                } else
+                    throw new ValidationException("El año no puede ser menor a 1952 o mayor a 2016");
+            }else throw new ValidationException("El año no puede ser tan grande");
         }
         else
             throw new ValidationException("El año de lanzamiento no es un número");

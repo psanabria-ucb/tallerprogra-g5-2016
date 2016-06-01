@@ -61,6 +61,7 @@ public class GameWindow extends JDialog {
         populateTable();
         modificarButton.setVisible(false);
         verButton.setVisible(false);
+        eliminarButton.setVisible(false);
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -71,6 +72,9 @@ public class GameWindow extends JDialog {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 deleteElem();
+                verButton.setVisible(false);
+                modificarButton.setVisible(false);
+                eliminarButton.setVisible(false);
             }
         });
         nuevoJuegoButton.addActionListener(new ActionListener() {
@@ -102,6 +106,7 @@ public class GameWindow extends JDialog {
                 super.mouseClicked(mouseEvent);
                 modificarButton.setVisible(true);
                 verButton.setVisible(true);
+                eliminarButton.setVisible(true);
             }
         });
         modificarButton.addActionListener(new ActionListener() {
@@ -110,6 +115,7 @@ public class GameWindow extends JDialog {
                 modificar();
                 modificarButton.setVisible(false);
                 verButton.setVisible(false);
+                eliminarButton.setVisible(false);
                 populateTable();
             }
         });
@@ -118,6 +124,8 @@ public class GameWindow extends JDialog {
             public void actionPerformed(ActionEvent actionEvent) {
                 ver();
                 verButton.setVisible(false);
+                modificarButton.setVisible(false);
+                eliminarButton.setVisible(false);
             }
         });
 
