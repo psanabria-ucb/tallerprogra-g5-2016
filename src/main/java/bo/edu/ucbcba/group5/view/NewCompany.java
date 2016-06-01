@@ -23,7 +23,11 @@ public class NewCompany extends JDialog {
     private JButton guardarButton;
 
     NewCompany(GameWindow parent) {
+
         super(parent, "Registrar juego", true);
+        //GameWindow f;
+       // f = new GameWindow();
+        //f.setVisible(true);
         setContentPane(rootPanel);
         setSize(1600, 1400);
         pack();
@@ -58,9 +62,9 @@ public class NewCompany extends JDialog {
     private void cancel() {
         setVisible(false);
         dispose();
-        GameWindow f;
-        f = new GameWindow();
-        f.setVisible(true);
+       // GameWindow f;
+       // f = new GameWindow();
+        //f.setVisible(true);
 
 
     }

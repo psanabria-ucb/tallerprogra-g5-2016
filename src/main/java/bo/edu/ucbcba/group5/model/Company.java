@@ -31,6 +31,7 @@ public class Company {
     public Company() {
         id =0;
         Name = "";
+        Anio=0;
         Awards = 0;
         juegos = new LinkedList<Juego>();
     }

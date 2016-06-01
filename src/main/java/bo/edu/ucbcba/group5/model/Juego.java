@@ -17,6 +17,27 @@ public class Juego {
     @Lob
     @Column(length = 500)
     private String description;
+    private String nomCover;
+
+    public String getNomCover() {
+        return nomCover;
+    }
+    public Juego(){
+        nombre="";
+        genero="";
+        description="";
+        nomCover="";
+        peso=0.0;
+        lanzamiento=0;
+        compName="";
+        company=null;
+
+
+    }
+    public void setNomCover(String nomCover) {
+        this.nomCover = nomCover;
+    }
+
     private Double peso; // En Gb
     private int lanzamiento;
     private String compName;

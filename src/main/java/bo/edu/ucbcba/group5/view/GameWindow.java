@@ -2,6 +2,7 @@ package bo.edu.ucbcba.group5.view;
 
 import bo.edu.ucbcba.group5.controller.CompanyController;
 import bo.edu.ucbcba.group5.controller.GameController;
+import bo.edu.ucbcba.group5.dao.DigitalCenterEntityManager;
 import bo.edu.ucbcba.group5.exceptions.ValidationException;
 import bo.edu.ucbcba.group5.model.Company;
 import bo.edu.ucbcba.group5.model.Juego;
@@ -9,6 +10,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 
+import javax.persistence.EntityManager;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -42,10 +44,12 @@ public class GameWindow extends JDialog {
     private JComboBox catBox;
     private JComboBox geneBox1;
     private JTextField desField2;
+    private JButton modificarButton;
+    private JButton verButton;
     private GameController gameController;
     private DefaultTableModel model;
     private CompanyController companyControllerr = new CompanyController();
-
+    private Juego aux;
 
     GameWindow(ElemForm parent) {
         super(parent, "Juegos", true);
@@ -55,6 +59,8 @@ public class GameWindow extends JDialog {
         setResizable(false);
         gameController = new GameController();
         populateTable();
+        modificarButton.setVisible(false);
+        verButton.setVisible(false);
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -67,18 +73,14 @@ public class GameWindow extends JDialog {
                 deleteElem();
             }
         });
-        actualizarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                launchUpdate2();
-            }
-        });
         nuevoJuegoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                setVisible(false);
                 lauchNewgame();
-                //populateComboBox();
+                populatefiltroBox();
+                modificarButton.setVisible(false);
+                verButton.setVisible(false);
+
 
             }
         });
@@ -87,6 +89,8 @@ public class GameWindow extends JDialog {
             public void actionPerformed(ActionEvent actionEvent) {
 
                 nuevoGame();
+                modificarButton.setVisible(false);
+                verButton.setVisible(false);
                 populateTable();
 
 
@@ -96,18 +100,27 @@ public class GameWindow extends JDialog {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 super.mouseClicked(mouseEvent);
-                nameField1.setText((String) model.getValueAt(resulTable.getSelectedRow(), 0));
-                genField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 1));
-                descArea.setText((String) model.getValueAt(resulTable.getSelectedRow(), 2));
-                lanField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
-                // int p;
-                // p = Integer.parseInt(Gbpeso);
-                pesoField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 4));
-                desField2.setText((String) model.getValueAt(resulTable.getSelectedRow(), 5));
-
+                modificarButton.setVisible(true);
+                verButton.setVisible(true);
             }
         });
-        populateComboBox();
+        modificarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                modificar();
+                modificarButton.setVisible(false);
+                verButton.setVisible(false);
+                populateTable();
+            }
+        });
+        verButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                ver();
+                verButton.setVisible(false);
+            }
+        });
+
         populatefiltroBox();
     }
 
@@ -117,9 +130,11 @@ public class GameWindow extends JDialog {
         setContentPane(rootPanel);
         setSize(1200, 1000);
         pack();
-        setResizable(false);
+        setResizable(true);
         gameController = new GameController();
         populateTable();
+        modificarButton.setVisible(false);
+        verButton.setVisible(false);
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -141,10 +156,18 @@ public class GameWindow extends JDialog {
         nuevoJuegoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                setVisible(false);
+                // setVisible(false);
                 lauchNewgame();
+                populatefiltroBox();
                 //populateComboBox();
 
+            }
+        });
+        verButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                ver();
+                verButton.setVisible(false);
             }
         });
         añadirJuegoButton.addActionListener(new ActionListener() {
@@ -155,6 +178,14 @@ public class GameWindow extends JDialog {
                 populateTable();
 
 
+            }
+        });
+        modificarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                modificar();
+                modificarButton.setVisible(false);
+                populateTable();
             }
         });
         resulTable.addMouseListener(new MouseAdapter() {
@@ -172,16 +203,19 @@ public class GameWindow extends JDialog {
 
             }
         });
-        populateComboBox();
+        resulTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                super.mouseClicked(mouseEvent);
+                modificarButton.setVisible(true);
+
+
+            }
+        });
+
         populatefiltroBox();
     }
 
-    private void populateComboBox() {
-        List<Company> companys = companyControllerr.getAllCompanys();
-        for (Company c : companys) {
-            companyBox.addItem(c);
-        }
-    }
 
     private void ComboBoxfiltro() {
         List<Company> companys = companyControllerr.getAllCompanys();
@@ -192,16 +226,52 @@ public class GameWindow extends JDialog {
 
     private void populatefiltroBox() {
         List<Company> companys = companyControllerr.getAllCompanys();
+        int itemCount = comBox2.getItemCount();
+
+        for (int i = 0; i < itemCount; i++) {
+            comBox2.removeItemAt(0);
+        }
+        comBox2.addItem("Todos");
         for (Company c : companys) {
             comBox2.addItem(c.getName());
         }
     }
 
     private void lauchNewgame() {
-        // this.setVisible(false);
         NewCompany form = new NewCompany(this);
         form.setVisible(true);
 
+    }
+
+    private void ver() {
+        final String nom, genero, descrip, lanz, peso, compania, direc;
+        nom = ((String) model.getValueAt(resulTable.getSelectedRow(), 0));
+        genero = ((String) model.getValueAt(resulTable.getSelectedRow(), 1));
+        descrip = ((String) model.getValueAt(resulTable.getSelectedRow(), 2));
+        lanz = (String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
+        // int p;
+        // p = Integer.parseInt(Gbpeso);
+        peso = ((String) model.getValueAt(resulTable.getSelectedRow(), 4));
+        compania = ((String) model.getValueAt(resulTable.getSelectedRow(), 5));
+        direc = ((String) model.getValueAt(resulTable.getSelectedRow(), 6));
+        VerWindow f = new VerWindow(this, nom, genero, descrip, lanz, peso, compania, direc);
+        f.setVisible(true);
+
+    }
+
+    private void modificar() {
+        final String nom, genero, descrip, lanz, peso, compania, direc;
+        nom = ((String) model.getValueAt(resulTable.getSelectedRow(), 0));
+        genero = ((String) model.getValueAt(resulTable.getSelectedRow(), 1));
+        descrip = ((String) model.getValueAt(resulTable.getSelectedRow(), 2));
+        lanz = (String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
+        // int p;
+        // p = Integer.parseInt(Gbpeso);
+        peso = ((String) model.getValueAt(resulTable.getSelectedRow(), 4));
+        compania = ((String) model.getValueAt(resulTable.getSelectedRow(), 5));
+        direc = ((String) model.getValueAt(resulTable.getSelectedRow(), 6));
+        UpdateMovie form = new UpdateMovie(this, nom, genero, descrip, lanz, peso, compania, direc);
+        form.setVisible(true);
     }
 
     private void nuevoGame() {
@@ -220,7 +290,7 @@ public class GameWindow extends JDialog {
         pesoField.setText("");
     }
 
-    private void launchRegistrar() {
+  /*  private void launchRegistrar() {
         Boolean entro;
         entro = true;
         Company c = (Company) companyBox.getSelectedItem();
@@ -245,7 +315,7 @@ public class GameWindow extends JDialog {
 
     private void error() {
         JOptionPane.showMessageDialog(this, "Juego creado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
-    }
+    }*/
 
     private void launchUpdate() {
         Boolean entro;
@@ -265,20 +335,22 @@ public class GameWindow extends JDialog {
         if (entro)
             JOptionPane.showMessageDialog(this, "Elemento actualizado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
         populateTable();
-        Clean();
+
 
     }
 
     private void launchUpdate2() {
-        String auxname = nameField1.getText();
-        String auxgen = (String) geneBox1.getSelectedItem();
-        String auxarea = descArea.getText();
-        String auxlan = lanField.getText();
-        String auxpeso = pesoField.getText();
+        EntityManager entityManager2 = DigitalCenterEntityManager.createEntityManager();
+        entityManager2.getTransaction().begin();
+        Juego aux = entityManager2.find(Juego.class, nameField1.getText());
+        entityManager2.getTransaction().commit();
+        entityManager2.close();
+
         DefaultTableModel model = (DefaultTableModel) resulTable.getModel();
         String cod = (String) model.getValueAt(resulTable.getSelectedRow(), 0);
         gameController.delete(cod);
         Boolean entro = true;
+        String co = aux.getNomCover();
         Company c = (Company) companyBox.getSelectedItem();
         try {
 
@@ -286,7 +358,7 @@ public class GameWindow extends JDialog {
                     (String) geneBox1.getSelectedItem(),       // REGISTRA EL GENERO
                     descArea.getText(),
                     lanField.getText(),
-                    pesoField.getText(), c);
+                    pesoField.getText(), " ", c);
 
         } catch (ValidationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "error de formato", JOptionPane.ERROR_MESSAGE);
@@ -297,7 +369,6 @@ public class GameWindow extends JDialog {
         if (entro) {
             JOptionPane.showMessageDialog(this, "Elemento actualizado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
 
-            Clean();
         }
 
         populateTable();
@@ -318,10 +389,11 @@ public class GameWindow extends JDialog {
         model.addColumn("lanzamiento");
         model.addColumn("peso");
         model.addColumn("compania");
+        model.addColumn("directorio de la portada");
         resulTable.setModel(model);
 
         for (Juego m : elementos) {
-            Object[] row = new Object[6];
+            Object[] row = new Object[7];
             // row[0] = m.getId();
             row[0] = m.getNombre();
             row[1] = m.getGenero();
@@ -329,6 +401,7 @@ public class GameWindow extends JDialog {
             row[3] = m.getLanzamiento();
             row[4] = String.format("%s", m.getPeso());
             row[5] = m.getCompName();
+            row[6] = m.getNomCover();
             model.addRow(row);
         }
 
@@ -342,7 +415,6 @@ public class GameWindow extends JDialog {
         gameController.delete(cod);
         JOptionPane.showMessageDialog(this, "Elemento eliminado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
         populateTable();
-        Clean();
 
 
     }
@@ -373,14 +445,14 @@ public class GameWindow extends JDialog {
      */
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
-        rootPanel.setLayout(new GridLayoutManager(27, 17, new Insets(20, 20, 20, 20), -1, -1));
+        rootPanel.setLayout(new GridLayoutManager(23, 17, new Insets(20, 20, 20, 20), -1, -1));
         nameField = new JTextField();
         nameField.setText("");
         rootPanel.add(nameField, new GridConstraints(0, 0, 1, 16, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final Spacer spacer1 = new Spacer();
-        rootPanel.add(spacer1, new GridConstraints(17, 16, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer1, new GridConstraints(19, 16, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         resulTable = new JTable();
-        rootPanel.add(resulTable, new GridConstraints(3, 0, 16, 16, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(500, 450), null, 0, false));
+        rootPanel.add(resulTable, new GridConstraints(3, 0, 18, 16, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(500, 450), null, 0, false));
         comBox2 = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("Todos");
@@ -400,13 +472,13 @@ public class GameWindow extends JDialog {
         label1.setText("Ordenar por");
         rootPanel.add(label1, new GridConstraints(1, 6, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
-        rootPanel.add(spacer2, new GridConstraints(12, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer2, new GridConstraints(14, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
-        rootPanel.add(spacer3, new GridConstraints(26, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer3, new GridConstraints(22, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
-        rootPanel.add(spacer4, new GridConstraints(11, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer4, new GridConstraints(13, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer5 = new Spacer();
-        rootPanel.add(spacer5, new GridConstraints(7, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer5, new GridConstraints(9, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         buscarButton = new JButton();
         buscarButton.setText("Buscar");
         rootPanel.add(buscarButton, new GridConstraints(0, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -414,7 +486,7 @@ public class GameWindow extends JDialog {
         label2.setText("Filtrar por:");
         rootPanel.add(label2, new GridConstraints(1, 0, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer6 = new Spacer();
-        rootPanel.add(spacer6, new GridConstraints(25, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer6, new GridConstraints(21, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         nuevoJuegoButton = new JButton();
         nuevoJuegoButton.setText("Nuevo Desarrollador");
         rootPanel.add(nuevoJuegoButton, new GridConstraints(5, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -422,13 +494,13 @@ public class GameWindow extends JDialog {
         eliminarButton.setText("Eliminar");
         rootPanel.add(eliminarButton, new GridConstraints(6, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         añadirJuegoButton = new JButton();
-        añadirJuegoButton.setText("añadir juego");
+        añadirJuegoButton.setText("Añadir juego");
         rootPanel.add(añadirJuegoButton, new GridConstraints(3, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         catBox = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
         defaultComboBoxModel3.addElement("nombre");
         defaultComboBoxModel3.addElement("genero");
-        defaultComboBoxModel3.addElement("company");
+        defaultComboBoxModel3.addElement("compania");
         defaultComboBoxModel3.addElement("lanzamiento");
         catBox.setModel(defaultComboBoxModel3);
         rootPanel.add(catBox, new GridConstraints(1, 9, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -440,66 +512,12 @@ public class GameWindow extends JDialog {
         rootPanel.add(spacer9, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer10 = new Spacer();
         rootPanel.add(spacer10, new GridConstraints(1, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        final JLabel label3 = new JLabel();
-        label3.setText("Nombre");
-        rootPanel.add(label3, new GridConstraints(19, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        nameField1 = new JTextField();
-        rootPanel.add(nameField1, new GridConstraints(19, 2, 1, 11, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label4 = new JLabel();
-        label4.setText("Peso");
-        rootPanel.add(label4, new GridConstraints(20, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        pesoField = new JTextField();
-        pesoField.setText("");
-        rootPanel.add(pesoField, new GridConstraints(20, 2, 1, 11, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label5 = new JLabel();
-        label5.setText("Lanzamiento");
-        rootPanel.add(label5, new GridConstraints(21, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        lanField = new JTextField();
-        lanField.setText("");
-        rootPanel.add(lanField, new GridConstraints(21, 2, 1, 11, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label6 = new JLabel();
-        label6.setText("Descripción");
-        rootPanel.add(label6, new GridConstraints(22, 0, 3, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label7 = new JLabel();
-        label7.setText("Genero(Actual)");
-        rootPanel.add(label7, new GridConstraints(19, 15, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        genField = new JTextField();
-        genField.setEnabled(false);
-        genField.setText("");
-        rootPanel.add(genField, new GridConstraints(19, 16, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label8 = new JLabel();
-        label8.setText("(Nuevo)");
-        rootPanel.add(label8, new GridConstraints(20, 15, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        geneBox1 = new JComboBox();
-        final DefaultComboBoxModel defaultComboBoxModel4 = new DefaultComboBoxModel();
-        defaultComboBoxModel4.addElement("Accion");
-        defaultComboBoxModel4.addElement("Shooter");
-        defaultComboBoxModel4.addElement("Moba");
-        defaultComboBoxModel4.addElement("Rpg");
-        defaultComboBoxModel4.addElement("Estrategia");
-        geneBox1.setModel(defaultComboBoxModel4);
-        rootPanel.add(geneBox1, new GridConstraints(20, 16, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label9 = new JLabel();
-        label9.setText("Desarrollador(Actual)");
-        rootPanel.add(label9, new GridConstraints(21, 15, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        desField2 = new JTextField();
-        desField2.setEnabled(false);
-        rootPanel.add(desField2, new GridConstraints(21, 16, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label10 = new JLabel();
-        label10.setText("Gb");
-        rootPanel.add(label10, new GridConstraints(20, 13, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        companyBox = new JComboBox();
-        rootPanel.add(companyBox, new GridConstraints(22, 16, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final Spacer spacer11 = new Spacer();
-        rootPanel.add(spacer11, new GridConstraints(24, 15, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        final JLabel label11 = new JLabel();
-        label11.setText("(Nuevo)");
-        rootPanel.add(label11, new GridConstraints(22, 15, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        descArea = new JTextArea();
-        rootPanel.add(descArea, new GridConstraints(22, 2, 3, 11, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(500, 50), new Dimension(500, 50), new Dimension(500, 50), 0, false));
-        actualizarButton = new JButton();
-        actualizarButton.setText("actualizar");
-        rootPanel.add(actualizarButton, new GridConstraints(23, 16, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        modificarButton = new JButton();
+        modificarButton.setText("Modificar");
+        rootPanel.add(modificarButton, new GridConstraints(7, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        verButton = new JButton();
+        verButton.setText("Ver");
+        rootPanel.add(verButton, new GridConstraints(8, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

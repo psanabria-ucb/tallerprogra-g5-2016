@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Abel on 5/16/2016.
  */
 public class GameController {
-    public void create(String nombre, String genero, String description, String lanzamiento, String Gbpeso, Company c)
+    public void create(String nombre, String genero, String description, String lanzamiento, String Gbpeso,String cov, Company c)
     {
 
         Juego juego = new Juego();
@@ -35,6 +35,9 @@ public class GameController {
         if (Gbpeso.isEmpty()){
             throw new ValidationException("debe ingresar un peso en Gb");
         }
+        if(cov.isEmpty()){
+            throw new ValidationException("debe seleccionar una imagen");
+        }
         int length;
         length = nombre.length();
         if (length > 100)
@@ -46,8 +49,15 @@ public class GameController {
         juego.setCompName(c.getName());
         juego.setGenero(genero);
         juego.setDescription(description);
-        if (lanzamiento.matches("[0-9]+"))
-            juego.setLanzamiento(Integer.parseInt(lanzamiento));
+        if (lanzamiento.matches("[0-9]+")) {
+            if (Integer.parseInt(lanzamiento) <=2016 && Integer.parseInt(lanzamiento) >= 1952) {
+                juego.setLanzamiento(Integer.parseInt(lanzamiento));
+
+            }
+            else
+                throw new ValidationException("El año no puede ser menor a 1952 o mayor a 2016");
+
+        }
         else
             throw new ValidationException("El año debe ser un numero");
         if(Gbpeso.matches("[0.0-9.9]+"))
@@ -55,6 +65,7 @@ public class GameController {
         else {
             throw new ValidationException("el peso debe ser un numero");
         }
+        juego.setNomCover(cov);
         juego.setCompany(c);
 
        /* int hours, minutes;
@@ -123,7 +134,7 @@ public class GameController {
             query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.nombre", Juego.class);
         if(ord=="genero")
             query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.genero", Juego.class);
-        if(ord=="company")
+        if(ord=="compania")
             query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.company", Juego.class);
         if(ord=="lanzamiento")
             query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.lanzamiento", Juego.class);

@@ -46,7 +46,14 @@ public class CompanyController {
         }
 
         if (Anio.matches("[0-9]+")) {
-           director.setAnio(Integer.parseInt(Anio));
+            {
+                if (Integer.parseInt(Anio) <=2016 && Integer.parseInt(Anio) >= 1952) {
+                    director.setAnio(Integer.parseInt(Anio));
+
+                }
+                else
+                    throw new ValidationException("El año no puede ser menor a 1952 o mayor a 2016");
+            }
         }else {
             throw new ValidationException("el año no es un numero");
         }
