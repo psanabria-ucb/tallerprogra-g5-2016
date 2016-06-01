@@ -40,7 +40,7 @@ public class GameWindow extends JDialog {
     private JComboBox genBox;
     private JComboBox comBox2;
     private JComboBox companyBox;
-    private JButton añadirJuegoButton;
+    private JButton agregarJuegoButton;
     private JComboBox catBox;
     private JComboBox geneBox1;
     private JTextField desField2;
@@ -84,7 +84,7 @@ public class GameWindow extends JDialog {
 
             }
         });
-        añadirJuegoButton.addActionListener(new ActionListener() {
+        agregarJuegoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
@@ -170,7 +170,7 @@ public class GameWindow extends JDialog {
                 verButton.setVisible(false);
             }
         });
-        añadirJuegoButton.addActionListener(new ActionListener() {
+        agregarJuegoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
@@ -493,9 +493,9 @@ public class GameWindow extends JDialog {
         eliminarButton = new JButton();
         eliminarButton.setText("Eliminar");
         rootPanel.add(eliminarButton, new GridConstraints(6, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        añadirJuegoButton = new JButton();
-        añadirJuegoButton.setText("Añadir juego");
-        rootPanel.add(añadirJuegoButton, new GridConstraints(3, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        agregarJuegoButton = new JButton();
+        agregarJuegoButton.setText("Agregar juego");
+        rootPanel.add(agregarJuegoButton, new GridConstraints(3, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         catBox = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
         defaultComboBoxModel3.addElement("nombre");
