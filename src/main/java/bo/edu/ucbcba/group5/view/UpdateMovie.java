@@ -1,9 +1,9 @@
 package bo.edu.ucbcba.group5.view;
 
-import bo.edu.ucbcba.group5.controller.CompanyController;
-import bo.edu.ucbcba.group5.controller.GameController;
+import bo.edu.ucbcba.group5.controller.DirectorController;
+import bo.edu.ucbcba.group5.controller.MovieController;
 import bo.edu.ucbcba.group5.exceptions.ValidationException;
-import bo.edu.ucbcba.group5.model.Company;
+import bo.edu.ucbcba.group5.model.Directors;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -17,31 +17,32 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by Abel on 5/31/2016.
+ * Created by INTEL on 01/06/2016.
  */
 public class UpdateMovie extends JDialog {
-    private JTextField nameField;
-    private JTextField pesoField;
-    private JComboBox comboBox1;
+    private JTextField nameField1;
     private JTextField lanField;
-    private JTextArea desArea;
-    private JComboBox comboBox2;
-    private JTextField genfield;
-    private JTextField desField;
+    private JTextField pesoField;
+    private JTextField minuField;
+    private JTextField genField;
+    private JComboBox generoBox;
+    private JTextField directorField;
+    private JComboBox directorBox;
     private JPanel rootPanel;
-    private JButton aceptarButton;
+    private JTextArea descArea;
     private JTextField dirField;
     private JButton cambiarPortadaButton;
-    private GameController gameController = new GameController();
-    CompanyController companyControllerr = new CompanyController();
+    private JButton aceptarButton;
+    private MovieController movieController = new MovieController();
+    DirectorController directorController = new DirectorController();
 
-    UpdateMovie(GameWindow parent, final String nombre, String genero, String descrip, String lanz, String peso, String company, final String direc) {
-        super(parent, "Modificar juego", true);
+    UpdateMovie(MovieWindow parent, final String nombre, String genero, String descrip, String durac, String lanz, String peso, String direc, final String lugar) {
+        super(parent, "Modificar Pelicula", true);
         setContentPane(rootPanel);
         setSize(1600, 1400);
         pack();
         setResizable(true);
-        llenar(nombre, genero, descrip, lanz, peso, company, direc);
+        llenar(nombre, genero, descrip, durac, lanz, peso, direc, lugar);
         populateComboBox();
         aceptarButton.addActionListener(new ActionListener() {
             @Override
@@ -55,18 +56,17 @@ public class UpdateMovie extends JDialog {
                 cargarImagen();
             }
         });
-
-
     }
 
-    private void llenar(String a, String b, String c, String d, String e, String f, String g) {
-        nameField.setText(a);
-        pesoField.setText(e);
-        lanField.setText(d);
-        desArea.setText(c);
-        genfield.setText(b);
-        desField.setText(f);
-        dirField.setText(g);
+    private void llenar(String a, String b, String c, String d, String e, String f, String g, String h) {
+        nameField1.setText(a);
+        pesoField.setText(f);
+        lanField.setText(e);
+        descArea.setText(c);
+        minuField.setText(d);
+        genField.setText(b);
+        directorField.setText(g);
+        dirField.setText(h);
     }
 
     private void cargarImagen() {
@@ -83,38 +83,38 @@ public class UpdateMovie extends JDialog {
         }
     }
 
+
     private void update(String a) {
 
-
-        //String cod = (String) model.getValueAt();
-        gameController.delete(a);
+        movieController.delete(a);
         Boolean entro = true;
-        Company c = (Company) comboBox2.getSelectedItem();
+        Directors d = (Directors) directorBox.getSelectedItem();
         try {
 
-            gameController.create(nameField.getText(),
-                    (String) comboBox1.getSelectedItem(),       // REGISTRA EL GENERO
-                    desArea.getText(),
+            movieController.create(nameField1.getText(),
+                    (String) generoBox.getSelectedItem(),       // REGISTRA EL GENERO
+                    descArea.getText(),
                     lanField.getText(),
-                    pesoField.getText(), dirField.getText(), c);
+                    minuField.getText(),
+                    pesoField.getText(),
+                    dirField.getText(), d);
 
         } catch (ValidationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "error de formato", JOptionPane.ERROR_MESSAGE);
             entro = false;
-
-
         }
         if (entro) {
-            JOptionPane.showMessageDialog(this, "Elemento actualizado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Película actualizada correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
 
             cancel();
         }
+
     }
 
     private void populateComboBox() {
-        List<Company> companys = companyControllerr.getAllCompanys();
-        for (Company c : companys) {
-            comboBox2.addItem(c);
+        List<Directors> directors = directorController.getAllDirectors();
+        for (Directors c : directors) {
+            directorBox.addItem(c);
         }
     }
 
@@ -139,75 +139,79 @@ public class UpdateMovie extends JDialog {
      */
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
-        rootPanel.setLayout(new GridLayoutManager(8, 4, new Insets(0, 0, 0, 0), -1, -1));
+        rootPanel.setLayout(new GridLayoutManager(8, 4, new Insets(20, 20, 20, 20), -1, -1));
         final JLabel label1 = new JLabel();
-        label1.setText("Nombre");
+        label1.setText("Titulo");
         rootPanel.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         rootPanel.add(spacer1, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        nameField1 = new JTextField();
+        rootPanel.add(nameField1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label2 = new JLabel();
-        label2.setText("Peso");
-        rootPanel.add(label2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label2.setText("Género (Actual)");
+        rootPanel.add(label2, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label3 = new JLabel();
-        label3.setText("Lanzamiento");
-        rootPanel.add(label3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label3.setText("(Nuevo)");
+        rootPanel.add(label3, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
-        label4.setText("Descripcion");
-        rootPanel.add(label4, new GridConstraints(3, 0, 4, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label4.setText("Director (Actual)");
+        rootPanel.add(label4, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label5 = new JLabel();
-        label5.setText("Genero(Actual)");
-        rootPanel.add(label5, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label6 = new JLabel();
-        label6.setText("Nuevo");
-        rootPanel.add(label6, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label7 = new JLabel();
-        label7.setText("Desarrollador(Actual)");
-        rootPanel.add(label7, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label8 = new JLabel();
-        label8.setText("Nuevo");
-        rootPanel.add(label8, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        nameField = new JTextField();
-        rootPanel.add(nameField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        pesoField = new JTextField();
-        rootPanel.add(pesoField, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        comboBox1 = new JComboBox();
+        label5.setText("(Nuevo)");
+        rootPanel.add(label5, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        genField = new JTextField();
+        genField.setEditable(true);
+        genField.setEnabled(false);
+        rootPanel.add(genField, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        generoBox = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
-        defaultComboBoxModel1.addElement("Accion");
-        defaultComboBoxModel1.addElement("Shooter");
-        defaultComboBoxModel1.addElement("Moba");
-        defaultComboBoxModel1.addElement("Estrategia");
-        defaultComboBoxModel1.addElement("Rpg");
-        comboBox1.setModel(defaultComboBoxModel1);
-        rootPanel.add(comboBox1, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        defaultComboBoxModel1.addElement("Acción");
+        defaultComboBoxModel1.addElement("Romántica");
+        defaultComboBoxModel1.addElement("Terror");
+        defaultComboBoxModel1.addElement("Comedia");
+        defaultComboBoxModel1.addElement("Drama");
+        defaultComboBoxModel1.addElement("Documental");
+        defaultComboBoxModel1.addElement("Ficción");
+        defaultComboBoxModel1.addElement("Infantil");
+        generoBox.setModel(defaultComboBoxModel1);
+        rootPanel.add(generoBox, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        directorField = new JTextField();
+        directorField.setEnabled(false);
+        rootPanel.add(directorField, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        directorBox = new JComboBox();
+        rootPanel.add(directorBox, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label6 = new JLabel();
+        label6.setText("Lanzamiento");
+        rootPanel.add(label6, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label7 = new JLabel();
+        label7.setText("Peso(Gb)");
+        rootPanel.add(label7, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label8 = new JLabel();
+        label8.setText("Duración(Minutos)");
+        rootPanel.add(label8, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lanField = new JTextField();
-        rootPanel.add(lanField, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final Spacer spacer2 = new Spacer();
-        rootPanel.add(spacer2, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        desArea = new JTextArea();
-        rootPanel.add(desArea, new GridConstraints(3, 1, 4, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
-        final Spacer spacer3 = new Spacer();
-        rootPanel.add(spacer3, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        comboBox2 = new JComboBox();
-        rootPanel.add(comboBox2, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        genfield = new JTextField();
-        genfield.setEnabled(false);
-        genfield.setText("");
-        rootPanel.add(genfield, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        desField = new JTextField();
-        desField.setEnabled(false);
-        rootPanel.add(desField, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        aceptarButton = new JButton();
-        aceptarButton.setText("Aceptar");
-        rootPanel.add(aceptarButton, new GridConstraints(6, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        rootPanel.add(lanField, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        pesoField = new JTextField();
+        rootPanel.add(pesoField, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        minuField = new JTextField();
+        rootPanel.add(minuField, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label9 = new JLabel();
-        label9.setText("Direccion de portada");
+        label9.setText("Dirección Portada");
         rootPanel.add(label9, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        descArea = new JTextArea();
+        rootPanel.add(descArea, new GridConstraints(4, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        final JLabel label10 = new JLabel();
+        label10.setText("Descripción");
+        rootPanel.add(label10, new GridConstraints(4, 0, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         dirField = new JTextField();
         dirField.setEnabled(false);
         rootPanel.add(dirField, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         cambiarPortadaButton = new JButton();
-        cambiarPortadaButton.setText("Cambiar portada");
+        cambiarPortadaButton.setText("Cambiar Portada");
         rootPanel.add(cambiarPortadaButton, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        aceptarButton = new JButton();
+        aceptarButton.setText("Aceptar");
+        rootPanel.add(aceptarButton, new GridConstraints(6, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -217,3 +221,4 @@ public class UpdateMovie extends JDialog {
         return rootPanel;
     }
 }
+

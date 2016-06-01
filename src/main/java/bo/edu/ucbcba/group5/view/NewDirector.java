@@ -58,10 +58,6 @@ public class NewDirector extends JDialog {
     private void cancel() {
         setVisible(false);
         dispose();
-        MovieWindow m = new MovieWindow();
-        m.setVisible(true);
-
-
     }
 
     {
