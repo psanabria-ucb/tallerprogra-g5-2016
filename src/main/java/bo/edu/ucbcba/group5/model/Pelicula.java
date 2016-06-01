@@ -22,8 +22,27 @@ public class Pelicula {
     private Double peso; // En Gb
     private int lanzamiento;
     private int duracMinutos;
+    private String nomCover;
 
+    public Pelicula(){
+        nombre="";
+        genero="";
+        description="";
+        nomCover="";
+        peso=0.0;
+        duracMinutos=0;
+        lanzamiento=0;
+        dirname="";
+        director=null;
+    }
 
+    public String getNomCover() {
+        return nomCover;
+    }
+
+    public void setNomCover(String nomCover) {
+        this.nomCover = nomCover;
+    }
 
     @ManyToOne
     private Directors director;

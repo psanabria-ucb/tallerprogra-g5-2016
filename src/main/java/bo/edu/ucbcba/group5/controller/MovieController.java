@@ -13,7 +13,7 @@ import java.util.List;
  * Created by INTEL on 17/05/2016.
  */
 public class MovieController {
-    public void create(String nombre, String genero, String description, String lanzamiento, String duracMinutos, String Gbpeso, Directors d)
+    public void create(String nombre, String genero, String description, String lanzamiento, String duracMinutos, String Gbpeso, String cov, Directors d)
     {
         Pelicula pelicula = new Pelicula();
         if(d==null ){
@@ -37,6 +37,9 @@ public class MovieController {
         if(Gbpeso.isEmpty()){
             throw new ValidationException("Ingrese el peso en GBytes");
         }
+        if(cov.isEmpty()){
+            throw new ValidationException("Debe seleccionar una imagen de portada");
+        }
         int length;
         length = nombre.length();
         if(length>50) {
@@ -52,23 +55,51 @@ public class MovieController {
         }
 
         pelicula.setGenero(genero);
+        pelicula.setNomCover(cov);
         pelicula.setDescription(description);
         pelicula.setDirector(d);
         pelicula.setDirname(d.getName());
-        if (lanzamiento.matches("[0-9]+"))
+        length = lanzamiento.length();
+
+        if (lanzamiento.matches("[0-9]+")){
+            if (Integer.parseInt(lanzamiento) <=2016 && Integer.parseInt(lanzamiento) >= 1952) {
             pelicula.setLanzamiento(Integer.parseInt(lanzamiento));
+            }
+            else
+                throw new ValidationException("El año no puede ser menor a 1952 o mayor a 2016");
+        }
         else
             throw new ValidationException("El año de lanzamiento no es un número");
         if(Gbpeso.matches("[0.0-9.9]+")){
+
             pelicula.setPeso(Double.parseDouble(Gbpeso));
         }
         Double p;
 //        p = Double.parseDouble(Gbpeso);
 //        pelicula.setPeso(p);
-        if (duracMinutos.matches("[0-9]+"))
-            pelicula.setDuracMinutos(Integer.parseInt(duracMinutos));
-        else
-            throw new ValidationException("La duración no esta en minutos");
+        length = duracMinutos.length();
+        if (duracMinutos.matches("[0-9]+")) {
+                if (length > 3)
+                {
+                    throw new ValidationException("La duración es muy larga");
+                }
+                else
+                {
+                    if (length < 1)
+                    {
+                        throw new ValidationException("La duración es muy corta");
+                    }
+                    else
+                    {
+    //                    if (Integer.parseInt(duracMinutos) <=999 && Integer.parseInt(duracMinutos) >= 1)
+                            pelicula.setDuracMinutos(Integer.parseInt(duracMinutos));
+  //                      else
+  //                          throw new ValidationException("La duracion debe estar en rango 1 - 999 minutos");
+                    }
+                }
+            }
+            else
+                throw new ValidationException("La duración no esta en minutos");
 
         EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
         entityManager.getTransaction().begin();

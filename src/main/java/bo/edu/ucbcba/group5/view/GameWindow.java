@@ -270,7 +270,7 @@ public class GameWindow extends JDialog {
         peso = ((String) model.getValueAt(resulTable.getSelectedRow(), 4));
         compania = ((String) model.getValueAt(resulTable.getSelectedRow(), 5));
         direc = ((String) model.getValueAt(resulTable.getSelectedRow(), 6));
-        UpdateMovie form = new UpdateMovie(this, nom, genero, descrip, lanz, peso, compania, direc);
+        UpdateGame form = new UpdateGame(this, nom, genero, descrip, lanz, peso, compania, direc);
         form.setVisible(true);
     }
 

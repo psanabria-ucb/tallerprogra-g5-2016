@@ -8,9 +8,11 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.List;
 
 
@@ -27,6 +29,9 @@ public class AddMovie extends JDialog {
     private JComboBox generoBox;
     private JComboBox directorBox;
     private JButton registrarButton;
+    private JTextField imageText;
+    private JButton buscarButton;
+    private JLabel portada;
     private MovieController movieController = new MovieController();
     private DirectorController directorController = new DirectorController();
 
@@ -43,6 +48,26 @@ public class AddMovie extends JDialog {
                 registraPeli();
             }
         });
+        buscarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                cargarImagen();
+            }
+        });
+    }
+
+    private void cargarImagen() {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        chooser.setFileFilter(filtroImagen);
+        int search = chooser.showOpenDialog(null);
+        if (search == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            imageText.setText(String.valueOf(file));
+            Image image = getToolkit().createImage(imageText.getText());
+            image = image.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
+            portada.setIcon(new ImageIcon(image));
+        }
     }
 
     private void populateComboBox() {
@@ -68,7 +93,8 @@ public class AddMovie extends JDialog {
                     descripcionArea.getText(),
                     lanzamientoField.getText(),
                     duracionField.getText(),
-                    pesoField.getText(), d);
+                    pesoField.getText(),
+                    imageText.getText(), d);
 
         } catch (ValidationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Format error", JOptionPane.ERROR_MESSAGE);
@@ -97,7 +123,7 @@ public class AddMovie extends JDialog {
      */
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
-        rootPanel.setLayout(new GridLayoutManager(5, 4, new Insets(20, 20, 20, 20), -1, -1));
+        rootPanel.setLayout(new GridLayoutManager(7, 4, new Insets(20, 20, 20, 20), -1, -1));
         final JLabel label1 = new JLabel();
         label1.setText("Titulo");
         rootPanel.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -145,9 +171,20 @@ public class AddMovie extends JDialog {
         rootPanel.add(label7, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         directorBox = new JComboBox();
         rootPanel.add(directorBox, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(120, -1), null, null, 0, false));
+        final JLabel label8 = new JLabel();
+        label8.setText("Portada");
+        rootPanel.add(label8, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        imageText = new JTextField();
+        rootPanel.add(imageText, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         registrarButton = new JButton();
         registrarButton.setText("Registrar");
-        rootPanel.add(registrarButton, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        rootPanel.add(registrarButton, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        buscarButton = new JButton();
+        buscarButton.setText("Buscar");
+        rootPanel.add(buscarButton, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        portada = new JLabel();
+        portada.setText("");
+        rootPanel.add(portada, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(70, 70), new Dimension(70, 70), new Dimension(70, 70), 0, false));
     }
 
     /**
