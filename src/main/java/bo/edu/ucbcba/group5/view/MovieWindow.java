@@ -195,6 +195,8 @@ public class MovieWindow extends JDialog {
 //                populateComboBox();
             }
         });
+        resulTable.addMouseListener(new MouseAdapter() {
+        });
     }
 
     private void populatefiltroBox() {

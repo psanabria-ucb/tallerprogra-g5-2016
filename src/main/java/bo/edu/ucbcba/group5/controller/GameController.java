@@ -131,13 +131,13 @@ public class GameController {
         TypedQuery<Juego>query = null;
         EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
         //TypedQuery<Juego> query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre order by e.nombre", Juego.class);
-        if(ord=="nombre")
+        if(ord=="Nombre")
             query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.nombre", Juego.class);
-        if(ord=="genero")
+        if(ord=="Genero")
             query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.genero", Juego.class);
-        if(ord=="compania")
+        if(ord=="Compañia")
             query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.company", Juego.class);
-        if(ord=="lanzamiento")
+        if(ord=="Lanzamiento")
             query = entityManager.createQuery("select e from Juego e WHERE lower(e.nombre) like :nombre and lower(e.genero) like :genero and lower(e.compName) like :compName order by e.lanzamiento", Juego.class);
 
         query.setParameter("nombre", "%" + q.toLowerCase() + "%");

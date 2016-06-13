@@ -18,6 +18,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -46,6 +49,7 @@ public class GameWindow extends JDialog {
     private JTextField desField2;
     private JButton modificarButton;
     private JButton verButton;
+    private JButton exportarAExcelButton;
     private GameController gameController;
     private DefaultTableModel model;
     private CompanyController companyControllerr = new CompanyController();
@@ -71,7 +75,12 @@ public class GameWindow extends JDialog {
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                deleteElem();
+                if (isSelect()) {
+                    deleteElem();
+
+                } else {
+                    JOptionPane.showMessageDialog(GameWindow.this, "Ningun elemento seleccionado", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
                 verButton.setVisible(false);
                 modificarButton.setVisible(false);
                 eliminarButton.setVisible(false);
@@ -112,7 +121,12 @@ public class GameWindow extends JDialog {
         modificarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                modificar();
+                if (isSelect()) {
+                    modificar();
+
+                } else {
+                    JOptionPane.showMessageDialog(GameWindow.this, "Ningun elemento seleccionado", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
                 modificarButton.setVisible(false);
                 verButton.setVisible(false);
                 eliminarButton.setVisible(false);
@@ -122,10 +136,43 @@ public class GameWindow extends JDialog {
         verButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                ver();
+                if (isSelect()) {
+                    ver();
+
+                } else {
+                    JOptionPane.showMessageDialog(GameWindow.this, "Ningun elemento seleccionado", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
                 verButton.setVisible(false);
                 modificarButton.setVisible(false);
                 eliminarButton.setVisible(false);
+            }
+        });
+        exportarAExcelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JFileChooser fc = new JFileChooser();
+                int option = fc.showSaveDialog(GameWindow.this);
+                if (option == JFileChooser.APPROVE_OPTION) {
+                    String filename = fc.getSelectedFile().getName();
+                    String path = fc.getSelectedFile().getParentFile().getPath();
+
+                    int len = filename.length();
+                    String ext = "";
+                    String file = "";
+
+                    if (len > 4) {
+                        ext = filename.substring(len - 4, len);
+                    }
+
+                    if (ext.equals(".xls")) {
+                        file = path + "\\" + filename;
+                    } else {
+                        file = path + "\\" + filename + ".xls";
+                    }
+
+                    toExcel(new File(file));
+                }
+
             }
         });
 
@@ -191,7 +238,9 @@ public class GameWindow extends JDialog {
         modificarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+
                 modificar();
+
                 modificarButton.setVisible(false);
                 populateTable();
             }
@@ -221,7 +270,9 @@ public class GameWindow extends JDialog {
             }
         });
 
+
         populatefiltroBox();
+
     }
 
 
@@ -230,6 +281,18 @@ public class GameWindow extends JDialog {
         for (Company c : companys) {
             companyBox.addItem(c);
         }
+    }
+
+    private Boolean isSelect() {
+        if (resulTable.isColumnSelected(0) || resulTable.isColumnSelected(1) ||
+                resulTable.isColumnSelected(2) || resulTable.isColumnSelected(3) || resulTable.isColumnSelected(4) ||
+                resulTable.isColumnSelected(5) || resulTable.isColumnSelected(6) || resulTable.isColumnSelected(7)) {
+            return true;
+
+        } else {
+            return false;
+        }
+
     }
 
     private void populatefiltroBox() {
@@ -265,6 +328,35 @@ public class GameWindow extends JDialog {
         VerWindow f = new VerWindow(this, nom, genero, descrip, lanz, peso, compania, direc);
         f.setVisible(true);
 
+    }
+
+    private void toExcel(File file) {
+        try {
+
+            FileWriter excel = new FileWriter(file);
+
+            for (int i = 0; i < resulTable.getColumnCount(); i++) {
+                excel.write(resulTable.getColumnName(i) + "\t");
+            }
+
+            excel.write("\n");
+
+
+            for (int i = 0; i < resulTable.getRowCount(); i++) {
+                for (int j = 0; j < resulTable.getColumnCount(); j++) {
+                    String text = resulTable.getValueAt(i, j).toString();
+
+
+                    String aux = text.replaceAll("\\r\\n|\\r|\\n", " ");
+                    excel.write(aux + "\t");
+                }
+                excel.write("\n");
+            }
+
+            excel.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 
     private void modificar() {
@@ -390,6 +482,7 @@ public class GameWindow extends JDialog {
         if (gen == "Todos") gen = "";
         List<Juego> elementos = gameController.BuscarGames(nameField.getText(), comp, gen, ord);
         model = new DefaultTableModel();
+
         // model.addColumn("Id");
         model.addColumn("nombre");
         model.addColumn("genero");
@@ -453,14 +546,14 @@ public class GameWindow extends JDialog {
      */
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
-        rootPanel.setLayout(new GridLayoutManager(23, 17, new Insets(20, 20, 20, 20), -1, -1));
+        rootPanel.setLayout(new GridLayoutManager(24, 17, new Insets(20, 20, 20, 20), -1, -1));
         nameField = new JTextField();
         nameField.setText("");
         rootPanel.add(nameField, new GridConstraints(0, 0, 1, 16, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final Spacer spacer1 = new Spacer();
-        rootPanel.add(spacer1, new GridConstraints(19, 16, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer1, new GridConstraints(20, 16, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         resulTable = new JTable();
-        rootPanel.add(resulTable, new GridConstraints(3, 0, 18, 16, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(500, 450), null, 0, false));
+        rootPanel.add(resulTable, new GridConstraints(3, 0, 19, 16, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(500, 450), null, 0, false));
         comBox2 = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("Todos");
@@ -480,13 +573,13 @@ public class GameWindow extends JDialog {
         label1.setText("Ordenar por");
         rootPanel.add(label1, new GridConstraints(1, 6, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
-        rootPanel.add(spacer2, new GridConstraints(14, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer2, new GridConstraints(15, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
-        rootPanel.add(spacer3, new GridConstraints(22, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer3, new GridConstraints(23, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
-        rootPanel.add(spacer4, new GridConstraints(13, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer4, new GridConstraints(14, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer5 = new Spacer();
-        rootPanel.add(spacer5, new GridConstraints(9, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer5, new GridConstraints(10, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         buscarButton = new JButton();
         buscarButton.setText("Buscar");
         rootPanel.add(buscarButton, new GridConstraints(0, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -494,7 +587,7 @@ public class GameWindow extends JDialog {
         label2.setText("Filtrar por:");
         rootPanel.add(label2, new GridConstraints(1, 0, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer6 = new Spacer();
-        rootPanel.add(spacer6, new GridConstraints(21, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer6, new GridConstraints(22, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         nuevoJuegoButton = new JButton();
         nuevoJuegoButton.setText("Nuevo Desarrollador");
         rootPanel.add(nuevoJuegoButton, new GridConstraints(5, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -506,10 +599,10 @@ public class GameWindow extends JDialog {
         rootPanel.add(agregarJuegoButton, new GridConstraints(3, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         catBox = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
-        defaultComboBoxModel3.addElement("nombre");
-        defaultComboBoxModel3.addElement("genero");
-        defaultComboBoxModel3.addElement("compania");
-        defaultComboBoxModel3.addElement("lanzamiento");
+        defaultComboBoxModel3.addElement("Nombre");
+        defaultComboBoxModel3.addElement("Genero");
+        defaultComboBoxModel3.addElement("Compañia");
+        defaultComboBoxModel3.addElement("Lanzamiento");
         catBox.setModel(defaultComboBoxModel3);
         rootPanel.add(catBox, new GridConstraints(1, 9, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer7 = new Spacer();
@@ -526,6 +619,9 @@ public class GameWindow extends JDialog {
         verButton = new JButton();
         verButton.setText("Ver");
         rootPanel.add(verButton, new GridConstraints(8, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        exportarAExcelButton = new JButton();
+        exportarAExcelButton.setText("Exportar a excel");
+        rootPanel.add(exportarAExcelButton, new GridConstraints(9, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

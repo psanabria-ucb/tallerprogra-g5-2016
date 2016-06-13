@@ -19,7 +19,7 @@ public class VerWindow extends JDialog {
     private JLabel Image;
 
     VerWindow(GameWindow parent, final String nombre, String genero, String descrip, String lanz, String peso, String company, final String direc) {
-        super(parent, "Modificar juego", true);
+        super(parent, " Detalles", true);
         setContentPane(rootPanel);
         setSize(1600, 1400);
         pack();
@@ -54,7 +54,7 @@ public class VerWindow extends JDialog {
      */
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
-        rootPanel.setLayout(new GridLayoutManager(3, 4, new Insets(0, 0, 0, 0), -1, -1));
+        rootPanel.setLayout(new GridLayoutManager(3, 4, new Insets(5, 5, 5, 5), -1, -1));
         nomLabel = new JLabel();
         nomLabel.setText("Label");
         rootPanel.add(nomLabel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -82,7 +82,7 @@ public class VerWindow extends JDialog {
         label3.setText("Genero:");
         rootPanel.add(label3, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
-        label4.setText("Compania:");
+        label4.setText("Compañia:");
         rootPanel.add(label4, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
