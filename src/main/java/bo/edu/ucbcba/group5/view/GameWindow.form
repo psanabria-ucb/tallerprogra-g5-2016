@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="bo.edu.ucbcba.group5.view.GameWindow">
-  <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="23" column-count="17" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="24" column-count="17" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="20" left="20" bottom="20" right="20"/>
     <constraints>
       <xy x="20" y="20" width="1355" height="846"/>
@@ -20,12 +20,12 @@
       </component>
       <vspacer id="f53cb">
         <constraints>
-          <grid row="19" column="16" row-span="2" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="20" column="16" row-span="2" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <component id="83ca" class="javax.swing.JTable" binding="resulTable">
         <constraints>
-          <grid row="3" column="0" row-span="18" col-span="16" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="3" column="0" row-span="19" col-span="16" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="500" height="450"/>
           </grid>
         </constraints>
@@ -66,22 +66,22 @@
       </component>
       <vspacer id="2a11c">
         <constraints>
-          <grid row="14" column="16" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="15" column="16" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <vspacer id="bb73f">
         <constraints>
-          <grid row="22" column="16" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="23" column="16" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <vspacer id="80c21">
         <constraints>
-          <grid row="13" column="16" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="14" column="16" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <vspacer id="c648c">
         <constraints>
-          <grid row="9" column="16" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="10" column="16" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <component id="db80e" class="javax.swing.JButton" binding="buscarButton" default-binding="true">
@@ -102,7 +102,7 @@
       </component>
       <vspacer id="7ce6f">
         <constraints>
-          <grid row="21" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="22" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <component id="64b13" class="javax.swing.JButton" binding="nuevoJuegoButton" default-binding="true">
@@ -135,10 +135,10 @@
         </constraints>
         <properties>
           <model>
-            <item value="nombre"/>
-            <item value="genero"/>
-            <item value="compania"/>
-            <item value="lanzamiento"/>
+            <item value="Nombre"/>
+            <item value="Genero"/>
+            <item value="Compañia"/>
+            <item value="Lanzamiento"/>
           </model>
         </properties>
       </component>
@@ -176,6 +176,14 @@
         </constraints>
         <properties>
           <text value="Ver"/>
+        </properties>
+      </component>
+      <component id="c4a2f" class="javax.swing.JButton" binding="exportarAExcelButton" default-binding="true">
+        <constraints>
+          <grid row="9" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Exportar a excel"/>
         </properties>
       </component>
     </children>

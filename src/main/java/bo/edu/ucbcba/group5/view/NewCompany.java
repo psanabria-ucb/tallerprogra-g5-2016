@@ -26,7 +26,7 @@ public class NewCompany extends JDialog {
 
         super(parent, "Registrar juego", true);
         //GameWindow f;
-       // f = new GameWindow();
+        // f = new GameWindow();
         //f.setVisible(true);
         setContentPane(rootPanel);
         setSize(1600, 1400);
@@ -49,7 +49,7 @@ public class NewCompany extends JDialog {
             controller.saveCompany(nameField.getText(), anioField.getText(), premiosField.getText());
 
         } catch (ValidationException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Format error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
             entro = false;
         }
         if (entro) {
@@ -62,8 +62,8 @@ public class NewCompany extends JDialog {
     private void cancel() {
         setVisible(false);
         dispose();
-       // GameWindow f;
-       // f = new GameWindow();
+        // GameWindow f;
+        // f = new GameWindow();
         //f.setVisible(true);
 
 
@@ -85,9 +85,9 @@ public class NewCompany extends JDialog {
      */
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
-        rootPanel.setLayout(new GridLayoutManager(5, 4, new Insets(0, 0, 0, 0), -1, -1));
+        rootPanel.setLayout(new GridLayoutManager(5, 4, new Insets(5, 5, 5, 5), -1, -1));
         final JLabel label1 = new JLabel();
-        label1.setText("Nombre de la compania");
+        label1.setText("Nombre de la compañia");
         rootPanel.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         nameField = new JTextField();
         rootPanel.add(nameField, new GridConstraints(0, 2, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
