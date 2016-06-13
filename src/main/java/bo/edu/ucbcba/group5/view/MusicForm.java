@@ -50,6 +50,8 @@ public class MusicForm extends JDialog {
     private JButton musicasButton;
     private JButton bandaButton;
     private JButton generoButton;
+    private JTabbedPane tabbedPane1;
+    private JTable songsTable;
     private DefaultTableModel model;
     private MusicController musicController;
 
@@ -61,6 +63,7 @@ public class MusicForm extends JDialog {
         setResizable(true);
         musicController = new MusicController();
         populateTable();
+        populateTable2();
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -76,13 +79,23 @@ public class MusicForm extends JDialog {
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                deleteElem();
+                if(resulTable.getSelectedColumn()==0)
+                {
+                    deleteElem();
+                }
+
             }
         });
+
+
         actualizarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                launchUpdate2();
+                if(resulTable.getSelectedColumn()==0)
+                {
+                    launchUpdate2();
+                }
+
             }
         });
         musicasButton.addActionListener(new ActionListener() {
@@ -115,20 +128,9 @@ public class MusicForm extends JDialog {
                 minuField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 4)));
                 pesoField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 5));
                 song1Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 6));
-                song2Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 7));
-                song3Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 8));
-                song4Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 9));
-                song5Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 10));
-                song6Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 11));
-                song7Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 12));
-                song8Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 13));
-                song9Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 14));
-                song10Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 15));
-                song11Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 16));
-                song12Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 17));
-
             }
         });
+
     }
 
     private void Clean() {
@@ -150,6 +152,7 @@ public class MusicForm extends JDialog {
         song10Field.setText("");
         song11Field.setText("");
         song12Field.setText("");
+
     }
 
     private void launchSongWindow() {
@@ -191,6 +194,7 @@ public class MusicForm extends JDialog {
         //cancel();
 
         populateTable();
+        populateTable2();
     }
 
     private void launchUpdate() {
@@ -220,18 +224,19 @@ public class MusicForm extends JDialog {
         }
 
         JOptionPane.showMessageDialog(this, "Musica actualizada satisfactoriamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
-        cancel();
+        //cancel();
         /*populateTable();
         Clean();*/
 
     }
 
-    private void launchUpdate2() {
+    private void launchUpdate2()
+    {
+
         DefaultTableModel model = (DefaultTableModel) resulTable.getModel();
         String cod = (String) model.getValueAt(resulTable.getSelectedRow(), 0);
         musicController.delete(cod);
-
-
+        Boolean entro = true;
         try {
 
             musicController.create(nameField1.getText(),
@@ -255,9 +260,15 @@ public class MusicForm extends JDialog {
 
         } catch (ValidationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "error de formato", JOptionPane.ERROR_MESSAGE);
+            entro = false;
         }
-        JOptionPane.showMessageDialog(this, "Album actualizado satisfactoriamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+        if (entro) {
+            JOptionPane.showMessageDialog(this, "Album actualizado satisfactoriamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+
         populateTable();
+        populateTable2();
     }
 
     private void orderBandTable() {
@@ -321,9 +332,10 @@ public class MusicForm extends JDialog {
         model.addColumn("Duración");
         model.addColumn("peso");
 
-        model.addColumn("tip");
+        //model.addColumn("tip");
         /*
         model.addColumn("cancion 1");
+
         model.addColumn("cancion 2");
         model.addColumn("cancion 3");
         model.addColumn("cancion 4");
@@ -335,7 +347,7 @@ public class MusicForm extends JDialog {
         model.addColumn("cancion 10");
         model.addColumn("cancion 11");
         model.addColumn("cancion 12");
-        */
+    */
         TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(model);
         resulTable.setRowSorter(elQueOrdena);
         resulTable.setModel(model);
@@ -349,8 +361,9 @@ public class MusicForm extends JDialog {
             row[3] = m.getLanzamiento();
             row[4] = m.getDuracMinutos();
             row[5] = String.format("%s", m.getPeso());
-
+            /*
             row[6] = m.getSong1();
+
             row[7] = m.getSong2();
             row[8] = m.getSong3();
             row[9] = m.getSong4();
@@ -362,13 +375,54 @@ public class MusicForm extends JDialog {
             row[15] = m.getSong10();
             row[16] = m.getSong11();
             row[17] = m.getSong12();
-
+            */
             model.addRow(row);
         }
 
 
         Clean();
 
+    }
+    private void populateTable2() {
+        List<Musica> elementos = musicController.BuscarMovies(nameField1.getText());
+        model = new DefaultTableModel();
+        // model.addColumn("Id");
+        model.addColumn("nombre");
+        model.addColumn("cancion 1");
+        model.addColumn("cancion 2");
+        model.addColumn("cancion 3");
+        model.addColumn("cancion 4");
+        model.addColumn("cancion 5");
+        model.addColumn("cancion 6");
+        model.addColumn("cancion 7");
+        model.addColumn("cancion 8");
+        model.addColumn("cancion 9");
+        model.addColumn("cancion 10");
+        model.addColumn("cancion 11");
+        model.addColumn("cancion 12");
+
+        songsTable.setModel(model);
+
+        for (Musica m : elementos) {
+            Object[] row = new Object[20];
+            // row[0] = m.getId();
+            row[0] = m.getNombre();
+            row[1] = m.getSong1();
+            row[2] = m.getSong2();
+            row[3] = m.getSong3();
+            row[4] = m.getSong4();
+            row[5] = m.getSong5();
+            row[6] = m.getSong6();
+            row[7] = m.getSong7();
+            row[8] = m.getSong8();
+            row[9] = m.getSong9();
+            row[10] = m.getSong10();
+            row[11] = m.getSong11();
+            row[12] = m.getSong12();
+
+            model.addRow(row);
+        }
+        Clean();
     }
 
     public void deleteElem() {

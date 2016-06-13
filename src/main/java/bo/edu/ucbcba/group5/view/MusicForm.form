@@ -3,19 +3,11 @@
   <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="15" column-count="10" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1174" height="652"/>
+      <xy x="20" y="20" width="1809" height="876"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <component id="fe912" class="javax.swing.JTable" binding="resulTable">
-        <constraints>
-          <grid row="1" column="1" row-span="5" col-span="8" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="1000" height="350"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="f3241" class="javax.swing.JTextField" binding="nameField">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="8" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
@@ -391,6 +383,53 @@
           <text value="Genero"/>
         </properties>
       </component>
+      <tabbedpane id="c2635" binding="tabbedPane1" default-binding="true">
+        <constraints>
+          <grid row="1" column="1" row-span="5" col-span="8" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="e7cc1" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Bandas"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="fe912" class="javax.swing.JTable" binding="resulTable">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="1000" height="350"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+            </children>
+          </grid>
+          <grid id="50dcf" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Canciones"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="6468c" class="javax.swing.JTable" binding="songsTable">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </tabbedpane>
     </children>
   </grid>
 </form>
