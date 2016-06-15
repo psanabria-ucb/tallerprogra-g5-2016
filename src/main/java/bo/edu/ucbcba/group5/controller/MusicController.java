@@ -53,10 +53,18 @@ public class MusicController {
         musica.setNombre(nombre);
         musica.setGenero(genero);
         musica.setDescription(description);
-        if (lanzamiento.matches("[0-9]+"))
-            musica.setLanzamiento(Integer.parseInt(lanzamiento));
+        if (lanzamiento.matches("[0-9]+")) {
+            if(lanzamiento.length()<=4) {
+                if (Integer.parseInt(lanzamiento) <= 2016 && Integer.parseInt(lanzamiento) >= 1952) {
+                    musica.setLanzamiento(Integer.parseInt(lanzamiento));
+
+                } else
+                    throw new ValidationException("El año no puede ser menor a 1952 o mayor a 2016");
+            }else throw new ValidationException("El año es demasiado largo");
+
+        }
         else
-            throw new ValidationException("El año de lanzamiento no es un número");
+            throw new ValidationException("El año debe ser un numero");
         Double p;
         p = Double.parseDouble(Gbpeso);
         musica.setPeso(p);

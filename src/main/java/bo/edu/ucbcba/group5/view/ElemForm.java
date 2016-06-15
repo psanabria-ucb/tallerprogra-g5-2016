@@ -95,6 +95,9 @@ public class ElemForm extends JFrame {
 
     private void launchMusicWindow() {
         MusicForm form = new MusicForm(this);
+        form.setMinimumSize(new Dimension(950,650));
+        form.setMaximumSize(new Dimension(1200,750));
+        form.setPreferredSize(new Dimension(850,550));
         form.setVisible(true);
     }
 

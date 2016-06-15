@@ -52,7 +52,10 @@ public class MusicForm extends JDialog {
     private JButton generoButton;
     private JTabbedPane tabbedPane1;
     private JTable songsTable;
+    private JTextField textField1;
+    private JButton editarButton;
     private DefaultTableModel model;
+    private DefaultTableModel model2;
     private MusicController musicController;
 
     MusicForm(JFrame parent) {
@@ -83,6 +86,10 @@ public class MusicForm extends JDialog {
                 {
                     deleteElem();
                 }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"Debe seleccionar una fila!","No se puede Eliminar!",JOptionPane.WARNING_MESSAGE);
+                }
 
             }
         });
@@ -95,9 +102,27 @@ public class MusicForm extends JDialog {
                 {
                     launchUpdate2();
                 }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"Debe seleccionar una fila!","No se puede Actualizar!",JOptionPane.WARNING_MESSAGE);
+                }
 
             }
         });
+        editarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(songsTable.getSelectedColumn()!= -1 || songsTable.getSelectedRow()!= -1)
+                {
+                    launchUpdate3();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"Debe seleccionar una fila!","No se puede Editar!",JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        populateTable();
         musicasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,18 +133,21 @@ public class MusicForm extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 orderBandTable();
+                orderBandTable2();
             }
         });
         generoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 orderGenTable();
+                orderGenTable2();
             }
         });
 
         resulTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
+
                 super.mouseClicked(mouseEvent);
                 nameField1.setText((String) model.getValueAt(resulTable.getSelectedRow(), 0));
                 genField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 1));
@@ -127,7 +155,21 @@ public class MusicForm extends JDialog {
                 lanField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
                 minuField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 4)));
                 pesoField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 5));
-                song1Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 6));
+
+                //song1Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 6));
+            }
+        });
+        populateTable();
+        populateTable2();
+        songsTable.addMouseListener(new MouseAdapter() {
+
+            @Override
+
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                String dato = String.valueOf(model2.getValueAt(songsTable.getSelectedRow(),songsTable.getSelectedColumn()));
+                textField1.setText(dato);
+
             }
         });
 
@@ -295,11 +337,13 @@ public class MusicForm extends JDialog {
         }
     }
 
+
+
     private void orderGenTable() {
-        List<Musica> elementos = musicController.SearchSongsBand(nameField.getText());
-        model = new DefaultTableModel();
-        model.addColumn("nombre");
-        model.addColumn("genero");
+            List<Musica> elementos = musicController.SearchSongsBand(nameField.getText());
+            model = new DefaultTableModel();
+            model.addColumn("nombre");
+            model.addColumn("genero");
         model.addColumn("Description");
         model.addColumn("lanzamiento");
         model.addColumn("Duración");
@@ -320,6 +364,7 @@ public class MusicForm extends JDialog {
             model.addRow(row);
         }
     }
+
 
     private void populateTable() {
         List<Musica> elementos = musicController.BuscarMovies(nameField.getText());
@@ -383,25 +428,25 @@ public class MusicForm extends JDialog {
         Clean();
 
     }
-    private void populateTable2() {
-        List<Musica> elementos = musicController.BuscarMovies(nameField1.getText());
-        model = new DefaultTableModel();
+    private void orderBandTable2() {
+        List<Musica> elementos = musicController.SearchSongsGenre(nameField.getText());
+        model2 = new DefaultTableModel();
         // model.addColumn("Id");
-        model.addColumn("nombre");
-        model.addColumn("cancion 1");
-        model.addColumn("cancion 2");
-        model.addColumn("cancion 3");
-        model.addColumn("cancion 4");
-        model.addColumn("cancion 5");
-        model.addColumn("cancion 6");
-        model.addColumn("cancion 7");
-        model.addColumn("cancion 8");
-        model.addColumn("cancion 9");
-        model.addColumn("cancion 10");
-        model.addColumn("cancion 11");
-        model.addColumn("cancion 12");
+        model2.addColumn("nombre");
+        model2.addColumn("cancion 1");
+        model2.addColumn("cancion 2");
+        model2.addColumn("cancion 3");
+        model2.addColumn("cancion 4");
+        model2.addColumn("cancion 5");
+        model2.addColumn("cancion 6");
+        model2.addColumn("cancion 7");
+        model2.addColumn("cancion 8");
+        model2.addColumn("cancion 9");
+        model2.addColumn("cancion 10");
+        model2.addColumn("cancion 11");
+        model2.addColumn("cancion 12");
 
-        songsTable.setModel(model);
+        songsTable.setModel(model2);
 
         for (Musica m : elementos) {
             Object[] row = new Object[20];
@@ -420,7 +465,125 @@ public class MusicForm extends JDialog {
             row[11] = m.getSong11();
             row[12] = m.getSong12();
 
-            model.addRow(row);
+            model2.addRow(row);
+        }
+    }
+    private void orderGenTable2() {
+        List<Musica> elementos = musicController.SearchSongsBand(nameField.getText());
+        model2 = new DefaultTableModel();
+        // model.addColumn("Id");
+        model2.addColumn("nombre");
+        model2.addColumn("cancion 1");
+        model2.addColumn("cancion 2");
+        model2.addColumn("cancion 3");
+        model2.addColumn("cancion 4");
+        model2.addColumn("cancion 5");
+        model2.addColumn("cancion 6");
+        model2.addColumn("cancion 7");
+        model2.addColumn("cancion 8");
+        model2.addColumn("cancion 9");
+        model2.addColumn("cancion 10");
+        model2.addColumn("cancion 11");
+        model2.addColumn("cancion 12");
+
+        songsTable.setModel(model2);
+
+        for (Musica m : elementos) {
+            Object[] row = new Object[20];
+            // row[0] = m.getId();
+            row[0] = m.getNombre();
+            row[1] = m.getSong1();
+            row[2] = m.getSong2();
+            row[3] = m.getSong3();
+            row[4] = m.getSong4();
+            row[5] = m.getSong5();
+            row[6] = m.getSong6();
+            row[7] = m.getSong7();
+            row[8] = m.getSong8();
+            row[9] = m.getSong9();
+            row[10] = m.getSong10();
+            row[11] = m.getSong11();
+            row[12] = m.getSong12();
+
+            model2.addRow(row);
+        }
+    }
+    private void launchUpdate3()
+    {
+
+        DefaultTableModel model = (DefaultTableModel) songsTable.getModel();
+        String cod = (String) model2.getValueAt(songsTable.getSelectedRow(), 0);
+        musicController.delete(cod);
+        Boolean entro = true;
+        try {
+
+            musicController.create(nameField1.getText(),
+                    genField.getText(),       // REGISTRA EL GENERO
+                    descField.getText(),
+                    lanField.getText(),
+                    minuField.getText(),
+                    pesoField.getText(),
+                    song1Field.getText(),
+                    song2Field.getText(),
+                    song3Field.getText(),
+                    song4Field.getText(),
+                    song5Field.getText(),
+                    song6Field.getText(),
+                    song7Field.getText(),
+                    song8Field.getText(),
+                    song9Field.getText(),
+                    song10Field.getText(),
+                    song11Field.getText(),
+                    song12Field.getText());
+
+        } catch (ValidationException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "error de formato", JOptionPane.ERROR_MESSAGE);
+            entro = false;
+        }
+        if (entro) {
+            JOptionPane.showMessageDialog(this, "Album actualizado satisfactoriamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
+        }
+        populateTable();
+        populateTable2();
+    }
+    private void populateTable2() {
+        List<Musica> elementos = musicController.BuscarMovies(nameField1.getText());
+        model2 = new DefaultTableModel();
+        // model.addColumn("Id");
+        model2.addColumn("nombre");
+        model2.addColumn("cancion 1");
+        model2.addColumn("cancion 2");
+        model2.addColumn("cancion 3");
+        model2.addColumn("cancion 4");
+        model2.addColumn("cancion 5");
+        model2.addColumn("cancion 6");
+        model2.addColumn("cancion 7");
+        model2.addColumn("cancion 8");
+        model2.addColumn("cancion 9");
+        model2.addColumn("cancion 10");
+        model2.addColumn("cancion 11");
+        model2.addColumn("cancion 12");
+
+        songsTable.setModel(model2);
+
+        for (Musica m : elementos) {
+            Object[] row = new Object[20];
+            // row[0] = m.getId();
+            row[0] = m.getNombre();
+            row[1] = m.getSong1();
+            row[2] = m.getSong2();
+            row[3] = m.getSong3();
+            row[4] = m.getSong4();
+            row[5] = m.getSong5();
+            row[6] = m.getSong6();
+            row[7] = m.getSong7();
+            row[8] = m.getSong8();
+            row[9] = m.getSong9();
+            row[10] = m.getSong10();
+            row[11] = m.getSong11();
+            row[12] = m.getSong12();
+
+            model2.addRow(row);
         }
         Clean();
     }
