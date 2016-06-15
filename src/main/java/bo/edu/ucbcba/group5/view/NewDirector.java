@@ -27,7 +27,7 @@ public class NewDirector extends JDialog {
         super(parent, "Registrar director", true);
         setContentPane(rootPanel);
         pack();
-        setResizable(true);
+        setResizable(false);
         directorController = new DirectorController();
         registrarDirButton.addActionListener(new ActionListener() {
             @Override

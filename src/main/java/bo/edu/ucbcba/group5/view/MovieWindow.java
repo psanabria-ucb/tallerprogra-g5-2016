@@ -52,17 +52,19 @@ public class MovieWindow extends JDialog {
         setContentPane(rootPanel);
         setSize(1600, 1400);
         pack();
-        setResizable(true);
+        setResizable(false);
         movieController = new MovieController();
         populateTable();
         editarButton.setVisible(false);
         verButton.setVisible(false);
+        eliminarButton.setVisible(false);
         agregarPeliculaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 launchAddMovieWindow();
                 editarButton.setVisible(false);
                 verButton.setVisible(false);
+                eliminarButton.setVisible(false);
                 populateTable();
             }
         });
@@ -70,6 +72,9 @@ public class MovieWindow extends JDialog {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 populateTable();
+                editarButton.setVisible(false);
+                verButton.setVisible(false);
+                eliminarButton.setVisible(false);
             }
         });
        /* registrarButton.addActionListener(new ActionListener() {
@@ -82,6 +87,9 @@ public class MovieWindow extends JDialog {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 deleteElem();
+                editarButton.setVisible(false);
+                verButton.setVisible(false);
+                eliminarButton.setVisible(false);
             }
         });
 
@@ -92,6 +100,7 @@ public class MovieWindow extends JDialog {
                 super.mouseClicked(mouseEvent);
                 editarButton.setVisible(true);
                 verButton.setVisible(true);
+                eliminarButton.setVisible(true);
                 //nameField1.setText((String) model.getValueAt(resulTable.getSelectedRow(), 0));
                 //genField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 1));
                 //descField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 2));
@@ -107,6 +116,7 @@ public class MovieWindow extends JDialog {
                 modificar();
                 editarButton.setVisible(false);
                 verButton.setVisible(false);
+                eliminarButton.setVisible(false);
                 populateTable();
             }
         });
@@ -114,7 +124,9 @@ public class MovieWindow extends JDialog {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 ver();
+                editarButton.setVisible(false);
                 verButton.setVisible(false);
+                eliminarButton.setVisible(false);
             }
         });
 
@@ -126,6 +138,7 @@ public class MovieWindow extends JDialog {
                 populatefiltroBox();
                 editarButton.setVisible(false);
                 verButton.setVisible(false);
+                eliminarButton.setVisible(false);
 //                setVisible(true);
 //                populatefiltroBox();
 //                populateComboBox();

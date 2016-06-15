@@ -40,7 +40,7 @@ public class AddMovie extends JDialog {
         super(parent, "Registrar nueva Película", true);
         setContentPane(rootPanel);
         pack();
-        setResizable(true);
+        setResizable(false);
         populateComboBox();
         registrarButton.addActionListener(new ActionListener() {
             @Override
