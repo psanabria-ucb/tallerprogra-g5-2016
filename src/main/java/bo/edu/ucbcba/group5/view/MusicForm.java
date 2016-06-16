@@ -8,6 +8,8 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -16,6 +18,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 /**
@@ -64,6 +69,21 @@ public class MusicForm extends JDialog {
         setSize(1600, 1400);
         pack();
         setResizable(true);
+        song1Field.setVisible(false);
+        song2Field.setVisible(false);
+        song3Field.setVisible(false);
+        song4Field.setVisible(false);
+        song5Field.setVisible(false);
+        song6Field.setVisible(false);
+        song7Field.setVisible(false);
+        song8Field.setVisible(false);
+        song9Field.setVisible(false);
+        song10Field.setVisible(false);
+        song11Field.setVisible(false);
+        song12Field.setVisible(false);
+        textField1.setVisible(false);
+        editarButton.setVisible(false);
+
         musicController = new MusicController();
         populateTable();
         populateTable2();
@@ -109,6 +129,7 @@ public class MusicForm extends JDialog {
 
             }
         });
+        /*
         editarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,11 +143,77 @@ public class MusicForm extends JDialog {
                 }
             }
         });
+        */
+
         populateTable();
         musicasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                launchSongWindow();
+                try
+                {
+                    File file = new File("reporte.txt");
+                    if(!file.exists())
+                    {
+                        file.createNewFile();
+                    }
+                    FileWriter fw = new FileWriter((file.getAbsoluteFile()));
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    for(int i=0; i <= resulTable.getRowCount();i++ )
+                    {
+                        for(int j=0; j< resulTable.getColumnCount();j++)
+                        {
+                            if(i==0)
+                            {
+                                if(j==0)
+                                {
+                                    bw.write("Album"+"\t" + "\t" +"\t" );
+                                }
+                                if(j==1)
+                                {
+                                    bw.write("Genero"+"\t" + "\t" +"\t" );
+                                }
+                                if(j==2)
+                                {
+                                    bw.write("Banda"+"\t" + "\t" +"\t" );
+                                }
+                                if(j==3)
+                                {
+                                    bw.write("Lanzamiento"+"\t" + "\t" );
+                                }
+                                if(j==4)
+                                {
+                                    bw.write("Pistas"+"\t" + "\t"+ "\t" );
+                                }
+                                if(j==5)
+                                {
+                                    bw.write("Duracion"+"\t" + "\t" +"\t" );
+                                }
+                            }
+                            else
+                            {
+                                String p=model.getValueAt(i-1,j)+"";
+                                if(p.length()<=8)
+                                    bw.write(model.getValueAt(i-1,j)+"\t" + "\t" +"\t" );
+                                if(p.length()>8 && p.length()<=16)
+                                    bw.write(model.getValueAt(i-1,j)+"\t"+"\t");
+                                if(p.length()>16)
+                                    bw.write(model.getValueAt(i-1,j)+"\t");
+                            }
+
+
+
+                        }
+                        bw.newLine();
+
+                    }
+                    bw.close();
+                    fw.close();
+                    JOptionPane.showMessageDialog(null,"Exportado Correctamente");
+                }
+                catch(Exception ex)
+                {
+                    ex.printStackTrace();
+                }
             }
         });
         bandaButton.addActionListener(new ActionListener() {
@@ -149,29 +236,132 @@ public class MusicForm extends JDialog {
             public void mouseClicked(MouseEvent mouseEvent) {
 
                 super.mouseClicked(mouseEvent);
-                nameField1.setText((String) model.getValueAt(resulTable.getSelectedRow(), 0));
-                genField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 1));
-                descField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 2));
-                lanField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
-                minuField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 4)));
-                pesoField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 5));
+                if(resulTable.getSelectedColumn()!= -1 || resulTable.getSelectedRow()!= -1)
+                {
+                    nameField1.setText((String) model.getValueAt(resulTable.getSelectedRow(), 0));
+                    genField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 1));
+                    descField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 2));
+                    lanField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
+                    minuField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 4)));
+                    pesoField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 5));
+                    song1Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 1));
+                    song2Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 2));
+                    song3Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 3));
+                    song4Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 4));
+                    song5Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 5));
+                    song6Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 6));
+                    song7Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 7));
+                    song8Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 8));
+                    song9Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 9));
+                    song10Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 10));
+                    song11Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 11));
+                    song12Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 12));
+
+                }
+
 
                 //song1Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 6));
             }
         });
         populateTable();
         populateTable2();
+        model2.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+
+                if(songsTable.getSelectedColumn()!= -1 || songsTable.getSelectedRow()!= -1)
+                {
+                    if(e.getType() == TableModelEvent.UPDATE)
+                    {
+                        int columna = e.getColumn();
+                        int fila = e.getFirstRow();
+                        if(columna == 1)
+                        {
+                            musicController.updatesong1((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+                        if(columna == 2)
+                        {
+                            musicController.updatesong2((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+                        if(columna == 3)
+                        {
+                            musicController.updatesong3((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+                        if(columna == 4)
+                        {
+                            musicController.updatesong4((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+                        if(columna == 5)
+                        {
+                            musicController.updatesong5((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+                        if(columna == 6)
+                        {
+                            musicController.updatesong6((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+                        if(columna == 7)
+                        {
+                            musicController.updatesong7((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+                        if(columna == 8)
+                        {
+                            musicController.updatesong8((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+                        if(columna == 9)
+                        {
+                            musicController.updatesong9((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+                        if(columna == 10)
+                        {
+                            musicController.updatesong10((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+                        if(columna == 11)
+                        {
+                            musicController.updatesong11((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+                        if(columna == 12)
+                        {
+                            musicController.updatesong12((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        }
+
+
+
+                    }
+                }
+
+            }
+        });
+        /*
         songsTable.addMouseListener(new MouseAdapter() {
 
             @Override
 
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                String dato = String.valueOf(model2.getValueAt(songsTable.getSelectedRow(),songsTable.getSelectedColumn()));
-                textField1.setText(dato);
 
+                //String dato = String.valueOf(model2.getValueAt(songsTable.getSelectedRow(),songsTable.getSelectedColumn()));
+                //textField1.setText(dato);
+
+                if(resulTable.getSelectedColumn()!= -1 || resulTable.getSelectedRow()!= -1)
+                {
+                    song1Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 1));
+                    song2Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 2));
+                    song3Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 3));
+                    song4Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 4));
+                    song5Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 5));
+                    song6Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 6));
+                    song7Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 7));
+                    song8Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 8));
+                    song9Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 9));
+                    song10Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 10));
+                    song11Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 11));
+                    song12Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 12));
+
+                }
             }
         });
+        */
+
 
     }
 

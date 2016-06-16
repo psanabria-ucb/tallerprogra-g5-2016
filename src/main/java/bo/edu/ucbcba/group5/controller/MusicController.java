@@ -159,6 +159,7 @@ public class MusicController {
         entityManager.close();
         return response;
     }
+
     public void delete(String id)
     {
         EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
@@ -167,4 +168,102 @@ public class MusicController {
         entityManager.getTransaction().commit();
         entityManager.close();
     }
+    public void updatesong1(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong1(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void updatesong2(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong2(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void updatesong3(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong3(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void updatesong4(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong4(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void updatesong5(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong5(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void updatesong6(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong6(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void updatesong7(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong7(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void updatesong8(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong8(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void updatesong9(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong9(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void updatesong10(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong10(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void updatesong11(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong11(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void updatesong12(String q, String song) {
+        EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
+        Musica m= entityManager.find(Musica.class,q);
+        entityManager.getTransaction().begin();
+        m.setSong12(song);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+
 }
