@@ -18,11 +18,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.PrinterException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by PC on 18/05/2016.
@@ -61,6 +64,8 @@ public class MusicForm extends JDialog {
     private JTextField textField1;
     private JButton editarButton;
     private JButton exportarATxtButton;
+    private JButton imprimirButton;
+    private JButton imprimirCancionesButton;
     private DefaultTableModel model;
     private DefaultTableModel model2;
     private MusicController musicController;
@@ -174,6 +179,19 @@ public class MusicForm extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 orderGenTable();
                 orderGenTable2();
+            }
+        });
+        imprimirCancionesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                toPrint2();
+            }
+        });
+
+        imprimirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                toPrint();
             }
         });
 
@@ -303,6 +321,28 @@ public class MusicForm extends JDialog {
         */
 
 
+    }
+    private void toPrint()
+    {
+        try
+        {
+            resulTable.print();
+        }
+        catch(PrinterException ex)
+        {
+            Logger.getLogger(MusicForm.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }
+    private void toPrint2()
+    {
+        try
+        {
+            songsTable.print();
+        }
+        catch(PrinterException ex)
+        {
+            Logger.getLogger(MusicForm.class.getName()).log(Level.SEVERE,null,ex);
+        }
     }
     private void toTxt()
     {
