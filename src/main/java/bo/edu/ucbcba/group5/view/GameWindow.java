@@ -18,9 +18,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -50,6 +52,7 @@ public class GameWindow extends JDialog {
     private JButton modificarButton;
     private JButton verButton;
     private JButton exportarAExcelButton;
+    private JButton imprimirButton;
     private GameController gameController;
     private DefaultTableModel model;
     private CompanyController companyControllerr = new CompanyController();
@@ -147,6 +150,14 @@ public class GameWindow extends JDialog {
                 eliminarButton.setVisible(false);
             }
         });
+        imprimirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                imprimir(resulTable, "Juegos", "Lista completa", true);
+            }
+        });
+
+
         exportarAExcelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -177,102 +188,6 @@ public class GameWindow extends JDialog {
         });
 
         populatefiltroBox();
-    }
-
-    public GameWindow() {
-        // super("Juegos");
-
-        setContentPane(rootPanel);
-        setSize(1200, 1000);
-        pack();
-        setResizable(true);
-        gameController = new GameController();
-        populateTable();
-        modificarButton.setVisible(false);
-        verButton.setVisible(false);
-        buscarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                populateTable();
-            }
-        });
-        eliminarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                deleteElem();
-            }
-        });
-        actualizarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                launchUpdate2();
-            }
-        });
-        nuevoJuegoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                // setVisible(false);
-                lauchNewgame();
-                populatefiltroBox();
-                //populateComboBox();
-
-            }
-        });
-        verButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                ver();
-                verButton.setVisible(false);
-            }
-        });
-        agregarJuegoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-                nuevoGame();
-                populateTable();
-
-
-            }
-        });
-        modificarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-                modificar();
-
-                modificarButton.setVisible(false);
-                populateTable();
-            }
-        });
-        resulTable.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-                super.mouseClicked(mouseEvent);
-                nameField1.setText((String) model.getValueAt(resulTable.getSelectedRow(), 0));
-                genField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 1));
-                descArea.setText((String) model.getValueAt(resulTable.getSelectedRow(), 2));
-                lanField.setText(String.valueOf((Integer) model.getValueAt(resulTable.getSelectedRow(), 3)));
-                // int p;
-                // p = Integer.parseInt(Gbpeso);
-                pesoField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 4));
-                desField2.setText((String) model.getValueAt(resulTable.getSelectedRow(), 5));
-
-            }
-        });
-        resulTable.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-                super.mouseClicked(mouseEvent);
-                modificarButton.setVisible(true);
-
-
-            }
-        });
-
-
-        populatefiltroBox();
-
     }
 
 
@@ -356,6 +271,35 @@ public class GameWindow extends JDialog {
             excel.close();
         } catch (IOException e) {
             System.out.println(e);
+        }
+    }
+
+    private void imprimir(JTable tab, String header, String footer, boolean showPrintDialog) {
+        boolean fitWidth = true;
+        boolean interactive = true;
+        // We define the print mode (Definimos el modo de impresión)
+        JTable.PrintMode mode = fitWidth ? JTable.PrintMode.FIT_WIDTH : JTable.PrintMode.NORMAL;
+        try {
+            // Print the table (Imprimo la <span id="IL_AD1" class="IL_AD">tabla</span>)
+            boolean complete = tab.print(mode, new MessageFormat(header), new MessageFormat(footer), showPrintDialog, null, interactive);
+            if (complete) {
+                // Mostramos el mensaje de impresión existosa
+                JOptionPane.showMessageDialog(tab,
+                        "Impresion terminada",
+                        "Resultado de la impresión",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Mostramos un mensaje indicando que la impresión fue cancelada
+                JOptionPane.showMessageDialog(tab,
+                        "Impresión cancelada",
+                        "Resultado de la impresión",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (PrinterException pe) {
+            JOptionPane.showMessageDialog(tab,
+                    "fallo de impresión: " + pe.getMessage(),
+                    "Print result (Resultado de la impresión)",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -622,6 +566,9 @@ public class GameWindow extends JDialog {
         exportarAExcelButton = new JButton();
         exportarAExcelButton.setText("Exportar a excel");
         rootPanel.add(exportarAExcelButton, new GridConstraints(9, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        imprimirButton = new JButton();
+        imprimirButton.setText("Imprimir");
+        rootPanel.add(imprimirButton, new GridConstraints(1, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

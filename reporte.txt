@@ -2,10 +2,3 @@ Album			Genero			Banda			Lanzamiento		Pistas			Duracion
 A Night at the Opera	Rock			Queen			1974			79			10.0			
 Sting in the Tail	Hard Rock		Scorpions		2011			23			23.0			
 Metallica		Thrash			Metallica		2011			23			23.0			
-Toxicity		Metal			System of a Down	2002			32			323.0			
-ASD			jlkjlk			jlkjlkjkljl		2012			22			2.0			
-Sd			jlkjl			lkjlklj			2012			12			23.0			
-asdjlkjl		kjljklj			kljljlk			2012			1			32.0			
-Aljdlkjlkj		lkjlkj			lkjlj			2012			12			45.5			
-asdjklaljl		kjljlkjkl		jlkjlkj			2012			10			85.89			
-Metallica2		Rock			Metallica		2011			12			120.0			

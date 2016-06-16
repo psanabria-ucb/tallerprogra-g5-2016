@@ -199,6 +199,7 @@ public class UpdateMovie extends JDialog {
         label9.setText("Dirección Portada");
         rootPanel.add(label9, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         descArea = new JTextArea();
+        descArea.setLineWrap(true);
         rootPanel.add(descArea, new GridConstraints(4, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         final JLabel label10 = new JLabel();
         label10.setText("Descripción");
