@@ -16,6 +16,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.PrinterException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * Created by INTEL on 17/05/2016.
@@ -43,6 +48,8 @@ public class MovieWindow extends JDialog {
     private JComboBox dirBox;
     private JButton editarButton;
     private JButton verButton;
+    private JButton imprimirButton;
+    private JButton exportarAExcelButton;
     private DefaultTableModel model;
     private MovieController movieController;
     private DirectorController directorController = new DirectorController();
@@ -86,7 +93,14 @@ public class MovieWindow extends JDialog {
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                deleteElem();
+                if(isSelect())
+                {
+                    deleteElem();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(MovieWindow.this, "Ningun elemento seleccionado", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
                 editarButton.setVisible(false);
                 verButton.setVisible(false);
                 eliminarButton.setVisible(false);
@@ -113,7 +127,14 @@ public class MovieWindow extends JDialog {
         editarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                modificar();
+                if(isSelect())
+                {
+                    modificar();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(MovieWindow.this, "Ningun elemento seleccionado", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
                 editarButton.setVisible(false);
                 verButton.setVisible(false);
                 eliminarButton.setVisible(false);
@@ -123,7 +144,14 @@ public class MovieWindow extends JDialog {
         verButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                ver();
+                if(isSelect())
+                {
+                    ver();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(MovieWindow.this, "Ningun elemento seleccionado", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
                 editarButton.setVisible(false);
                 verButton.setVisible(false);
                 eliminarButton.setVisible(false);
@@ -145,7 +173,45 @@ public class MovieWindow extends JDialog {
             }
         });
 
+        imprimirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                imprimir(resulTable, "Peliculas", "Lista completa", true);
+            }
+        });
+
+        exportarAExcelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JFileChooser fc = new JFileChooser();
+                int option = fc.showSaveDialog(MovieWindow.this);
+                if (option == JFileChooser.APPROVE_OPTION) {
+                    String filename = fc.getSelectedFile().getName();
+                    String path = fc.getSelectedFile().getParentFile().getPath();
+
+                    int len = filename.length();
+                    String ext = "";
+                    String file = "";
+
+                    if (len > 4) {
+                        ext = filename.substring(len - 4, len);
+                    }
+
+                    if (ext.equals(".xls")) {
+                        file = path + "\\" + filename;
+                    } else {
+                        file = path + "\\" + filename + ".xls";
+                    }
+
+                    toExcel(new File(file));
+                }
+
+            }
+        });
+
     }
+
+
 
     public MovieWindow() {
 
@@ -379,6 +445,75 @@ public class MovieWindow extends JDialog {
         dispose();
     }
 
+    private void toExcel(File file) {
+        try {
+
+            FileWriter excel = new FileWriter(file);
+
+            for (int i = 0; i < resulTable.getColumnCount(); i++) {
+                excel.write(resulTable.getColumnName(i) + "\t");
+            }
+
+            excel.write("\n");
+
+
+            for (int i = 0; i < resulTable.getRowCount(); i++) {
+                for (int j = 0; j < resulTable.getColumnCount(); j++) {
+                    String text = resulTable.getValueAt(i, j).toString();
+
+
+                    String aux = text.replaceAll("\\r\\n|\\r|\\n", " ");
+                    excel.write(aux + "\t");
+                }
+                excel.write("\n");
+            }
+
+            excel.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    private void imprimir(JTable tab, String header, String footer, boolean showPrintDialog) {
+        boolean fitWidth = true;
+        boolean interactive = true;
+        // We define the print mode (Definimos el modo de impresión)
+        JTable.PrintMode mode = fitWidth ? JTable.PrintMode.FIT_WIDTH : JTable.PrintMode.NORMAL;
+        try {
+            // Print the table (Imprimo la <span id="IL_AD1" class="IL_AD">tabla</span>)
+            boolean complete = tab.print(mode, new MessageFormat(header), new MessageFormat(footer), showPrintDialog, null, interactive);
+            if (complete) {
+                // Mostramos el mensaje de impresión existosa
+                JOptionPane.showMessageDialog(tab,
+                        "Impresion terminada",
+                        "Resultado de la impresión",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Mostramos un mensaje indicando que la impresión fue cancelada
+                JOptionPane.showMessageDialog(tab,
+                        "Impresión cancelada",
+                        "Resultado de la impresión",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (PrinterException pe) {
+            JOptionPane.showMessageDialog(tab,
+                    "fallo de impresión: " + pe.getMessage(),
+                    "Print result (Resultado de la impresión)",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private Boolean isSelect() {
+        if (resulTable.isColumnSelected(0) || resulTable.isColumnSelected(1) ||
+                resulTable.isColumnSelected(2) || resulTable.isColumnSelected(3) || resulTable.isColumnSelected(4) ||
+                resulTable.isColumnSelected(5) || resulTable.isColumnSelected(6) || resulTable.isColumnSelected(7)) {
+            return true;
+
+        } else {
+            return false;
+        }
+
+    }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
