@@ -189,6 +189,7 @@ public class MusicForm extends JDialog {
                                     bw.write("Duracion"+"\t" + "\t" +"\t" );
                                 }
                             }
+
                             else
                             {
                                 String p=model.getValueAt(i-1,j)+"";

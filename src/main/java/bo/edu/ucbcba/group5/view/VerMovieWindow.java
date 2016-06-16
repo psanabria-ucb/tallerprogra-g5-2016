@@ -23,7 +23,7 @@ public class VerMovieWindow extends JDialog {
         setContentPane(rootPanel);
         setSize(1600, 1400);
         pack();
-        setResizable(true);
+        setResizable(false);
         llenar(nombre, genero, descrip, lanz, direc);
         java.awt.Image image = getToolkit().createImage(lugar);
         image = image.getScaledInstance(300, 300, image.SCALE_DEFAULT);

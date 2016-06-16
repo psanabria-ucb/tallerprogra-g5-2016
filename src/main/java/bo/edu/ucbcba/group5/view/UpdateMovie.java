@@ -41,7 +41,7 @@ public class UpdateMovie extends JDialog {
         setContentPane(rootPanel);
         setSize(1600, 1400);
         pack();
-        setResizable(true);
+        setResizable(false);
         llenar(nombre, genero, descrip, durac, lanz, peso, direc, lugar);
         populateComboBox();
         aceptarButton.addActionListener(new ActionListener() {
