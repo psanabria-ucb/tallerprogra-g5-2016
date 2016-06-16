@@ -36,23 +36,35 @@ public class MusicController {
         {
             throw new ValidationException("el campo minutos no puede quedar vacio!");
         }
+
         int length = nombre.length();
-        if (length > 100)
-            throw new ValidationException("nombre muy largo!");
+        if (length > 23)
+            throw new ValidationException("Album muy largo!");
         else {
-            if(length<1)throw new ValidationException("nombre muy corto!");
+            if(length<2)throw new ValidationException("Album muy corto!");
             else musica.setNombre(nombre);
         }
+
+        int lengthgenero = genero.length();
+        if (lengthgenero > 23)
+            throw new ValidationException("Genero muy largo!");
+        else {
+            if(lengthgenero<2)throw new ValidationException("Genero muy corto!");
+            else musica.setGenero(genero);
+        }
+
         int lengthdesc = description.length();
-        if (lengthdesc > 100)
-            throw new ValidationException("nombre muy largo!");
+        if (lengthdesc > 23)
+            throw new ValidationException("Banda muy larga!");
         else {
-            if(length<2)throw new ValidationException("nombre muy corto!");
-            else musica.setNombre(nombre);
+            if(length<2)throw new ValidationException("Banda muy corta!");
+            else musica.setDescription(description);
         }
+        /*
         musica.setNombre(nombre);
         musica.setGenero(genero);
         musica.setDescription(description);
+        */
         if (lanzamiento.matches("[0-9]+")) {
             if(lanzamiento.length()<=4) {
                 if (Integer.parseInt(lanzamiento) <= 2016 && Integer.parseInt(lanzamiento) >= 1952) {
@@ -65,9 +77,107 @@ public class MusicController {
         }
         else
             throw new ValidationException("El año debe ser un numero");
-        Double p;
+
+
+        /*Double p;
         p = Double.parseDouble(Gbpeso);
         musica.setPeso(p);
+        if(Gbpeso.matches("[0.0-9.9]+"))
+            musica.setPeso(Double.parseDouble(Gbpeso));
+        else {
+            throw new ValidationException("Los minutos deben ser un numero!");
+        }
+        */
+        if(Gbpeso.matches("[0.0-9.9]+")) {
+            if(Gbpeso.length()<=3) {
+                if (Double.parseDouble(Gbpeso) <= 120 && Double.parseDouble(Gbpeso) >= 50) {
+                    musica.setPeso(Double.parseDouble(Gbpeso));
+                } else
+                    throw new ValidationException("Los minutos deben estar entre 50 a 120");
+            }else throw new ValidationException("Solo se admite entre 50 a 120 minutos");
+
+        }
+        else
+            throw new ValidationException("El campo minutos debe ser un numero!");
+
+
+        if (song1.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song1.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong1(song1);
+        }
+
+        if (song2.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song2.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong2(song2);
+        }
+        if (song3.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song3.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong3(song3);
+        }
+        if (song4.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song4.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong4(song4);
+        }
+        if (song5.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song5.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong5(song5);
+        }
+        if (song6.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song6.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong6(song6);
+        }
+        if (song7.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song7.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong7(song7);
+        }
+        if (song8.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song8.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong8(song8);
+        }
+        if (song9.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song9.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong9(song9);
+        }
+        if (song10.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song10.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong10(song10);
+        }
+        if (song11.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song11.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong11(song11);
+        }
+        if (song12.length() > 23)
+            throw new ValidationException("Cancion muy larga!");
+        else {
+            if(song12.length()<0)throw new ValidationException("Nombre muy corto!");
+            else musica.setSong12(song12);
+        }
+
+
+
+        /*
         musica.setSong1(song1);
         musica.setSong2(song2);
         musica.setSong3(song3);
@@ -80,12 +190,25 @@ public class MusicController {
         musica.setSong10(song10);
         musica.setSong11(song11);
         musica.setSong12(song12);
-
-
+        */
+        /*
         if (duracMinutos.matches("[0-9]+"))
             musica.setDuracMinutos(Integer.parseInt(duracMinutos));
         else
             throw new ValidationException("La duración no esta en minutos");
+        */
+        if (duracMinutos.matches("[0-9]+")) {
+            if(duracMinutos.length()<=2) {
+                if (Integer.parseInt(duracMinutos) <= 12 && Integer.parseInt(duracMinutos) >= 6) {
+                    musica.setDuracMinutos(Integer.parseInt(duracMinutos));
+
+                } else
+                    throw new ValidationException("el numero de pistas debe ser mayor que 4 y menor que 13");
+            }else throw new ValidationException("Solo se admite entre 5 a 12 pistas!");
+
+        }
+        else
+            throw new ValidationException("La cantidad de pistas debe ser un numero!");
 
         EntityManager entityManager = DigitalCenterEntityManager.createEntityManager();
         entityManager.getTransaction().begin();

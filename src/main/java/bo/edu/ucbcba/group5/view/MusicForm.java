@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -59,6 +60,7 @@ public class MusicForm extends JDialog {
     private JTable songsTable;
     private JTextField textField1;
     private JButton editarButton;
+    private JButton exportarATxtButton;
     private DefaultTableModel model;
     private DefaultTableModel model2;
     private MusicController musicController;
@@ -146,75 +148,18 @@ public class MusicForm extends JDialog {
         */
 
         populateTable();
+        exportarATxtButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                toTxt2();
+
+            }
+        });
         musicasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try
-                {
-                    File file = new File("reporte.txt");
-                    if(!file.exists())
-                    {
-                        file.createNewFile();
-                    }
-                    FileWriter fw = new FileWriter((file.getAbsoluteFile()));
-                    BufferedWriter bw = new BufferedWriter(fw);
-                    for(int i=0; i <= resulTable.getRowCount();i++ )
-                    {
-                        for(int j=0; j< resulTable.getColumnCount();j++)
-                        {
-                            if(i==0)
-                            {
-                                if(j==0)
-                                {
-                                    bw.write("Album"+"\t" + "\t" +"\t" );
-                                }
-                                if(j==1)
-                                {
-                                    bw.write("Genero"+"\t" + "\t" +"\t" );
-                                }
-                                if(j==2)
-                                {
-                                    bw.write("Banda"+"\t" + "\t" +"\t" );
-                                }
-                                if(j==3)
-                                {
-                                    bw.write("Lanzamiento"+"\t" + "\t" );
-                                }
-                                if(j==4)
-                                {
-                                    bw.write("Pistas"+"\t" + "\t"+ "\t" );
-                                }
-                                if(j==5)
-                                {
-                                    bw.write("Duracion"+"\t" + "\t" +"\t" );
-                                }
-                            }
+                toTxt();
 
-                            else
-                            {
-                                String p=model.getValueAt(i-1,j)+"";
-                                if(p.length()<=8)
-                                    bw.write(model.getValueAt(i-1,j)+"\t" + "\t" +"\t" );
-                                if(p.length()>8 && p.length()<=16)
-                                    bw.write(model.getValueAt(i-1,j)+"\t"+"\t");
-                                if(p.length()>16)
-                                    bw.write(model.getValueAt(i-1,j)+"\t");
-                            }
-
-
-
-                        }
-                        bw.newLine();
-
-                    }
-                    bw.close();
-                    fw.close();
-                    JOptionPane.showMessageDialog(null,"Exportado Correctamente");
-                }
-                catch(Exception ex)
-                {
-                    ex.printStackTrace();
-                }
             }
         });
         bandaButton.addActionListener(new ActionListener() {
@@ -259,9 +204,6 @@ public class MusicForm extends JDialog {
                     song12Field.setText((String) model2.getValueAt(resulTable.getSelectedRow(), 12));
 
                 }
-
-
-                //song1Field.setText((String) model.getValueAt(resulTable.getSelectedRow(), 6));
             }
         });
         populateTable();
@@ -324,9 +266,6 @@ public class MusicForm extends JDialog {
                         {
                             musicController.updatesong12((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
                         }
-
-
-
                     }
                 }
 
@@ -365,14 +304,177 @@ public class MusicForm extends JDialog {
 
 
     }
+    private void toTxt()
+    {
+        try
+        {
+            JFileChooser fi= new JFileChooser();
+            fi.showSaveDialog(this);
+            File file = fi.getSelectedFile();
+            if(file != null)
+            {
+                FileWriter fw = new FileWriter(file+".txt");
+
+                //FileWriter fw = new FileWriter((file.getAbsoluteFile()));
+                BufferedWriter bw = new BufferedWriter(fw);
+                for(int i=0; i <= resulTable.getRowCount();i++ )
+                {
+                    for(int j=0; j< resulTable.getColumnCount();j++)
+                    {
+                        if(i==0)
+                        {
+                            if(j==0)
+                            {
+                                bw.write("Album"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==1)
+                            {
+                                bw.write("Genero"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==2)
+                            {
+                                bw.write("Banda"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==3)
+                            {
+                                bw.write("Lanzamiento"+"\t" + "\t" );
+                            }
+                            if(j==4)
+                            {
+                                bw.write("Pistas"+"\t" + "\t"+ "\t" );
+                            }
+                            if(j==5)
+                            {
+                                bw.write("Duracion"+"\t" + "\t" +"\t" );
+                            }
+                        }
+                        else
+                        {
+                            String p=model.getValueAt(i-1,j)+"";
+                            if(p.length()<8)
+                                bw.write(model.getValueAt(i-1,j)+"\t" + "\t" +"\t" );
+                            if(p.length()>=8 && p.length()<16)
+                                bw.write(model.getValueAt(i-1,j)+"\t"+"\t");
+                            if(p.length()>=16)
+                                bw.write(model.getValueAt(i-1,j)+"\t");
+                        }
+                    }
+                    bw.newLine();
+                }
+                bw.close();
+                fw.close();
+                JOptionPane.showMessageDialog(null,"Exportado Correctamente");
+            }
+        }
+        catch(IOException ex)
+        {
+            JOptionPane.showMessageDialog(null,"El archivo no ha sido guardado","Advertencia!",JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    private void toTxt2()
+    {
+        try
+        {
+            JFileChooser fi= new JFileChooser();
+            fi.showSaveDialog(this);
+            File file = fi.getSelectedFile();
+            if(file != null)
+            {
+                FileWriter fw = new FileWriter(file+".txt");
+
+                //FileWriter fw = new FileWriter((file.getAbsoluteFile()));
+                BufferedWriter bw = new BufferedWriter(fw);
+                for(int i=0; i <= songsTable.getRowCount();i++ )
+                {
+                    for(int j=0; j< songsTable.getColumnCount();j++)
+                    {
+                        if(i==0)
+                        {
+                            if(j==0)
+                            {
+                                bw.write("Album"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==1)
+                            {
+                                bw.write("Pista 1"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==2)
+                            {
+                                bw.write("Pista 2"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==3)
+                            {
+                                bw.write("Pista 3"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==4)
+                            {
+                                bw.write("Pista 4"+"\t" + "\t"+ "\t" );
+                            }
+                            if(j==5)
+                            {
+                                bw.write("Pista 5"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==6)
+                            {
+                                bw.write("Pista 6"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==7)
+                            {
+                                bw.write("Pista 7"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==8)
+                            {
+                                bw.write("Pista 8"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==9)
+                            {
+                                bw.write("Pista 9"+"\t" + "\t" +"\t" );
+                            }
+                            if(j==10)
+                            {
+                                bw.write("Pista 10"+"\t" + "\t");
+                            }
+                            if(j==11)
+                            {
+                                bw.write("Pista 11"+"\t" + "\t");
+                            }
+                            if(j==12)
+                            {
+                                bw.write("Pista 12"+"\t" + "\t");
+                            }
+                        }
+                        else
+                        {
+                            String p=model2.getValueAt(i-1,j)+"";
+                            if(p.length()<8)
+                                bw.write(model2.getValueAt(i-1,j)+"\t" + "\t" +"\t" );
+                            if(p.length()>=8 && p.length()<16)
+                                bw.write(model2.getValueAt(i-1,j)+"\t"+"\t");
+                            if(p.length()>=16)
+                                bw.write(model2.getValueAt(i-1,j)+"\t");
+                        }
+                    }
+                    bw.newLine();
+                }
+                bw.close();
+                fw.close();
+                JOptionPane.showMessageDialog(null,"Exportado Correctamente");
+            }
+        }
+        catch(IOException ex)
+        {
+            JOptionPane.showMessageDialog(null,"El archivo no ha sido guardado","Advertencia!",JOptionPane.WARNING_MESSAGE);
+        }
+
+    }
 
     private void Clean() {
         nameField1.setText("");
         genField.setText("");
         descField.setText("");
         lanField.setText("");
-        pesoField.setText("");
         minuField.setText("");
+        pesoField.setText("");
         song1Field.setText("");
         song2Field.setText("");
         song3Field.setText("");
@@ -402,8 +504,8 @@ public class MusicForm extends JDialog {
                     genField.getText(),       // REGISTRA EL GENERO
                     descField.getText(),
                     lanField.getText(),
-                    pesoField.getText(),
                     minuField.getText(),
+                    pesoField.getText(),
                     song1Field.getText(),
                     song2Field.getText(),
                     song3Field.getText(),
