@@ -1,3 +1,4 @@
 Album			Genero			Banda			Lanzamiento		Pistas			Duracion			
 A Night at the Opera	Rock			Queen			1974			79			10.0			
-Sting in the		Hard Rock		Scorpions		2011			23			23.0			
+Sting in the Tail	Hard Rock		Scorpions		2011			23			23.0			
+Metallica		Thrash			Metallica		2011			23			23.0			

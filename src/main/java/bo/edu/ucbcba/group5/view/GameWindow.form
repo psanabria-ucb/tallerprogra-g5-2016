@@ -186,6 +186,14 @@
           <text value="Exportar a excel"/>
         </properties>
       </component>
+      <component id="1db2d" class="javax.swing.JButton" binding="imprimirButton" default-binding="true">
+        <constraints>
+          <grid row="1" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Imprimir"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

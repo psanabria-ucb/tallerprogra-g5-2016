@@ -102,13 +102,10 @@ public class MusicForm extends JDialog {
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(resulTable.getSelectedColumn()==0)
-                {
+                if (resulTable.getSelectedColumn() == 0) {
                     deleteElem();
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null,"Debe seleccionar una fila!","No se puede Eliminar!",JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar una fila!", "No se puede Eliminar!", JOptionPane.WARNING_MESSAGE);
                 }
 
             }
@@ -118,13 +115,10 @@ public class MusicForm extends JDialog {
         actualizarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(resulTable.getSelectedColumn()==0)
-                {
+                if (resulTable.getSelectedColumn() == 0) {
                     launchUpdate2();
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null,"Debe seleccionar una fila!","No se puede Actualizar!",JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar una fila!", "No se puede Actualizar!", JOptionPane.WARNING_MESSAGE);
                 }
 
             }
@@ -149,58 +143,43 @@ public class MusicForm extends JDialog {
         musicasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try
-                {
+                try {
                     File file = new File("reporte.txt");
-                    if(!file.exists())
-                    {
+                    if (!file.exists()) {
                         file.createNewFile();
                     }
                     FileWriter fw = new FileWriter((file.getAbsoluteFile()));
                     BufferedWriter bw = new BufferedWriter(fw);
-                    for(int i=0; i <= resulTable.getRowCount();i++ )
-                    {
-                        for(int j=0; j< resulTable.getColumnCount();j++)
-                        {
-                            if(i==0)
-                            {
-                                if(j==0)
-                                {
-                                    bw.write("Album"+"\t" + "\t" +"\t" );
+                    for (int i = 0; i <= resulTable.getRowCount(); i++) {
+                        for (int j = 0; j < resulTable.getColumnCount(); j++) {
+                            if (i == 0) {
+                                if (j == 0) {
+                                    bw.write("Album" + "\t" + "\t" + "\t");
                                 }
-                                if(j==1)
-                                {
-                                    bw.write("Genero"+"\t" + "\t" +"\t" );
+                                if (j == 1) {
+                                    bw.write("Genero" + "\t" + "\t" + "\t");
                                 }
-                                if(j==2)
-                                {
-                                    bw.write("Banda"+"\t" + "\t" +"\t" );
+                                if (j == 2) {
+                                    bw.write("Banda" + "\t" + "\t" + "\t");
                                 }
-                                if(j==3)
-                                {
-                                    bw.write("Lanzamiento"+"\t" + "\t" );
+                                if (j == 3) {
+                                    bw.write("Lanzamiento" + "\t" + "\t");
                                 }
-                                if(j==4)
-                                {
-                                    bw.write("Pistas"+"\t" + "\t"+ "\t" );
+                                if (j == 4) {
+                                    bw.write("Pistas" + "\t" + "\t" + "\t");
                                 }
-                                if(j==5)
-                                {
-                                    bw.write("Duracion"+"\t" + "\t" +"\t" );
+                                if (j == 5) {
+                                    bw.write("Duracion" + "\t" + "\t" + "\t");
                                 }
+                            } else {
+                                String p = model.getValueAt(i - 1, j) + "";
+                                if (p.length() <= 8)
+                                    bw.write(model.getValueAt(i - 1, j) + "\t" + "\t" + "\t");
+                                if (p.length() > 8 && p.length() <= 16)
+                                    bw.write(model.getValueAt(i - 1, j) + "\t" + "\t");
+                                if (p.length() > 16)
+                                    bw.write(model.getValueAt(i - 1, j) + "\t");
                             }
-
-                            else
-                            {
-                                String p=model.getValueAt(i-1,j)+"";
-                                if(p.length()<=8)
-                                    bw.write(model.getValueAt(i-1,j)+"\t" + "\t" +"\t" );
-                                if(p.length()>8 && p.length()<=16)
-                                    bw.write(model.getValueAt(i-1,j)+"\t"+"\t");
-                                if(p.length()>16)
-                                    bw.write(model.getValueAt(i-1,j)+"\t");
-                            }
-
 
 
                         }
@@ -209,10 +188,8 @@ public class MusicForm extends JDialog {
                     }
                     bw.close();
                     fw.close();
-                    JOptionPane.showMessageDialog(null,"Exportado Correctamente");
-                }
-                catch(Exception ex)
-                {
+                    JOptionPane.showMessageDialog(null, "Exportado Correctamente");
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
@@ -237,8 +214,7 @@ public class MusicForm extends JDialog {
             public void mouseClicked(MouseEvent mouseEvent) {
 
                 super.mouseClicked(mouseEvent);
-                if(resulTable.getSelectedColumn()!= -1 || resulTable.getSelectedRow()!= -1)
-                {
+                if (resulTable.getSelectedColumn() != -1 || resulTable.getSelectedRow() != -1) {
                     nameField1.setText((String) model.getValueAt(resulTable.getSelectedRow(), 0));
                     genField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 1));
                     descField.setText((String) model.getValueAt(resulTable.getSelectedRow(), 2));
@@ -270,61 +246,46 @@ public class MusicForm extends JDialog {
             @Override
             public void tableChanged(TableModelEvent e) {
 
-                if(songsTable.getSelectedColumn()!= -1 || songsTable.getSelectedRow()!= -1)
-                {
-                    if(e.getType() == TableModelEvent.UPDATE)
-                    {
+                if (songsTable.getSelectedColumn() != -1 || songsTable.getSelectedRow() != -1) {
+                    if (e.getType() == TableModelEvent.UPDATE) {
                         int columna = e.getColumn();
                         int fila = e.getFirstRow();
-                        if(columna == 1)
-                        {
-                            musicController.updatesong1((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 1) {
+                            musicController.updatesong1((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-                        if(columna == 2)
-                        {
-                            musicController.updatesong2((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 2) {
+                            musicController.updatesong2((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-                        if(columna == 3)
-                        {
-                            musicController.updatesong3((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 3) {
+                            musicController.updatesong3((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-                        if(columna == 4)
-                        {
-                            musicController.updatesong4((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 4) {
+                            musicController.updatesong4((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-                        if(columna == 5)
-                        {
-                            musicController.updatesong5((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 5) {
+                            musicController.updatesong5((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-                        if(columna == 6)
-                        {
-                            musicController.updatesong6((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 6) {
+                            musicController.updatesong6((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-                        if(columna == 7)
-                        {
-                            musicController.updatesong7((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 7) {
+                            musicController.updatesong7((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-                        if(columna == 8)
-                        {
-                            musicController.updatesong8((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 8) {
+                            musicController.updatesong8((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-                        if(columna == 9)
-                        {
-                            musicController.updatesong9((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 9) {
+                            musicController.updatesong9((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-                        if(columna == 10)
-                        {
-                            musicController.updatesong10((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 10) {
+                            musicController.updatesong10((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-                        if(columna == 11)
-                        {
-                            musicController.updatesong11((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 11) {
+                            musicController.updatesong11((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-                        if(columna == 12)
-                        {
-                            musicController.updatesong12((String) songsTable.getValueAt(fila,0),(String)songsTable.getValueAt(fila,columna));
+                        if (columna == 12) {
+                            musicController.updatesong12((String) songsTable.getValueAt(fila, 0), (String) songsTable.getValueAt(fila, columna));
                         }
-
 
 
                     }
@@ -463,8 +424,7 @@ public class MusicForm extends JDialog {
 
     }
 
-    private void launchUpdate2()
-    {
+    private void launchUpdate2() {
 
         DefaultTableModel model = (DefaultTableModel) resulTable.getModel();
         String cod = (String) model.getValueAt(resulTable.getSelectedRow(), 0);
@@ -529,12 +489,11 @@ public class MusicForm extends JDialog {
     }
 
 
-
     private void orderGenTable() {
-            List<Musica> elementos = musicController.SearchSongsBand(nameField.getText());
-            model = new DefaultTableModel();
-            model.addColumn("nombre");
-            model.addColumn("genero");
+        List<Musica> elementos = musicController.SearchSongsBand(nameField.getText());
+        model = new DefaultTableModel();
+        model.addColumn("nombre");
+        model.addColumn("genero");
         model.addColumn("Description");
         model.addColumn("lanzamiento");
         model.addColumn("Duración");
@@ -619,6 +578,7 @@ public class MusicForm extends JDialog {
         Clean();
 
     }
+
     private void orderBandTable2() {
         List<Musica> elementos = musicController.SearchSongsGenre(nameField.getText());
         model2 = new DefaultTableModel();
@@ -659,6 +619,7 @@ public class MusicForm extends JDialog {
             model2.addRow(row);
         }
     }
+
     private void orderGenTable2() {
         List<Musica> elementos = musicController.SearchSongsBand(nameField.getText());
         model2 = new DefaultTableModel();
@@ -699,8 +660,8 @@ public class MusicForm extends JDialog {
             model2.addRow(row);
         }
     }
-    private void launchUpdate3()
-    {
+
+    private void launchUpdate3() {
 
         DefaultTableModel model = (DefaultTableModel) songsTable.getModel();
         String cod = (String) model2.getValueAt(songsTable.getSelectedRow(), 0);
@@ -737,6 +698,7 @@ public class MusicForm extends JDialog {
         populateTable();
         populateTable2();
     }
+
     private void populateTable2() {
         List<Musica> elementos = musicController.BuscarMovies(nameField1.getText());
         model2 = new DefaultTableModel();
@@ -812,8 +774,6 @@ public class MusicForm extends JDialog {
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
         rootPanel.setLayout(new GridLayoutManager(15, 10, new Insets(0, 0, 0, 0), -1, -1));
-        resulTable = new JTable();
-        rootPanel.add(resulTable, new GridConstraints(1, 1, 5, 8, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(1000, 350), null, 0, false));
         nameField = new JTextField();
         rootPanel.add(nameField, new GridConstraints(0, 1, 1, 8, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         buscarButton = new JButton();
@@ -858,84 +818,64 @@ public class MusicForm extends JDialog {
         final JLabel label6 = new JLabel();
         label6.setText("Minutos");
         rootPanel.add(label6, new GridConstraints(11, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label7 = new JLabel();
-        label7.setText("Canciones");
-        rootPanel.add(label7, new GridConstraints(12, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         song2Field = new JTextField();
-        rootPanel.add(song2Field, new GridConstraints(12, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        rootPanel.add(song2Field, new GridConstraints(12, 3, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         song4Field = new JTextField();
-        rootPanel.add(song4Field, new GridConstraints(12, 8, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        rootPanel.add(song4Field, new GridConstraints(12, 7, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         descField = new JTextField();
         rootPanel.add(descField, new GridConstraints(8, 1, 1, 8, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         song1Field = new JTextField();
-        rootPanel.add(song1Field, new GridConstraints(12, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        rootPanel.add(song1Field, new GridConstraints(12, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         song5Field = new JTextField();
-        rootPanel.add(song5Field, new GridConstraints(13, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        rootPanel.add(song5Field, new GridConstraints(13, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         song6Field = new JTextField();
-        rootPanel.add(song6Field, new GridConstraints(13, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        rootPanel.add(song6Field, new GridConstraints(13, 3, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         song9Field = new JTextField();
-        rootPanel.add(song9Field, new GridConstraints(14, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        rootPanel.add(song9Field, new GridConstraints(14, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         song10Field = new JTextField();
-        rootPanel.add(song10Field, new GridConstraints(14, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        rootPanel.add(song10Field, new GridConstraints(14, 3, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         song7Field = new JTextField();
         song7Field.setText("");
-        rootPanel.add(song7Field, new GridConstraints(13, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        rootPanel.add(song7Field, new GridConstraints(13, 5, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         song11Field = new JTextField();
-        rootPanel.add(song11Field, new GridConstraints(14, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        rootPanel.add(song11Field, new GridConstraints(14, 5, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         song8Field = new JTextField();
-        rootPanel.add(song8Field, new GridConstraints(13, 8, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        rootPanel.add(song8Field, new GridConstraints(13, 7, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         song12Field = new JTextField();
-        rootPanel.add(song12Field, new GridConstraints(14, 8, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label8 = new JLabel();
-        label8.setText("1");
-        rootPanel.add(label8, new GridConstraints(12, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label9 = new JLabel();
-        label9.setText("2");
-        rootPanel.add(label9, new GridConstraints(12, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label10 = new JLabel();
-        label10.setText("3");
-        rootPanel.add(label10, new GridConstraints(12, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label11 = new JLabel();
-        label11.setText("5");
-        rootPanel.add(label11, new GridConstraints(13, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label12 = new JLabel();
-        label12.setText("6");
-        rootPanel.add(label12, new GridConstraints(13, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label13 = new JLabel();
-        label13.setText("7");
-        rootPanel.add(label13, new GridConstraints(13, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label14 = new JLabel();
-        label14.setText("4");
-        rootPanel.add(label14, new GridConstraints(12, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label15 = new JLabel();
-        label15.setText("9");
-        rootPanel.add(label15, new GridConstraints(14, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label16 = new JLabel();
-        label16.setText("8");
-        rootPanel.add(label16, new GridConstraints(13, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label17 = new JLabel();
-        label17.setText("10");
-        rootPanel.add(label17, new GridConstraints(14, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label18 = new JLabel();
-        label18.setText("11");
-        rootPanel.add(label18, new GridConstraints(14, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label19 = new JLabel();
-        label19.setText("12");
-        rootPanel.add(label19, new GridConstraints(14, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        rootPanel.add(song12Field, new GridConstraints(14, 7, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         song3Field = new JTextField();
-        rootPanel.add(song3Field, new GridConstraints(12, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        musicasButton = new JButton();
-        musicasButton.setText("Musicas");
-        rootPanel.add(musicasButton, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label20 = new JLabel();
-        label20.setText("Orden por");
-        rootPanel.add(label20, new GridConstraints(0, 9, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        rootPanel.add(song3Field, new GridConstraints(12, 5, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label7 = new JLabel();
+        label7.setText("Orden por");
+        rootPanel.add(label7, new GridConstraints(0, 9, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         bandaButton = new JButton();
         bandaButton.setText("Album");
         rootPanel.add(bandaButton, new GridConstraints(1, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         generoButton = new JButton();
         generoButton.setText("Genero");
         rootPanel.add(generoButton, new GridConstraints(2, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tabbedPane1 = new JTabbedPane();
+        rootPanel.add(tabbedPane1, new GridConstraints(1, 1, 5, 8, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        tabbedPane1.addTab("Bandas", panel1);
+        resulTable = new JTable();
+        panel1.add(resulTable, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 150), null, 0, false));
+        musicasButton = new JButton();
+        musicasButton.setText("Exportar a .txt");
+        panel1.add(musicasButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer2 = new Spacer();
+        panel1.add(spacer2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
+        tabbedPane1.addTab("Canciones", panel2);
+        songsTable = new JTable();
+        panel2.add(songsTable, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        textField1 = new JTextField();
+        panel2.add(textField1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        editarButton = new JButton();
+        editarButton.setText("Editar");
+        panel2.add(editarButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
