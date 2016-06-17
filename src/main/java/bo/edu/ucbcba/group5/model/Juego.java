@@ -31,8 +31,6 @@ public class Juego {
         lanzamiento=0;
         compName="";
         company=null;
-
-
     }
     public void setNomCover(String nomCover) {
         this.nomCover = nomCover;

@@ -87,15 +87,32 @@ public class MusicController {
         else {
             throw new ValidationException("Los minutos deben ser un numero!");
         }
-        */
-        if(Gbpeso.matches("[0.0-9.9]+")) {
-            if(Gbpeso.length()<=3) {
-                if (Double.parseDouble(Gbpeso) <= 120 && Double.parseDouble(Gbpeso) >= 50) {
-                    musica.setPeso(Double.parseDouble(Gbpeso));
-                } else
-                    throw new ValidationException("Los minutos deben estar entre 50 a 120");
-            }else throw new ValidationException("Solo se admite entre 50 a 120 minutos");
 
+        if(Gbpeso.matches("[0.0-9.9]+"))
+        {
+            if(Gbpeso.length()<=3)
+            {
+                if (Double.parseDouble(Gbpeso) <= 120 && Double.parseDouble(Gbpeso) >= 50)
+                {
+                    musica.setPeso(Double.parseDouble(Gbpeso));
+                }
+                else
+                    throw new ValidationException("Los minutos deben estar entre 50 a 120");
+            }
+            else
+                throw new ValidationException("Solo se admite entre 50 a 120 minutos");
+        }
+        else
+            throw new ValidationException("El campo minutos debe ser un numero!");
+            */
+        if(Gbpeso.matches("[0.0-9.9]+"))
+        {
+            if (Double.parseDouble(Gbpeso) <= 120 && Double.parseDouble(Gbpeso) >= 50)
+            {
+                musica.setPeso(Double.parseDouble(Gbpeso));
+            }
+            else
+                throw new ValidationException("Los minutos deben estar entre 50 a 120");
         }
         else
             throw new ValidationException("El campo minutos debe ser un numero!");
@@ -387,6 +404,4 @@ public class MusicController {
         entityManager.getTransaction().commit();
         entityManager.close();
     }
-
-
 }
