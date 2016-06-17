@@ -99,7 +99,7 @@
         </constraints>
         <properties>
           <model>
-            <item value="Accion&#9;"/>
+            <item value="Accion"/>
             <item value="Shooter"/>
             <item value="Moba"/>
             <item value="Estrategia"/>
@@ -126,7 +126,9 @@
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <lineWrap value="true"/>
+        </properties>
       </component>
       <vspacer id="7d43">
         <constraints>

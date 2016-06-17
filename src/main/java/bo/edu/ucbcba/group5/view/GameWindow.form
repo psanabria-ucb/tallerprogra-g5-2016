@@ -3,9 +3,11 @@
   <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="24" column-count="17" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="20" left="20" bottom="20" right="20"/>
     <constraints>
-      <xy x="20" y="20" width="1355" height="846"/>
+      <xy x="20" y="20" width="3654" height="4528"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-1"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="55381" class="javax.swing.JTextField" binding="nameField">
@@ -29,7 +31,10 @@
             <preferred-size width="500" height="450"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <autoCreateRowSorter value="false"/>
+          <background color="-3355444"/>
+        </properties>
       </component>
       <component id="ddfd0" class="javax.swing.JComboBox" binding="comBox2">
         <constraints>
@@ -89,7 +94,8 @@
           <grid row="0" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Buscar"/>
+          <text value=""/>
+          <toolTipText value="Click! para buscar"/>
         </properties>
       </component>
       <component id="b4d73" class="javax.swing.JLabel">
@@ -105,28 +111,13 @@
           <grid row="22" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="64b13" class="javax.swing.JButton" binding="nuevoJuegoButton" default-binding="true">
-        <constraints>
-          <grid row="5" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Nuevo Desarrollador"/>
-        </properties>
-      </component>
       <component id="7f966" class="javax.swing.JButton" binding="eliminarButton" default-binding="true">
         <constraints>
           <grid row="6" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Eliminar"/>
-        </properties>
-      </component>
-      <component id="bb67e" class="javax.swing.JButton" binding="agregarJuegoButton">
-        <constraints>
-          <grid row="3" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Agregar juego"/>
+          <text value=""/>
+          <toolTipText value="Click! para eliminar un juego"/>
         </properties>
       </component>
       <component id="68f17" class="javax.swing.JComboBox" binding="catBox">
@@ -162,36 +153,58 @@
           <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </hspacer>
-      <component id="75e47" class="javax.swing.JButton" binding="modificarButton" default-binding="true">
-        <constraints>
-          <grid row="7" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Modificar"/>
-        </properties>
-      </component>
-      <component id="e1058" class="javax.swing.JButton" binding="verButton" default-binding="true">
-        <constraints>
-          <grid row="8" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Ver"/>
-        </properties>
-      </component>
       <component id="c4a2f" class="javax.swing.JButton" binding="exportarAExcelButton" default-binding="true">
         <constraints>
           <grid row="9" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Exportar a excel"/>
+          <text value=""/>
+          <toolTipText value="Click! para exportar la tabla a excel"/>
+        </properties>
+      </component>
+      <component id="bb67e" class="javax.swing.JButton" binding="agregarJuegoButton">
+        <constraints>
+          <grid row="3" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+          <toolTipText value="Click! para agregar un juego"/>
+        </properties>
+      </component>
+      <component id="64b13" class="javax.swing.JButton" binding="nuevoJuegoButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+          <toolTipText value="Click! para agregar una compañia"/>
+        </properties>
+      </component>
+      <component id="75e47" class="javax.swing.JButton" binding="modificarButton" default-binding="true">
+        <constraints>
+          <grid row="5" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+          <toolTipText value="Click! para editar un juego"/>
+        </properties>
+      </component>
+      <component id="e1058" class="javax.swing.JButton" binding="verButton" default-binding="true">
+        <constraints>
+          <grid row="7" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+          <toolTipText value="Click! para ver mas detalles"/>
         </properties>
       </component>
       <component id="1db2d" class="javax.swing.JButton" binding="imprimirButton" default-binding="true">
         <constraints>
-          <grid row="1" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Imprimir"/>
+          <text value=""/>
+          <toolTipText value="Click! para imprimir"/>
         </properties>
       </component>
     </children>

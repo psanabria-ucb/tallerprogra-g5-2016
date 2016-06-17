@@ -61,11 +61,14 @@ public class GameWindow extends JDialog {
     GameWindow(ElemForm parent) {
         super(parent, "Juegos", true);
         setContentPane(rootPanel);
-        setSize(1200, 1000);
         pack();
-        setResizable(false);
+        //  setSize(1200, 2500);
+        this.setSize(700, 630);
+
+        setResizable(true);
         gameController = new GameController();
         populateTable();
+        SetIconbuttons();
         modificarButton.setVisible(false);
         verButton.setVisible(false);
         eliminarButton.setVisible(false);
@@ -230,7 +233,13 @@ public class GameWindow extends JDialog {
     }
 
     private void ver() {
-        final String nom, genero, descrip, lanz, peso, compania, direc;
+        final String nom;
+        final String genero;
+        final String descrip;
+        final String lanz;
+        final String peso;
+        final String compania;
+        String direc;
         nom = ((String) model.getValueAt(resulTable.getSelectedRow(), 0));
         genero = ((String) model.getValueAt(resulTable.getSelectedRow(), 1));
         descrip = ((String) model.getValueAt(resulTable.getSelectedRow(), 2));
@@ -240,6 +249,11 @@ public class GameWindow extends JDialog {
         peso = ((String) model.getValueAt(resulTable.getSelectedRow(), 4));
         compania = ((String) model.getValueAt(resulTable.getSelectedRow(), 5));
         direc = ((String) model.getValueAt(resulTable.getSelectedRow(), 6));
+        if (new File(direc).exists()) {
+
+        } else
+            direc = "caratula.jpg";
+
         VerWindow f = new VerWindow(this, nom, genero, descrip, lanz, peso, compania, direc);
         f.setVisible(true);
 
@@ -469,6 +483,67 @@ public class GameWindow extends JDialog {
         dispose();
     }
 
+    private void SetIconbuttons() {
+        //eliminar button
+        eliminarButton.setIcon(new ImageIcon("del.jpg"));
+        //eliminarButton.setBorderPainted(false);
+        eliminarButton.setContentAreaFilled(false);
+        eliminarButton.setFocusPainted(false);
+        eliminarButton.setOpaque(false);
+        eliminarButton.setFocusable(true);
+        //actualizar button
+        modificarButton.setIcon(new ImageIcon("actualiz.jpg"));
+        modificarButton.setContentAreaFilled(false);
+        modificarButton.setFocusPainted(false);
+        modificarButton.setOpaque(false);
+        modificarButton.setFocusable(true);
+        modificarButton.setVisible(false);
+        //agregar juego button
+        agregarJuegoButton.setIcon(new ImageIcon("adga.jpg"));
+        //eliminarButton.setBorderPainted(false);
+        agregarJuegoButton.setContentAreaFilled(false);
+        agregarJuegoButton.setFocusPainted(false);
+        agregarJuegoButton.setOpaque(false);
+        agregarJuegoButton.setFocusable(true);
+        //agregar company button
+        nuevoJuegoButton.setIcon(new ImageIcon("savComp.jpg"));
+        //eliminarButton.setBorderPainted(false);
+        nuevoJuegoButton.setContentAreaFilled(false);
+        nuevoJuegoButton.setFocusPainted(false);
+        nuevoJuegoButton.setOpaque(false);
+        nuevoJuegoButton.setFocusable(true);
+        //buscar
+        buscarButton.setIcon(new ImageIcon("busca.jpg"));
+        //eliminarButton.setBorderPainted(false);
+        buscarButton.setContentAreaFilled(false);
+        buscarButton.setFocusPainted(false);
+        buscarButton.setOpaque(false);
+        buscarButton.setFocusable(true);
+        //imprimir
+        imprimirButton.setIcon(new ImageIcon("priiint.jpg"));
+        //eliminarButton.setBorderPainted(false);
+        imprimirButton.setContentAreaFilled(false);
+        imprimirButton.setFocusPainted(false);
+        imprimirButton.setOpaque(false);
+        imprimirButton.setFocusable(true);
+        //toexcel
+        exportarAExcelButton.setIcon(new ImageIcon("exe.jpg"));
+        //eliminarButton.setBorderPainted(false);
+        exportarAExcelButton.setContentAreaFilled(false);
+        exportarAExcelButton.setFocusPainted(false);
+        exportarAExcelButton.setOpaque(false);
+        exportarAExcelButton.setFocusable(true);
+        //ver
+        verButton.setIcon(new ImageIcon("bus.jpg"));
+        //eliminarButton.setBorderPainted(false);
+        verButton.setContentAreaFilled(false);
+        verButton.setFocusPainted(false);
+        verButton.setOpaque(false);
+        verButton.setFocusable(true);
+
+
+    }
+
 
     private void createUIComponents() {
 
@@ -491,12 +566,15 @@ public class GameWindow extends JDialog {
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
         rootPanel.setLayout(new GridLayoutManager(24, 17, new Insets(20, 20, 20, 20), -1, -1));
+        rootPanel.setBackground(new Color(-1));
         nameField = new JTextField();
         nameField.setText("");
         rootPanel.add(nameField, new GridConstraints(0, 0, 1, 16, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final Spacer spacer1 = new Spacer();
         rootPanel.add(spacer1, new GridConstraints(20, 16, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         resulTable = new JTable();
+        resulTable.setAutoCreateRowSorter(false);
+        resulTable.setBackground(new Color(-3355444));
         rootPanel.add(resulTable, new GridConstraints(3, 0, 19, 16, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(500, 450), null, 0, false));
         comBox2 = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
@@ -525,22 +603,18 @@ public class GameWindow extends JDialog {
         final Spacer spacer5 = new Spacer();
         rootPanel.add(spacer5, new GridConstraints(10, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         buscarButton = new JButton();
-        buscarButton.setText("Buscar");
+        buscarButton.setText("");
+        buscarButton.setToolTipText("Click! para buscar");
         rootPanel.add(buscarButton, new GridConstraints(0, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         label2.setText("Filtrar por:");
         rootPanel.add(label2, new GridConstraints(1, 0, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer6 = new Spacer();
         rootPanel.add(spacer6, new GridConstraints(22, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        nuevoJuegoButton = new JButton();
-        nuevoJuegoButton.setText("Nuevo Desarrollador");
-        rootPanel.add(nuevoJuegoButton, new GridConstraints(5, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         eliminarButton = new JButton();
-        eliminarButton.setText("Eliminar");
+        eliminarButton.setText("");
+        eliminarButton.setToolTipText("Click! para eliminar un juego");
         rootPanel.add(eliminarButton, new GridConstraints(6, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        agregarJuegoButton = new JButton();
-        agregarJuegoButton.setText("Agregar juego");
-        rootPanel.add(agregarJuegoButton, new GridConstraints(3, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         catBox = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
         defaultComboBoxModel3.addElement("Nombre");
@@ -557,18 +631,30 @@ public class GameWindow extends JDialog {
         rootPanel.add(spacer9, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer10 = new Spacer();
         rootPanel.add(spacer10, new GridConstraints(1, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        modificarButton = new JButton();
-        modificarButton.setText("Modificar");
-        rootPanel.add(modificarButton, new GridConstraints(7, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        verButton = new JButton();
-        verButton.setText("Ver");
-        rootPanel.add(verButton, new GridConstraints(8, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         exportarAExcelButton = new JButton();
-        exportarAExcelButton.setText("Exportar a excel");
+        exportarAExcelButton.setText("");
+        exportarAExcelButton.setToolTipText("Click! para exportar la tabla a excel");
         rootPanel.add(exportarAExcelButton, new GridConstraints(9, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        agregarJuegoButton = new JButton();
+        agregarJuegoButton.setText("");
+        agregarJuegoButton.setToolTipText("Click! para agregar un juego");
+        rootPanel.add(agregarJuegoButton, new GridConstraints(3, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        nuevoJuegoButton = new JButton();
+        nuevoJuegoButton.setText("");
+        nuevoJuegoButton.setToolTipText("Click! para agregar una compañia");
+        rootPanel.add(nuevoJuegoButton, new GridConstraints(4, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        modificarButton = new JButton();
+        modificarButton.setText("");
+        modificarButton.setToolTipText("Click! para editar un juego");
+        rootPanel.add(modificarButton, new GridConstraints(5, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        verButton = new JButton();
+        verButton.setText("");
+        verButton.setToolTipText("Click! para ver mas detalles");
+        rootPanel.add(verButton, new GridConstraints(7, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         imprimirButton = new JButton();
-        imprimirButton.setText("Imprimir");
-        rootPanel.add(imprimirButton, new GridConstraints(1, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        imprimirButton.setText("");
+        imprimirButton.setToolTipText("Click! para imprimir");
+        rootPanel.add(imprimirButton, new GridConstraints(8, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

@@ -127,7 +127,7 @@ public class ElemForm extends JFrame {
 
         BufferedImage myPicture = null;
         try {
-            myPicture = ImageIO.read(new File("foto.jpg"));
+            myPicture = ImageIO.read(new File("fondo.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }

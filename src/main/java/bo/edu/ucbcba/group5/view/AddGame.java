@@ -38,7 +38,7 @@ public class AddGame extends JDialog {
         setContentPane(rootPanel);
         setSize(1600, 1400);
         pack();
-        setResizable(true);
+        setResizable(false);
         populateComboBox();
         buscarButton.addActionListener(new ActionListener() {
             @Override
@@ -159,7 +159,10 @@ public class AddGame extends JDialog {
         pesoField = new JTextField();
         rootPanel.add(pesoField, new GridConstraints(4, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         descripArea = new JTextArea();
-        rootPanel.add(descripArea, new GridConstraints(5, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        descripArea.setColumns(3);
+        descripArea.setLineWrap(true);
+        descripArea.setRows(0);
+        rootPanel.add(descripArea, new GridConstraints(5, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(400, 50), new Dimension(400, 50), new Dimension(400, 50), 0, false));
         agregarButton = new JButton();
         agregarButton.setText("Agregar");
         rootPanel.add(agregarButton, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(300, -1), new Dimension(300, -1), new Dimension(300, -1), 0, false));
