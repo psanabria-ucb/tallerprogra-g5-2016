@@ -22,6 +22,8 @@ public class VerWindow extends JDialog {
         super(parent, " Detalles", true);
         setContentPane(rootPanel);
         setSize(1600, 1400);
+        setMinimumSize(new Dimension(600, 600));
+        setMaximumSize(new Dimension(200, 200));
         pack();
         setResizable(true);
         llenar(nombre, genero, descrip, lanz, company);
@@ -54,7 +56,7 @@ public class VerWindow extends JDialog {
      */
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
-        rootPanel.setLayout(new GridLayoutManager(3, 4, new Insets(5, 5, 5, 5), -1, -1));
+        rootPanel.setLayout(new GridLayoutManager(3, 4, new Insets(20, 20, 20, 20), -1, -1));
         nomLabel = new JLabel();
         nomLabel.setText("Label");
         rootPanel.add(nomLabel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

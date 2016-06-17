@@ -64,7 +64,8 @@ public class GameWindow extends JDialog {
         pack();
         //  setSize(1200, 2500);
         this.setSize(700, 630);
-
+        setMinimumSize(new Dimension(600, 600));
+        setMaximumSize(new Dimension(200, 200));
         setResizable(true);
         gameController = new GameController();
         populateTable();
@@ -277,6 +278,7 @@ public class GameWindow extends JDialog {
 
 
                     String aux = text.replaceAll("\\r\\n|\\r|\\n", " ");
+                    aux = aux.replaceAll("\\u0009", "");
                     excel.write(aux + "\t");
                 }
                 excel.write("\n");
@@ -442,13 +444,13 @@ public class GameWindow extends JDialog {
         model = new DefaultTableModel();
 
         // model.addColumn("Id");
-        model.addColumn("nombre");
-        model.addColumn("genero");
-        model.addColumn("Description");
-        model.addColumn("lanzamiento");
-        model.addColumn("peso");
-        model.addColumn("compania");
-        model.addColumn("directorio de la portada");
+        model.addColumn("Nombre");
+        model.addColumn("Genero");
+        model.addColumn("Descripcion");
+        model.addColumn("Lanzamiento");
+        model.addColumn("Peso(Gb)");
+        model.addColumn("Compañia");
+        model.addColumn("Directorio de la portada");
         resulTable.setModel(model);
 
         for (Juego m : elementos) {
@@ -565,17 +567,13 @@ public class GameWindow extends JDialog {
      */
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
-        rootPanel.setLayout(new GridLayoutManager(24, 17, new Insets(20, 20, 20, 20), -1, -1));
+        rootPanel.setLayout(new GridLayoutManager(17, 17, new Insets(20, 20, 20, 20), -1, -1));
         rootPanel.setBackground(new Color(-1));
         nameField = new JTextField();
         nameField.setText("");
         rootPanel.add(nameField, new GridConstraints(0, 0, 1, 16, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final Spacer spacer1 = new Spacer();
-        rootPanel.add(spacer1, new GridConstraints(20, 16, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        resulTable = new JTable();
-        resulTable.setAutoCreateRowSorter(false);
-        resulTable.setBackground(new Color(-3355444));
-        rootPanel.add(resulTable, new GridConstraints(3, 0, 19, 16, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(500, 450), null, 0, false));
+        rootPanel.add(spacer1, new GridConstraints(13, 16, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         comBox2 = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("Todos");
@@ -595,11 +593,11 @@ public class GameWindow extends JDialog {
         label1.setText("Ordenar por");
         rootPanel.add(label1, new GridConstraints(1, 6, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
-        rootPanel.add(spacer2, new GridConstraints(15, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer2, new GridConstraints(12, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
-        rootPanel.add(spacer3, new GridConstraints(23, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer3, new GridConstraints(16, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
-        rootPanel.add(spacer4, new GridConstraints(14, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer4, new GridConstraints(11, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer5 = new Spacer();
         rootPanel.add(spacer5, new GridConstraints(10, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         buscarButton = new JButton();
@@ -610,7 +608,7 @@ public class GameWindow extends JDialog {
         label2.setText("Filtrar por:");
         rootPanel.add(label2, new GridConstraints(1, 0, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer6 = new Spacer();
-        rootPanel.add(spacer6, new GridConstraints(22, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer6, new GridConstraints(15, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         eliminarButton = new JButton();
         eliminarButton.setText("");
         eliminarButton.setToolTipText("Click! para eliminar un juego");
@@ -655,6 +653,10 @@ public class GameWindow extends JDialog {
         imprimirButton.setText("");
         imprimirButton.setToolTipText("Click! para imprimir");
         rootPanel.add(imprimirButton, new GridConstraints(8, 16, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(50, 48), new Dimension(50, 48), new Dimension(50, 48), 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        rootPanel.add(scrollPane1, new GridConstraints(3, 0, 9, 12, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        resulTable = new JTable();
+        scrollPane1.setViewportView(resulTable);
     }
 
     /**

@@ -30,6 +30,9 @@ public class ElemForm extends JFrame {
         // launchImage();lo puse mas abajo xD y da
         setContentPane(rootPanel);
         // setSize(600, 400);
+        setMinimumSize(new Dimension(600, 600));
+        setMaximumSize(new Dimension(200, 200));
+        setResizable(true);
         createButton.setVisible(false);
         eliminarButton.setVisible(false);
         buscarButton.setVisible(false);
