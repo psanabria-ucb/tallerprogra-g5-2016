@@ -35,6 +35,26 @@ public class Musica {
     private String song10;
     private String song11;
     private String song12;
+    public Musica()
+    {
+        nombre="";
+        genero="";
+        description="";
+        lanzamiento=0;
+        duracMinutos=0;
+        song1="";
+        song2="";
+        song3="";
+        song4="";
+        song5="";
+        song6="";
+        song7="";
+        song8="";
+        song9="";
+        song10="";
+        song11="";
+        song12="";
+    }
 
 
     public String getSong2() {
@@ -176,5 +196,7 @@ public class Musica {
     public int getDuracMinutos() {return duracMinutos;   }
 
     public void setDuracMinutos(int duracMinutos) {  this.duracMinutos = duracMinutos; }
+
+
 
 }

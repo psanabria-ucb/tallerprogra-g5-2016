@@ -175,6 +175,7 @@ public class MusicForm extends JDialog {
                 orderGenTable2();
             }
         });
+
         imprimirCancionesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -865,8 +866,7 @@ public class MusicForm extends JDialog {
         musicController.delete(cod);
         JOptionPane.showMessageDialog(this, "Album eliminado correctamente", "Realizado", JOptionPane.INFORMATION_MESSAGE);
         populateTable();
-
-
+        populateTable2();
     }
 
     private void cancel() {
