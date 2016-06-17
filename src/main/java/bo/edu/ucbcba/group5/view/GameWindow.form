@@ -91,7 +91,11 @@
       </vspacer>
       <component id="db80e" class="javax.swing.JButton" binding="buscarButton" default-binding="true">
         <constraints>
-          <grid row="0" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="50" height="48"/>
+            <preferred-size width="50" height="48"/>
+            <maximum-size width="50" height="48"/>
+          </grid>
         </constraints>
         <properties>
           <text value=""/>
@@ -113,7 +117,11 @@
       </vspacer>
       <component id="7f966" class="javax.swing.JButton" binding="eliminarButton" default-binding="true">
         <constraints>
-          <grid row="6" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="6" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="50" height="48"/>
+            <preferred-size width="50" height="48"/>
+            <maximum-size width="50" height="48"/>
+          </grid>
         </constraints>
         <properties>
           <text value=""/>
@@ -155,7 +163,11 @@
       </hspacer>
       <component id="c4a2f" class="javax.swing.JButton" binding="exportarAExcelButton" default-binding="true">
         <constraints>
-          <grid row="9" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="9" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="50" height="48"/>
+            <preferred-size width="50" height="48"/>
+            <maximum-size width="50" height="48"/>
+          </grid>
         </constraints>
         <properties>
           <text value=""/>
@@ -164,7 +176,11 @@
       </component>
       <component id="bb67e" class="javax.swing.JButton" binding="agregarJuegoButton">
         <constraints>
-          <grid row="3" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="50" height="48"/>
+            <preferred-size width="50" height="48"/>
+            <maximum-size width="50" height="48"/>
+          </grid>
         </constraints>
         <properties>
           <text value=""/>
@@ -173,7 +189,11 @@
       </component>
       <component id="64b13" class="javax.swing.JButton" binding="nuevoJuegoButton" default-binding="true">
         <constraints>
-          <grid row="4" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="50" height="48"/>
+            <preferred-size width="50" height="48"/>
+            <maximum-size width="50" height="48"/>
+          </grid>
         </constraints>
         <properties>
           <text value=""/>
@@ -182,7 +202,11 @@
       </component>
       <component id="75e47" class="javax.swing.JButton" binding="modificarButton" default-binding="true">
         <constraints>
-          <grid row="5" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="50" height="48"/>
+            <preferred-size width="50" height="48"/>
+            <maximum-size width="50" height="48"/>
+          </grid>
         </constraints>
         <properties>
           <text value=""/>
@@ -191,7 +215,11 @@
       </component>
       <component id="e1058" class="javax.swing.JButton" binding="verButton" default-binding="true">
         <constraints>
-          <grid row="7" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="50" height="48"/>
+            <preferred-size width="50" height="48"/>
+            <maximum-size width="50" height="48"/>
+          </grid>
         </constraints>
         <properties>
           <text value=""/>
@@ -200,7 +228,11 @@
       </component>
       <component id="1db2d" class="javax.swing.JButton" binding="imprimirButton" default-binding="true">
         <constraints>
-          <grid row="8" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="16" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="50" height="48"/>
+            <preferred-size width="50" height="48"/>
+            <maximum-size width="50" height="48"/>
+          </grid>
         </constraints>
         <properties>
           <text value=""/>
