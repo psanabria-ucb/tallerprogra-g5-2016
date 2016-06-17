@@ -223,7 +223,7 @@ public class MusicController {
                     musica.setDuracMinutos(Integer.parseInt(duracMinutos));
 
                 } else
-                    throw new ValidationException("el numero de pistas debe ser mayor que 4 y menor que 13");
+                    throw new ValidationException("el numero de pistas debe ser mayor que 5 y menor que 13");
             }else throw new ValidationException("Solo se admite entre 5 a 12 pistas!");
 
         }

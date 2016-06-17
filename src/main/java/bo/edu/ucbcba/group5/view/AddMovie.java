@@ -177,9 +177,11 @@ public class AddMovie extends JDialog {
         imageText = new JTextField();
         rootPanel.add(imageText, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         registrarButton = new JButton();
+        registrarButton.setBackground(new Color(-10190849));
         registrarButton.setText("Registrar");
         rootPanel.add(registrarButton, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         buscarButton = new JButton();
+        buscarButton.setBackground(new Color(-13351985));
         buscarButton.setText("Buscar");
         rootPanel.add(buscarButton, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         portada = new JLabel();

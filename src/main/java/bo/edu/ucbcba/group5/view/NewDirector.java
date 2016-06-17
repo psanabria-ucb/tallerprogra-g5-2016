@@ -95,6 +95,7 @@ public class NewDirector extends JDialog {
         premiosField = new JTextField();
         rootPanel.add(premiosField, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         registrarDirButton = new JButton();
+        registrarDirButton.setBackground(new Color(-10190849));
         registrarDirButton.setText("Registrar");
         rootPanel.add(registrarDirButton, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }

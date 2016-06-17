@@ -208,9 +208,11 @@ public class UpdateMovie extends JDialog {
         dirField.setEnabled(false);
         rootPanel.add(dirField, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         cambiarPortadaButton = new JButton();
+        cambiarPortadaButton.setBackground(new Color(-10190849));
         cambiarPortadaButton.setText("Cambiar Portada");
         rootPanel.add(cambiarPortadaButton, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         aceptarButton = new JButton();
+        aceptarButton.setBackground(new Color(-10190849));
         aceptarButton.setText("Aceptar");
         rootPanel.add(aceptarButton, new GridConstraints(6, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }

@@ -345,8 +345,7 @@ public class MovieWindow extends JDialog {
         lugar = ((String) model.getValueAt(resulTable.getSelectedRow(), 7));
         if (new File(lugar).exists()) {
 
-        } else
-        {
+        } else {
             lugar = "caratula.jpg";
         }
         VerMovieWindow formm = new VerMovieWindow(this, nom, genero, descrip, durac, lanz, peso, direct, lugar);
@@ -543,9 +542,11 @@ public class MovieWindow extends JDialog {
         nameField.setText("");
         rootPanel.add(nameField, new GridConstraints(0, 0, 1, 9, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(395, 24), null, 0, false));
         buscarButton = new JButton();
+        buscarButton.setBackground(new Color(-13351985));
         buscarButton.setText("Buscar");
         rootPanel.add(buscarButton, new GridConstraints(0, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         resulTable = new JTable();
+        resulTable.setBackground(new Color(-3355444));
         rootPanel.add(resulTable, new GridConstraints(2, 0, 11, 9, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(500, 300), null, 0, false));
         final Spacer spacer1 = new Spacer();
         rootPanel.add(spacer1, new GridConstraints(8, 9, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
@@ -582,24 +583,31 @@ public class MovieWindow extends JDialog {
         filtroBox.setModel(defaultComboBoxModel3);
         rootPanel.add(filtroBox, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, new Dimension(150, -1), 0, false));
         editarButton = new JButton();
+        editarButton.setBackground(new Color(-10190849));
         editarButton.setText("Editar");
         rootPanel.add(editarButton, new GridConstraints(6, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         verButton = new JButton();
+        verButton.setBackground(new Color(-10190849));
         verButton.setText("Ver");
         rootPanel.add(verButton, new GridConstraints(7, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         agregarPeliculaButton = new JButton();
+        agregarPeliculaButton.setBackground(new Color(-10190849));
         agregarPeliculaButton.setText("Agregar Pelicula");
         rootPanel.add(agregarPeliculaButton, new GridConstraints(1, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         agregarDirectorButton = new JButton();
+        agregarDirectorButton.setBackground(new Color(-10190849));
         agregarDirectorButton.setText("Agregar Director");
         rootPanel.add(agregarDirectorButton, new GridConstraints(2, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         eliminarButton = new JButton();
+        eliminarButton.setBackground(new Color(-3206617));
         eliminarButton.setText("Eliminar");
         rootPanel.add(eliminarButton, new GridConstraints(5, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         imprimirButton = new JButton();
+        imprimirButton.setBackground(new Color(-10190849));
         imprimirButton.setText("Imprimir");
         rootPanel.add(imprimirButton, new GridConstraints(3, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         exportarAExcelButton = new JButton();
+        exportarAExcelButton.setBackground(new Color(-13652442));
         exportarAExcelButton.setText("Exportar a Excel");
         rootPanel.add(exportarAExcelButton, new GridConstraints(4, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
