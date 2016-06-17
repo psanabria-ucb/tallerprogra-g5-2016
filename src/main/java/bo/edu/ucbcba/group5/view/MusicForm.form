@@ -22,6 +22,7 @@
         </constraints>
         <properties>
           <text value="Buscar"/>
+          <toolTipText value="Busca un album por el nombre"/>
         </properties>
       </component>
       <component id="1f3b1" class="javax.swing.JButton" binding="eliminarButton" default-binding="true">
@@ -30,6 +31,7 @@
         </constraints>
         <properties>
           <text value="Eliminar"/>
+          <toolTipText value="Elimina un album seleccionando una fila de la tabla."/>
         </properties>
       </component>
       <component id="a5ade" class="javax.swing.JButton" binding="actualizarButton" default-binding="true">
@@ -38,6 +40,7 @@
         </constraints>
         <properties>
           <text value="Actualizar"/>
+          <toolTipText value="Actualiza los datos de un album seleccionado de la tabla"/>
         </properties>
       </component>
       <component id="f345" class="javax.swing.JTextField" binding="nameField1">
@@ -78,6 +81,7 @@
         </constraints>
         <properties>
           <text value="Registrar"/>
+          <toolTipText value="Registra un Album introduciendo los datos en los respectivos campos a ser rellenados."/>
         </properties>
       </component>
       <vspacer id="7fc77">
@@ -261,6 +265,7 @@
         </constraints>
         <properties>
           <text value="Album"/>
+          <toolTipText value="Ordena los resultados de la tabla alfabeticamente segun el album."/>
         </properties>
       </component>
       <component id="45985" class="javax.swing.JButton" binding="generoButton" default-binding="true">
@@ -269,6 +274,7 @@
         </constraints>
         <properties>
           <text value="Genero"/>
+          <toolTipText value="Ordena los datos de la tabla alfabeticamente segun el genero."/>
         </properties>
       </component>
       <tabbedpane id="c2635" binding="tabbedPane1" default-binding="true">
@@ -277,7 +283,9 @@
             <preferred-size width="200" height="200"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <toolTipText value=""/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="e7cc1" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -285,7 +293,9 @@
             <constraints>
               <tabbedpane title="Bandas"/>
             </constraints>
-            <properties/>
+            <properties>
+              <toolTipText value="Muestra todas las bandas registradas."/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="fe912" class="javax.swing.JTable" binding="resulTable">
@@ -302,6 +312,7 @@
                 </constraints>
                 <properties>
                   <text value="Exportar a .txt"/>
+                  <toolTipText value="Exporta la tabla de las &quot;Bandas&quot; a un archivo de texto"/>
                 </properties>
               </component>
               <hspacer id="daec4">
@@ -315,6 +326,7 @@
                 </constraints>
                 <properties>
                   <text value="Imprimir"/>
+                  <toolTipText value="Mada a imprimir la tabla &quot;Bandas&quot;. "/>
                 </properties>
               </component>
             </children>
@@ -357,6 +369,7 @@
                 </constraints>
                 <properties>
                   <text value="Exportar a .Txt"/>
+                  <toolTipText value="Exporta la tabla &quot;Canciones&quot; a un archivo de texto."/>
                 </properties>
               </component>
               <hspacer id="1c13b">
@@ -370,6 +383,7 @@
                 </constraints>
                 <properties>
                   <text value="Imprimir Canciones"/>
+                  <toolTipText value="Manda a imprimir la tabla &quot;canciones&quot;."/>
                 </properties>
               </component>
             </children>
