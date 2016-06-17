@@ -50,7 +50,7 @@ public class PeliculaTest {
 
     @Test
     public void testGetDirectorName() throws Exception {
-        assertEquals("", pelicula.getDirectorName());
+        assertEquals("", pelicula.getDirname());
     }
 
     @Test
