@@ -327,7 +327,14 @@ public class MovieWindow extends JDialog {
     }
 
     private void ver() {
-        final String nom, genero, descrip, durac, lanz, peso, direct, lugar;
+        final String nom;
+        final String genero;
+        final String descrip;
+        final String durac;
+        final String lanz;
+        final String peso;
+        final String direct;
+        String lugar;
         nom = ((String) model.getValueAt(resulTable.getSelectedRow(), 0));
         genero = ((String) model.getValueAt(resulTable.getSelectedRow(), 1));
         descrip = ((String) model.getValueAt(resulTable.getSelectedRow(), 2));
@@ -336,6 +343,12 @@ public class MovieWindow extends JDialog {
         peso = ((String) model.getValueAt(resulTable.getSelectedRow(), 5));
         direct = ((String) model.getValueAt(resulTable.getSelectedRow(), 6));
         lugar = ((String) model.getValueAt(resulTable.getSelectedRow(), 7));
+        if (new File(lugar).exists()) {
+
+        } else
+        {
+            lugar = "caratula.jpg";
+        }
         VerMovieWindow formm = new VerMovieWindow(this, nom, genero, descrip, durac, lanz, peso, direct, lugar);
         formm.setVisible(true);
     }
