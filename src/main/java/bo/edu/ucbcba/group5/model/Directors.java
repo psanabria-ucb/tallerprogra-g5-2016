@@ -31,7 +31,7 @@ public class Directors {
 
     public Directors() {
         id = 0;
-        Name = "";
+        Name ="";
         Awards = 0;
         peliculas = new LinkedList<Pelicula>();
     }

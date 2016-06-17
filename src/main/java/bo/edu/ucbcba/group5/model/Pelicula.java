@@ -59,7 +59,7 @@ public class Pelicula {
     }
 
     public String getDirectorName(){
-        return director.getName();
+        return dirname;
     }
 
     public void setDirector(Directors director) {

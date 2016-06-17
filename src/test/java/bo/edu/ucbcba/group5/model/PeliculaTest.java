@@ -122,7 +122,7 @@ public class PeliculaTest {
 
     @Test
     public void testSetDuracMinutos() throws Exception {
-        pelicula.setLanzamiento(200);
+        pelicula.setDuracMinutos(200);
         assertEquals(200, pelicula.getDuracMinutos());
     }
 }
